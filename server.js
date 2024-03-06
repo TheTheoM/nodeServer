@@ -1,10 +1,9 @@
-const WebSocket = require('ws');
-const EventEmitter = require('events');
-const { PassThrough } = require('stream');
-const { error, Console } = require('console');
-const fs = require('fs');
-
-//need to discon repeat names
+const WebSocket               = require('ws');
+const EventEmitter            = require('events');
+const { PassThrough }         = require('stream');
+const { error, Console, log } = require('console');
+const fs                      = require('fs');
+const { setTimeout }          = require('timers');
 
 class VariableWatcher extends EventEmitter {
   constructor(preventDuplicateValue) {
@@ -26,185 +25,341 @@ class VariableWatcher extends EventEmitter {
   }
 }
 
+class ObservableMap {
+    constructor(runOnUpdate) {
+        this.map             = new Map();
+        this.runOnUpdate     = runOnUpdate;
+        this.set             = this.set.bind(this);
+        this.get             = this.get.bind(this);
+        this.deleteItem      = this.deleteItem.bind(this);
+        this.has             = this.has.bind(this);
+        this.forEach         = this.forEach.bind(this);
+        this.getMap          = this.getMap.bind(this);
+        this.getMapFunctions = this.getMapFunctions.bind(this);
+    }
+  
+    set = (key, value) => {
+        this.map.set(key, value);
+        this.runOnUpdate()
+      return this.map;
+    };
+  
+    get = function (key) {
+        return this.map.get(key);
+    };
+  
+    deleteItem = function (key) {
+        let item = this.map.delete(key)
+        this.runOnUpdate()
+        return item;
+    };
+  
+    has = function (key) {
+      return this.map.has(key);
+    };
+  
+    forEach = function (callback) {
+      this.map.forEach(callback);
+    };
+
+    getMap() {
+        return this.map
+    }
+
+    getMapFunctions() {
+        return {
+            "set":        this.set,
+            "get":        this.get,
+            "deleteItem": this.deleteItem,
+            "has":        this.has,
+            "forEach":    this.forEach,
+            "map":        this.map,
+            "getMap":     this.getMap,
+          };
+    }
+
+}
+
 class SERVER {
     constructor(port, reactClientName, savedLinkFiles) {
-        this.server = new WebSocket.Server({ port: port, pingInterval: 5000,   pingTimeout: 1000 });
-        this.activeLinks = this.createObservableMap();
-        this.deviceLogs = this.createObservableLog();
-        this.reactClientName = reactClientName;
-        this.savedLinkFiles = savedLinkFiles;
+        this.server      = new WebSocket.Server({ port: port, pingInterval: 5000,   pingTimeout: 1000 });
+        this.activeLinks = new ObservableMap(this.on_activeLinks_Change.bind(this)).getMapFunctions()
+        this.reactClientName  = reactClientName;
+        this.savedLinkFiles   = savedLinkFiles;
         this.connectedDevices = new Map();
-        this.persistentLinks = new Map();
-        this.sendReactUpdate = true;
-        this.logFilters = {selectedDevices: [], time: ["from", "to"], alerts: ["warning", "error", "info", "success"], search: ""};
-        this.serverContext = this;
+        this.persistentLinks  = new ObservableMap(this.on_PersistentLinks_Update.bind(this)).getMapFunctions();
+        this.sendReactUpdate  = true;
         this.serverLogVirtDevice;
-        this.printLogs = true;
-        this.sendUpdate = true;
-        this.pingTimeout = 1500;
+        this.maxLogCount = {
+            "info":    300,
+            "error":   300,
+            "warning": 300,
+            "success": 300,
+        }
+        this.logFilters = {selectedDevices: [], time: {"from": new Date("2000-01-01"),  "to": new Date()},
+                           alerts: ["warning", "error", "info", "success"],     search: ""};
+        this.serverContext = this;
+        this.printLogs     = true;
+        this.sendUpdate    = true;
+        this.pingTimeout   = 1500;
+        this.loadLinks()
         this.main()
     }
 
     main() {
         this.serverLogVirtDevice = this.createVirtualDevice("Server", {}, {})
 
-        this.server.on('connection', (socket) => {
-            this.addLog("Device: Device connected.", "info")
-
+        this.server.on('connection', (socket, req) => {
+            this.addLog("Server", "Device: Device connected.", "info")
+            let ip = req.socket.remoteAddress
             socket.on('message', (msg) => {
                 msg = JSON.parse(msg)
                 if (msg.type === "registerDevice") {
-                    this.addLog(`Device: ${msg.name} registered.`, "info")
-                    let device = new DEVICE(socket, this.serverContext, msg.name, msg.inputNames, msg.outputNames, msg.deviceInfo, msg.widgets, msg.isNode)
-                    if (device.name === this.reactClientName) {
-                        device.sendMessage(
-                            JSON.stringify({
-                                type: "linkMapUpdate",
-                                activeLinks: this.getActiveLinkInfo(),
-                            })
+                    this.addLog("Server",  `Device: ${msg.name} registered. Ip: ${ip}`, "info")
+
+                    if (this.connectedDevices.has(msg.name)){
+                        let newName = msg.name
+                        if (msg.name.includes(this.reactClientName)) {
+                            for (let i = 0; i < 20; i ++ ) {
+                                newName = `${msg.name}-${i}`
+                                if (!this.connectedDevices.has(newName)) { 
+                                    break;
+                                } 
+                            }
+
+                            socket.send(JSON.stringify({
+                                type: "nameTaken",
+                                proposedName: newName,
+                            }))
+
+                        } else {
+                            socket.send(JSON.stringify({
+                                type: "nameTaken"
+                            }))
+                        }
+
+                        setTimeout(() => {
+                            socket.close()
+                        }, 100);
+
+                    } else {
+                        let device = new DEVICE(socket, this.serverContext, msg.name, msg.inputNames,
+                                                msg.outputNames, msg.deviceInfo, msg.widgets, msg.isNode,
+                                                msg.supportedEncryptionStandards)
+                        
+                        device.sendMessage(JSON.stringify({
+                            type: "connected"
+                        }))
+                        
+                        if (device.name.includes(this.reactClientName)) {
+                            device.sendMessage(
+                                JSON.stringify({
+                                    type: "linkMapUpdate",
+                                    activeLinks:      this.getActiveLinkInfo(),
+                                })
                             );
+                            device.sendMessage(
+                                JSON.stringify({
+                                    type: "getLogs",
+                                    deviceLogs:       this.getDeviceLogs(true),
+                                })
+                            );
+                            device.sendMessage(
+                                JSON.stringify({
+                                    type: "persistentLinksUpdate",
+                                    persistentLinks:  this.getPersistentLinks(),
+                                })
+                            );
+                        }
+                        this.connectedDevices.set(device.name, device)
+                        this.checkForPersistentLink();
+                        this.checkDeviceSavedData()
                     }
-                    this.connectedDevices.set(device.name, device)
-                    this.checkForPersistentLink();
-                    this.checkDeviceSavedData()
                 }
             })
-
-
         })
     }
 
-    createObservableMap() {
-        const map = new Map();
-        const listeners = new Set();
-
-        const update = () => {
-            if (this.sendReactUpdate) {
-              let reactDevice = this.connectedDevices.get(this.reactClientName);
-              if (reactDevice) {
-                reactDevice.sendMessage(
-                  JSON.stringify({
-                    type: "linkMapUpdate",
-                    activeLinks: this.getActiveLinkInfo(),
-                  })
-                );
-              }
-            }
-          };
-          
-      
-        const set = (key, value) => {
-            map.set(key, value);
-            update()
-          return map;
-        };
-      
-        const get = function (key) {
-            return map.get(key);
-        };
-      
-        const deleteItem = function (key) {
-            let item = map.delete(key)
-            update()
-            return item;
-        };
-      
-        const has = function (key) {
-          return map.has(key);
-        };
-      
-        const forEach = function (callback) {
-          map.forEach(callback);
-        };
-      
-        return {
-          set,
-          get,
-          deleteItem,
-          has,
-          forEach,
-        };
+    on_PersistentLinks_Update() {
+        if (this.sendReactUpdate) {
+            this.connectedDevices.forEach((device) => {
+                if (device.name.includes(this.reactClientName)) {
+                    device.sendMessage(
+                        JSON.stringify({
+                            type: "persistentLinksUpdate",
+                            persistentLinks: this.getPersistentLinks(),
+                        })
+                    );
+                }
+            });
+        }
     }
 
-    createObservableLog() {
-        const map = new Map();
-        const listeners = new Set();
-
-        const update = () => {
-            if (this.sendReactUpdate) {
-              let reactDevice = this.connectedDevices.get(this.reactClientName);
-              if (reactDevice) {
-                reactDevice.sendMessage(
-                  JSON.stringify({
-                    type: "getLogs",
-                    deviceLogs: this.getDeviceLogs(),
-                  })
-                );
-              }
-            }
-          };
-          
-      
-        const set = (key, value) => {
-            map.set(key, value);
-            update()
-          return map;
-        };
-      
-        const get = function (key) {
-            return map.get(key);
-        };
-      
-        const deleteItem = function (key) {
-            let item = map.delete(key)
-            update()
-            return item;
-        };
-        const has = function (key) {
-          return map.has(key);
-        };
-      
-        const forEach = function (callback) {
-          map.forEach(callback);
-        };
-      
-        return {
-          set,
-          get,
-          deleteItem,
-          has,
-          forEach,
-        };
+    on_activeLinks_Change() {
+        if (this.sendReactUpdate) {
+            this.connectedDevices.forEach((device) => {
+                if (device.name.includes(this.reactClientName)) {
+                    device.sendMessage(
+                        JSON.stringify({
+                            type: "linkMapUpdate",
+                            activeLinks: this.getActiveLinkInfo(),
+                        })
+                    );
+                }
+            });
+        }
     }
 
+    addLog(deviceName, log, logType) {
+        if (this.printLogs && deviceName === "Server") {console.log(log)}
+
+        if (!this.connectedDevices.has(deviceName)) {
+            console.log(`Raise error. Device ${deviceName} doesn't exist.`)
+            return null
+        }
+        
+        let logData = {"name": deviceName, "log": log, "time":  new Date().toISOString(), "logType": logType}
+
+        try {
+            const excludedLogTypes  = [""] 
+            let parsedData =  this.validateDataStructure(this.savedLinkFiles, true);
+            if (!parsedData.deviceData[deviceName]) {
+                parsedData.deviceData[deviceName] = {'logs': [], position: {'x': 0, 'y': 0}}
+            }
+
+
+            parsedData.deviceData[deviceName].logs.push(logData)
+
+            let currentDeviceLogs = parsedData.deviceData[deviceName].logs
+            let maxSize           = this.maxLogCount[logType]
+            let logs_not_logType  = currentDeviceLogs.filter((log) => (log.hasOwnProperty('logType') && log.logType !== logType))
+            let logs_ARE_logType  = currentDeviceLogs.filter((log) => (log.logType === logType))
+            let logs_ARE_logType_RESIZED  = logs_ARE_logType.slice(-maxSize)
+
+            let deviceLogsToAdd   = [...logs_not_logType, ...logs_ARE_logType_RESIZED]
+
+            parsedData.deviceData[deviceName].logs = deviceLogsToAdd
+            fs.writeFileSync(this.savedLinkFiles, JSON.stringify(parsedData, null, 2), 'utf-8');
+            } catch (error) {
+                console.log('Error parsing existing file content:' + error.stack );
+        }
+
+        if (this.sendReactUpdate) {
+            this.connectedDevices.forEach((device) => {
+                if (device.name.includes(this.reactClientName)) {
+                    device.sendMessage(
+                        JSON.stringify({
+                            type: "getLogs",
+                            deviceLogs: this.getDeviceLogs(true),
+                          })
+                    );
+                }
+            });
+        }
+    }
+
+    on_deviceLogs_Change() {
+        if (this.sendReactUpdate) {
+            this.connectedDevices.forEach((device) => {
+                if (device.name.includes(this.reactClientName)) {
+                    device.sendMessage(
+                        JSON.stringify({
+                            type: "getLogs",
+                            deviceLogs: this.getDeviceLogs(true),
+                          })
+                    );
+                }
+            });
+        }
+
+        try {
+            const excludedLogTypes  = [""] 
+            let fileData = fs.readFileSync(this.savedLinkFiles, 'utf-8');
+            let parsedData = JSON.parse(fileData);
+            if (!parsedData.hasOwnProperty('deviceData')) {
+                parsedData["deviceData"] = {}
+            }
+            let deviceData = parsedData.deviceData
+            this.connectedDevices.forEach((device, deviceName) => {
+                if (!Object.keys(deviceData).includes(deviceName)) {
+                    deviceData[deviceName] = {"logs": []}
+                }
+                if (deviceData[deviceName].hasOwnProperty("logs") && deviceData[deviceName].logs.length > 0) {
+                }
+            })
+
+            fs.writeFileSync(this.savedLinkFiles, JSON.stringify(parsedData, null, 2), 'utf-8');
+        } catch (error) {
+            console.log('Error parsing existing file content:' + error );
+            throw error
+        }
+
+        
+        
+    }
+
+    validateDataStructure(fileName, saveChanges) {
+        if (!fs.existsSync(fileName)) { 
+            fs.writeFileSync(fileName, '', 'utf-8');
+        }
+
+        let fileData = fs.readFileSync(fileName, 'utf-8');
+
+        if (fileData.trim() === '') { 
+            return {
+                "links": [], 
+                "deviceData": {},
+            }; 
+        } else {
+            let parsedData = JSON.parse(fileData)
+            if (!parsedData.hasOwnProperty('links')) {
+                parsedData['links'] = []
+            }
+
+            if (!parsedData.hasOwnProperty('deviceData')) {
+                parsedData['deviceData'] = {}
+            }  
+
+
+            let deviceData = parsedData['deviceData']
+
+            if (Object.keys(deviceData).length > 0) { 
+                Object.keys(deviceData).forEach((deviceName) => {
+                    let device = deviceData[deviceName]
+                    if (!device.hasOwnProperty('logs')) {
+                        device['logs'] = []
+                    }
+
+                    if (!device.hasOwnProperty('position')) {
+                        device['position'] = {x: 0, y: 0}
+                    }
+                })
+            }
+
+            if (saveChanges) {fs.writeFileSync(fileName, JSON.stringify(parsedData, null, 2), 'utf-8');}
+
+            return parsedData
+        }
+
+
+    }
+    
     modifyFilters(filters) {
         for (const key of Object.keys(filters)) {
             if (true) {
                 this.logFilters[key] = filters[key]
-            } else {
-                // Log The error.
-            }
+            } 
         }
 
-    }
-
-    addLog(log, logType) {
-        let device = this.connectedDevices.get("Server")
-
-        if (device) {
-            device.addLog(log, logType)            
-        } 
-
-        if (this.printLogs) {console.log(log)}
+        this.on_deviceLogs_Change()
     }
 
     saveNodePositions(nodePositions) {
         try {
             let fileData = fs.readFileSync(this.savedLinkFiles, 'utf-8');
-            let parsedData = JSON.parse(fileData);
+            let parsedData =  this.validateDataStructure(this.savedLinkFiles, true);
             
-            if (typeof parsedData.deviceData === 'undefined' || parsedData.deviceData) {
-                console.log('runs')
+            if (typeof parsedData.deviceData === 'undefined') {
                 parsedData["deviceData"] = {}
             }
 
@@ -213,13 +368,13 @@ class SERVER {
             nodePositions.forEach((nodeData) => {
                 let device = this.connectedDevices.get(nodeData.name)
                 if (device) {
-                    deviceData[nodeData.name] = {"position": nodeData.position}
+                    deviceData[nodeData.name] = {...deviceData[nodeData.name], "position": nodeData.position}
                     device.setPosition(nodeData.position)
                 }
             })
             fs.writeFileSync(this.savedLinkFiles, JSON.stringify(parsedData, null, 2), 'utf-8');
         } catch (error) {
-            this.addLog('Error parsing existing file content:'  + error, "error");
+            this.addLog("Server",  'Error parsing existing file content:'  + error, "error");
         }
 
     }
@@ -227,7 +382,18 @@ class SERVER {
     checkDeviceSavedData() {
         try {
             const fileData = fs.readFileSync(this.savedLinkFiles, 'utf-8');
-            const parsedData = JSON.parse(fileData);
+            let parsedData;
+            if (fileData.trim() === '') {
+                parsedData = {
+                    "links": [], 
+                    "deviceData": {},
+                }; 
+                
+                fs.writeFileSync(this.savedLinkFiles, JSON.stringify(parsedData, null, 2), 'utf-8');
+            } else {
+                parsedData = JSON.parse(fileData)
+            }
+
             if (parsedData["deviceData"]) {
                 Object.keys(parsedData["deviceData"]).forEach((deviceName) => {
                     let device = this.connectedDevices.get(deviceName)
@@ -237,7 +403,7 @@ class SERVER {
                 });
             }
         } catch (error) {
-        this.addLog('Error reading JSON file:'+ error.message, "error");
+        this.addLog("Server", 'Error reading JSON file:'+ error.message, "error");
         }
     }
 
@@ -247,7 +413,8 @@ class SERVER {
             const parsedData = JSON.parse(fileData);
             if (parsedData["links"]) {
                 parsedData["links"].forEach((link) => {
-                    this.addPersistentLink(link.outputDeviceName, link.outputName, link.inputDeviceName, link.inputName)
+                    this.addPersistentLink(link.outputDeviceName, link.outputName, link.inputDeviceName, link.inputName, 
+                                            link.encrypt_algorithm, link.key_size, link.highest_compatible, link.isHybrid)
                 });
             }
           } catch (error) {
@@ -265,19 +432,19 @@ class SERVER {
         if (link) { 
             return link.getLastMessage()
         } else {
-            this.addLog(`Link ${linkName} doesn't exist.`, "error")
+            this.addLog("Server", `Link ${linkName} doesn't exist.`, "error")
         }
 
     }
-      
+
     getDeviceIO() {
         let deviceInfo = {};
 
         for (const [name, device] of this.connectedDevices.entries()) {
             deviceInfo[name] = {
-                name: device.name,
-                inputs: device.inputs,
-                outputs: device.outputs,
+                name:        device.name,
+                inputs:      device.inputs,
+                outputs:     device.outputs,
             }
         }
 
@@ -289,21 +456,20 @@ class SERVER {
     getIOObject(deviceName, IOname, isInput) {
         const device = this.connectedDevices.get(deviceName);
         if (!device) {
-            // throw new Error(`Device ${deviceName} not found in getIOObject`);
             return false
         }
     
         if (isInput) {
             const input = device.inputs.get(IOname);
             if (!input) {
-                this.addLog(`Device ${deviceName} doesn't have input: ${IOname}`, "error");
+                this.addLog("Server", `Device ${deviceName} doesn't have input: ${IOname}`, "error");
                 return false;
             }
             return input;
         } else {
             const output = device.outputs.get(IOname);
             if (!output) {
-                this.addLog(`Device ${deviceName} doesn't have output: ${IOname}`, "error");
+                this.addLog("Server", `Device ${deviceName} doesn't have output: ${IOname}`, "error");
                 return false;
             }
             return output;
@@ -334,18 +500,67 @@ class SERVER {
         })
         return availableIO
     }
+    
+    getPersistentLinks() {
+        let persistentLinksData = {};
+        this.persistentLinks.forEach((linkData, linkName) => {
+            persistentLinksData[linkName] = linkData
+        })
+        return persistentLinksData
+    }
 
+    getLogsByDevice() {
+        let allDeviceLogs = {};
+
+        this.connectedDevices.forEach((device, deviceName) => {
+            allDeviceLogs[deviceName] = device.getLogs()
+
+            for (let log of localLog) {
+                allDeviceLogs.push(log)
+            }
+        })
+    }
+    
     getDeviceLogs() {
         let deviceLogs = [];
         let logFilters = this.logFilters;
-        this.connectedDevices.forEach((device, deviceName) => {
-            let localLog = device.getLogs()
-            for (let log of localLog) {
-                  if (logFilters.selectedDevices.includes(deviceName) && logFilters.alerts.includes(log.logType)) {
-                    if (logFilters.search === "") {
-                        deviceLogs.push(log)
-                    }  else if (JSON.stringify(log).toLocaleLowerCase().includes(logFilters.search.toLocaleLowerCase())) {
-                        deviceLogs.push(log)
+
+        let to   = new Date(logFilters.time.to)
+        let from = new Date(logFilters.time.from)
+
+        to.setHours(23, 59, 59, 999);
+        from.setHours(23, 59, 59, 999);
+
+        let allDeviceLogs = {}
+        
+
+        try {
+            const fileData   = fs.readFileSync(this.savedLinkFiles, 'utf-8');
+            const parsedData = JSON.parse(fileData);
+            if (parsedData.hasOwnProperty("deviceData")) {
+                Object.keys(parsedData["deviceData"]).forEach((name) => {
+                    allDeviceLogs[name] = parsedData["deviceData"][name].logs
+                });
+            }
+          } catch (error) {
+            console.error('Error reading JSON file:', error.message);
+          }
+        
+        Object.keys(allDeviceLogs).forEach((name) => {
+            let localLog = allDeviceLogs[name]
+            if (localLog) {
+                for (let log of localLog) {
+                    if (logFilters.selectedDevices.includes(name)) {
+                        if (logFilters.alerts.includes(log.logType)) {
+                            let logTime = new Date(log.time)
+                            if (logTime >= from && logTime <= to) {
+                                if (logFilters.search === "") {
+                                    deviceLogs.push(log)
+                                }  else if (JSON.stringify(log).toLocaleLowerCase().includes(logFilters.search.toLocaleLowerCase())) {
+                                    deviceLogs.push(log)
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -353,17 +568,104 @@ class SERVER {
 
         deviceLogs.sort((logA, logB) => new Date(logA.time) - new Date(logB.time));
 
+        deviceLogs = deviceLogs.slice(-200)
+
         return deviceLogs
     }
+
+    communicate_Encryption_Protocols(outputDevice, inputDevice, algorithm, highest_compatible, outputName, inputName, keySize, isHybrid) {
+        console.log("Attempting Encryption")
+        if (this.check_Common_Encryption_Algo(outputDevice, inputDevice, algorithm, isHybrid)) { 
+            if (highest_compatible) { 
+                keySize = this.get_Highest_Common_Key(outputDevice, inputDevice, algorithm)
+            }
+            
+            if (this.is_Key_Common(outputDevice, inputDevice, algorithm, keySize)) {
+                this.keyExchange(algorithm, keySize, outputDevice, outputName, inputDevice, inputName, isHybrid)
+                return true
+            } else {
+                console.log(`Uncommon Key proposed. requestLink() ${algorithm} ${keySize}`)
+            }
+
+        } else {
+            console.log(`No common Encryption algorithm. Denying Link Request. requestLink()`)
+        }
+        return false
+    }
     
-    requestLink(outputDeviceName, outputName, inputDeviceName, inputName, isPersistent) {
+    check_Common_Encryption_Algo(outputDevice, inputDevice, algo) {
+        let output_Algos = Object.keys(outputDevice.supportedEncryptionStandards)
+        let input_Algos  = Object.keys(inputDevice.supportedEncryptionStandards)
+        if (output_Algos.includes(algo) && input_Algos.includes(algo)) {
+            return true
+        }
+        return false
+    }
+
+    get_Highest_Common_Key(outputDevice, inputDevice, algo) {
+        const output_Algo = outputDevice.supportedEncryptionStandards[algo];
+        const input_Algo = inputDevice.supportedEncryptionStandards[algo];
+      
+        if (output_Algo && input_Algo) {
+            if (output_Algo.hasOwnProperty("keys") && output_Algo.hasOwnProperty("keys")) {
+                const outputKeySizes = Object.keys(output_Algo.keys);
+                const inputKeySizes = Object.keys(input_Algo.keys);
+            
+                const setOutputKeySizes = new Set(outputKeySizes);
+                const setInputKeySizes = new Set(inputKeySizes);
+            
+                const commonKeySizes = [...setOutputKeySizes].filter(size =>
+                  setInputKeySizes.has(size)
+                );
+      
+                if (commonKeySizes.length > 0) {
+                  return Math.max(...commonKeySizes);
+                } else {
+                  return null; 
+                }
+            } else {
+                console.log("Encryption Error. No property Keys.")
+            }
+        } else {
+          return null; 
+        }
+      }
+
+    is_Key_Common(outputDevice, inputDevice, algorithm,  keySize) {
+        keySize = keySize.toString()
+        let output_Algo = (outputDevice.supportedEncryptionStandards)[algorithm]
+        let input_Algo  = (inputDevice.supportedEncryptionStandards)[algorithm]
+        const outputKeySizes = Object.keys(output_Algo.keys)
+        const inputKeySizes  = Object.keys(input_Algo.keys)
+
+        return outputKeySizes.includes(keySize) && inputKeySizes.includes(keySize)
+    }
+
+    keyExchange(algorithm, key_Size, outputDevice, outputName, inputDevice, inputName, isHybrid) {
+        const outputPublicKey = outputDevice.getPublicKey(algorithm, key_Size)
+        const inputPublicKey  = inputDevice.getPublicKey(algorithm, key_Size)
+        outputDevice.sendPublicKey(algorithm, key_Size,  outputName, inputPublicKey, true, isHybrid)
+        inputDevice.sendPublicKey(algorithm,  key_Size,   inputName, outputPublicKey, false, isHybrid)
+    }
+
+
+    requestLink(outputDeviceName, outputName, inputDeviceName, inputName, isPersistent, algorithm = null, keySize = null, highest_compatible = null, isHybrid = null) {
         let outputIOObject = this.getIOObject(outputDeviceName, outputName, false);
         let inputIOObject  = this.getIOObject(inputDeviceName,  inputName,  true );
-
         let outputDevice   = this.getDevice(outputDeviceName);
         let inputDevice    = this.getDevice(inputDeviceName);
 
+        if (!(outputIOObject && inputIOObject && outputDevice && inputDevice)) { 
+            this.addLog("Server", `Null parameters at requestLink(): outputDeviceName: ${outputDeviceName}    outputName: ${outputName}    inputDeviceName: ${inputDeviceName}    inputName: ${inputName}`)
+            return false
+        }
 
+        if (algorithm && keySize || algorithm && highest_compatible) {
+            if (!this.communicate_Encryption_Protocols(outputDevice, inputDevice, algorithm, highest_compatible, outputName, inputName, keySize, isHybrid)) {
+                console.log("Encryption Failed.")
+                return false
+            }
+        }
 
         try {
             let proposedLinkName =  `${outputDevice.name}-${outputIOObject.name}=>${inputDevice.name}-${inputIOObject.name}`;
@@ -372,22 +674,24 @@ class SERVER {
                 link.activate();
                 if (isPersistent) {
                     let existingFileContent = fs.readFileSync(this.savedLinkFiles, 'utf-8');
+
                     try {
                         let fileData = JSON.parse(existingFileContent);
                         let linkData = fileData.links;
                         if ((linkData.filter(link => link.linkName === proposedLinkName)).length === 0) {
                             let newLink = {
-                                "linkName":         proposedLinkName,
-                                "outputDeviceName": outputDevice.name,
-                                "outputName":       outputIOObject.name,
-                                "inputDeviceName":  inputDevice.name,
-                                "inputName":        inputIOObject.name,
+                                "linkName":             proposedLinkName,
+                                "outputDeviceName":     outputDevice.name,
+                                "outputName":           outputIOObject.name,
+                                "inputDeviceName":      inputDevice.name,
+                                "inputName":            inputIOObject.name,
+                                "encrypt_algorithm" :   algorithm,
+                                "key_size" :            keySize ,
+                                "highest_compatible" :  highest_compatible,
+                                "isHybrid":             isHybrid,
                             };
                             linkData.push(newLink);
-                            let updatedFile = {
-                                "links": linkData
-                            };
-                            fs.writeFileSync(this.savedLinkFiles, JSON.stringify(updatedFile, null, 2), 'utf-8');
+                            fs.writeFileSync(this.savedLinkFiles, JSON.stringify(fileData, null, 2), 'utf-8');
                         }
                     } catch (error) {
                         console.error('Error parsing existing file content:', error);
@@ -399,53 +703,63 @@ class SERVER {
                 return false
             }
           } catch (error) {
-            this.addLog(`Error on outputDeviceName: ${outputDeviceName}    outputName: ${outputName}    inputDeviceName: ${inputDeviceName}    inputName: ${inputName}
+            this.addLog("Server", `Error on outputDeviceName: ${outputDeviceName}    outputName: ${outputName}    inputDeviceName: ${inputDeviceName}    inputName: ${inputName}
             ${error}`, "error")
             return false
           } 
     }
 
-    addPersistentLink(outputDeviceName, outputName, inputDeviceName, inputName) {
+    addPersistentLink(outputDeviceName, outputName, inputDeviceName, inputName, encrypt_algorithm, key_size, highest_compatible, isHybrid) {
         let linkName = `${outputDeviceName}-${outputName}=>${inputDeviceName}-${inputName}`;
         let linkData = {
-            "outputDeviceName": outputDeviceName,
-            "outputName":       outputName,
-            "inputDeviceName":  inputDeviceName,
-            "inputName":        inputName,
+            "outputDeviceName":    outputDeviceName,
+            "outputName":          outputName,
+            "inputDeviceName":     inputDeviceName,
+            "inputName":           inputName,
+            "encrypt_algorithm":   encrypt_algorithm,
+            "key_size":            key_size,
+            "highest_compatible":  highest_compatible,
+            "isHybrid":            isHybrid,
         };
     
-        // Add the link to the persistentLinks map
         this.persistentLinks.set(linkName, linkData);
-        this.addLog(`Persistent Link: ${linkName}: Activating `, "info");
+        this.addLog("Server", `Persistent Link: ${linkName}: Activating `, "info");
         this.checkForPersistentLink();
-    
-
     }
 
+    breakPersistentLink(outputDeviceName, outputName, inputDeviceName, inputName, linkName = null) {
+        if (!linkName) {
+            linkName = `${outputDeviceName}-${outputName}=>${inputDeviceName}-${inputName}`
+        } 
 
-    breakPersistentLink(outputDeviceName, outputName, inputDeviceName, inputName) {
-        let linkName = `${outputDeviceName}-${outputName}=>${inputDeviceName}-${inputName}`
-        if (this.persistentLinks.delete(linkName)) {
-            this.addLog(`Persistent Link: ${linkName}:  Broken and Deactivating: `, "info")
+        if (this.persistentLinks.deleteItem(linkName)) {
+            this.addLog("Server", `Persistent Link: ${linkName}:  Broken and Deactivating: `, "info")
             this.breakLinkWithIONames(outputDeviceName, outputName, inputDeviceName, inputName)
             let fileData = fs.readFileSync(this.savedLinkFiles, 'utf-8');
             try {
-                const parsedData = JSON.parse(fileData);
-                let deletedLinks = parsedData.links.filter(link => link.linkName !== linkName);
-                let updatedFile = {
-                    "links": deletedLinks
-                };
-                fs.writeFileSync(this.savedLinkFiles, JSON.stringify(updatedFile, null, 2), 'utf-8');
+                let parsedData =  this.validateDataStructure(this.savedLinkFiles, true);
+                let linksToSave = parsedData.links.filter(link => link.linkName !== linkName);
+                parsedData.links = linksToSave
+                
+                fs.writeFileSync(this.savedLinkFiles, JSON.stringify(parsedData, null, 2), 'utf-8');
             } catch (error) {
                 console.error('Error parsing existing file content:', error);
             }
+            return true
         } else {
-            this.addLog(`Persistent Link: ${linkName}: ERROR Not Found: `, "error")
+            this.addLog("Server", `Persistent Link: ${linkName}: ERROR Not Found: `, "error")
         }
+        return false
     }
 
-    requestNodeLink(srcDevice, srcIOname, trgDevice, trgIOname) {
-        this.requestLink(srcDevice, srcIOname, trgDevice, trgIOname)
+    updatePersistentLink(linkName, outputDeviceName, outputName, inputDeviceName, inputName, encrypt_algorithm, key_size, highest_compatible, isHybrid) {
+        if (this.breakPersistentLink(outputDeviceName, outputName, inputDeviceName, inputName, linkName = linkName)) {
+            this.addPersistentLink(outputDeviceName, outputName, inputDeviceName, inputName,  encrypt_algorithm, key_size, highest_compatible, isHybrid)
+        } else {
+            this.addLog("Server", `Persistent Link: ${linkName}: ERROR Failed to Update: INFO: \n
+              outputDeviceName: ${outputDeviceName}, outputName: ${outputName},
+              inputDeviceName: ${inputDeviceName}, inputName: ${inputName}`, "error")
+        }
     }
 
     doesLinkExist(linkName) {
@@ -458,10 +772,11 @@ class SERVER {
             let outputDevice  = this.connectedDevices.get(linkData.outputDeviceName);
 
             if (inputDevice && outputDevice) {
-   
                 if (inputDevice.inputNames.has(linkData.inputName) && outputDevice.outputNames.has(linkData.outputName)) {
-                    this.requestLink(linkData.outputDeviceName, linkData.outputName, linkData.inputDeviceName, linkData.inputName, true)
-                    // Some issue with requestLink
+                    this.requestLink(linkData.outputDeviceName, linkData.outputName, 
+                                    linkData.inputDeviceName, linkData.inputName, true, 
+                                    linkData.encrypt_algorithm, linkData.key_size, linkData.highest_compatible, 
+                                    linkData.isHybrid)
                 }
             }    
           });
@@ -478,11 +793,10 @@ class SERVER {
             link.deactivate()
             return false
         } else {
-            this.addLog(`Deactivation failure. Link Name ${linkName} doesn't exist.`, "error")
+            this.addLog("Server", `Deactivation failure. Link Name ${linkName} doesn't exist.`, "error")
             return false
         }
     }
-
 
     addDevice(DEVICE) {
         if (this.connectedDevices.get(DEVICE)) {
@@ -497,14 +811,14 @@ class SERVER {
     }
 
     removeDeviceByName(deviceName) {
-        this.addLog("Attempts to disconnect " + deviceName, "info")
+        this.addLog("Server", "Attempts to disconnect " + deviceName, "info")
 
         this.activeLinks.forEach((link) => {
             if (link.outputDeviceObject.device.name === deviceName || link.inputDeviceObject.device.name === deviceName) {
-                this.addLog("Link found.", 'info')
+                this.addLog("Server", "Link found.", 'info')
                 link.deactivate()
             } else {
-                this.addLog("Link not found.", "error")
+                this.addLog("Server", "Link not found.", "error")
             }
         })
         let device = this.connectedDevices.get(deviceName)
@@ -512,13 +826,13 @@ class SERVER {
             this.connectedDevices.get(deviceName).deactivate()
             this.connectedDevices.get(deviceName).ws.close()
         } else {
-            this.addLog("Device not found.", "error")
+            this.addLog("Server", "Device not found.", "error")
 
         }
          if (this.connectedDevices.delete(deviceName)) {
-            this.addLog(`Device: ${deviceName} Deleted.`, "info")
+            this.addLog("Server", `Device: ${deviceName} Deleted.`, "info")
          } else {
-            this.addLog("Device not deleted.", "error")
+            this.addLog("Server", "Device not deleted.", "error")
          }
     }
 
@@ -527,7 +841,7 @@ class SERVER {
         if (device) {
             device.sendMessage(message)
         } else {
-            this.addLog(`Cannot send Message to device ${deviceName}`, "error")
+            this.addLog("Server", `Cannot send Message to device ${deviceName}`, "error")
         }
     }
 
@@ -551,7 +865,6 @@ class LINK {
     }
 
     activate() {
-
         let outputListener = this.outputDeviceObject.getMessageEventListener();
         let inputListener  = this.inputDeviceObject.getMessageEventListener();
 
@@ -561,6 +874,14 @@ class LINK {
 
         if (!this.serverContext.activeLinks.has(this.name)) {
             this.serverContext.activeLinks.set(this.name, this)
+            let output_device_IO_Name  = this.outputDeviceObject.name
+            let input_device_IO_Name   = this.inputDeviceObject.name
+            let output_device_name     = this.outputDevice.name
+            let input_device_name      = this.inputDevice.name
+
+            this.outputDevice.addConnectedDevice(output_device_IO_Name, input_device_name)
+            this.inputDevice.addConnectedDevice(input_device_IO_Name, output_device_name)
+
         } else {
             this.serverContext.addLog(`Link Activation Failure: Link Exists. Name: ${this.name}`, "error")
             return false
@@ -568,7 +889,7 @@ class LINK {
 
 
         outputListener.on("change", (value) => {
-            this.lastMessage = value;
+            this.lastMessage = JSON.stringify(value);
             this.inputDeviceObject.setIOEventListenerVariable(value);
         })
 
@@ -582,15 +903,34 @@ class LINK {
     deactivate() {
         let outputListener = this.outputDeviceObject.getMessageEventListener();
         outputListener.removeAllListeners("change");
+        
         if (!this.serverContext.activeLinks.deleteItem(this.name)) {
             throw new Error("Deactivation Error. Link potentially doesn't exist.")
         }
 
+        let output_device_IO_Name  = this.outputDeviceObject.name
+        let input_device_IO_Name   = this.inputDeviceObject.name
+        let output_device_name     =  this.outputDevice.name
+        let input_device_name      =  this.inputDevice.name
+
+        this.outputDevice.removeConnectedDevice(output_device_IO_Name)
+        this.inputDevice.removeConnectedDevice(input_device_IO_Name)
+
         this.outputDeviceObject.setAvailability(true)
         this.inputDeviceObject.setAvailability(true)
 
-
         this.serverContext.addLog(`Link: ${this.name}: Deactivated`, "info")
+    }
+
+
+    updateEncryption(algorithm, highest_compatible, keySize) {
+        if (algorithm && keySize || algorithm && highest_compatible) {
+            if (!this.communicate_Encryption_Protocols(this.outputDevice, this.inputDevice, algorithm, highest_compatible, this.outputDeviceObject.name, this.inputDeviceObject.name, keySize)) {
+                console.log("Update Link Encryption Failed:", "\nOutput Device:", this.outputDevice, "\nInput Device:", this.inputDevice, "\nAlgorithm:",
+                            algorithm, "\nHighest Compatible:", highest_compatible, "\nOutput Device Name:", this.outputDeviceObject.name, "\nInput Device Name:",
+                            this.inputDeviceObject.name, "\nKey Size:", keySize);
+            }
+        }
     }
 
     getLastMessage() {
@@ -600,19 +940,20 @@ class LINK {
 }
 
 class DEVICE {
-    constructor(ws, serverContext, name, inputNames, outputNames, deviceInfo, widgets, isnode) {
+    constructor(ws, serverContext, name, inputNames, outputNames, deviceInfo, widgets, isnode, supportedEncryptionStandards) {
         this.deviceInfo = deviceInfo;
-        this.inputNames  = new Map(inputNames.map((value, index) => [value, value]));
-        this.outputNames = new Map(outputNames.map((value, index) => [value, value]));
+        this.supportedEncryptionStandards = supportedEncryptionStandards
+        this.inputNames  = inputNames ? new Map(inputNames.map(value => [value, value])) : [];
+        this.outputNames = outputNames ? new Map(outputNames.map(value => [value, value])) : [];
+        this.connectedTo = {}
         this.widgets     = new Map()
-        if (widgets) {this.widgets     = new Map(Object.entries(widgets))}
+        if (widgets) {this.widgets     = widgets}
         this.inputs  = this.create_IO_objects(inputNames, true);
         this.outputs = this.create_IO_objects(outputNames, false);
         this.validStatuses = ["offline", "online", "alert", "fault", "criticalFault"];
         this.statusState = "online";
         this.pingInterval;
         this.server = serverContext;
-        this.deviceLogs = [];
         this.name = name;
         this.ws = ws;
         this.isnode = isnode;
@@ -620,26 +961,72 @@ class DEVICE {
         this.deviceContext = this;
         this.handleWSCloseAndError()
         this.main()
+    }
 
+
+    getPublicKey(algorithm, keySize) {
+        if (this.supportedEncryptionStandards.hasOwnProperty(algorithm)) {
+            keySize = keySize.toString()
+            let publicKey = this.supportedEncryptionStandards[algorithm].keys[keySize]
+            return publicKey
+        } else {
+            throw new Error(`Algorithm ${algorithm} doesn't exist in ${this.name}'s algorithms. 'getPublicKey(${algorithm}, ${keySize})'`);
+        }
 
     }
 
+    sendPublicKey(algorithm, key_Size, ioName, publicKey, isOutput, isHybrid) {
+        this.sendMessage(JSON.stringify({
+            "type":     "sendPublicKey",
+            "algorithm":  algorithm,
+            "key_size":   key_Size,
+            "publicKey":  publicKey,
+            "isHybrid":   isHybrid,
+            "ioName":     ioName, 
+            "isOutput":   isOutput,
+        }))
+    }
+
+    
+    modify_widget_key_pair(widgetName, keyPair) {
+        if (this.widgets) {
+            let key = Object.keys(keyPair)[0]
+            let value = Object.values(keyPair)[0]
+            let widget = this.widgets.find(widget => widget.widgetName === widgetName)
+            if (widget) {
+                widget[key] = value;             
+            } else {
+                console.log(`Error: No Such Widget Name: Device: ${this.name} WidgetName: ${this.widgetName}`)
+            }
+        } else {
+            console.log(`Error: No Widgets in Device: ${this.name}`)
+        }
+    }
+    
+    modify_widget(widgetName, widgets) {
+        if (this.widgets) {
+            if (this.widgets.includes(widgetName)) {
+                this.widgets[widgetName] = widgets;
+            } else {
+                console.log(`Error: No Such Widget Name: Device: ${this.name} WidgetName: ${this.widgetName}`)
+            }
+        } else {
+            console.log(`Error: No Widgets in Device: ${this.name}`)
+        }
+    }
+
     create_IO_objects(ioArray, isInput) {
+
+        if (ioArray === null || !Array.isArray(ioArray)) {
+            ioArray = []
+        }
+        
         let ioMap = new Map(); 
         ioArray.forEach(ioName => {
             let ioObject = new IO(ioName, this, isInput);
             ioMap.set(ioName, ioObject)
         });
         return ioMap
-    }
-
-    addLog(logs, logType) {
-        this.deviceLogs.push({"name": this.name, "log": logs, "time": new Date().toISOString(), "logType": logType})
-        this.server.deviceLogs.set(this.name, this.deviceLogs)
-    }
-
-    getLogs() {
-        return this.deviceLogs
     }
 
     setPosition(newPosition) {
@@ -650,6 +1037,21 @@ class DEVICE {
         return this.nodePosition
     }
 
+    addConnectedDevice(IOName, deviceName) {
+        this.connectedTo[IOName] = deviceName
+    }
+
+    removeConnectedDevice(IOName) {
+        if (IOName in this.connectedTo) {
+            delete this.connectedTo[IOName]
+        } else {
+            this.server.addLog(this.name, `IOName not deleted from connectedTo: ${IOName}`, "error");
+        }
+    }
+
+    getConnectedDevices() {
+        return this.connectedTo
+    }
 
     main() {
         this.ws.on('message', (msg) => {
@@ -667,19 +1069,20 @@ class DEVICE {
                             let inputEventListener = this.outputs.get(outputName)
                             inputEventListener.setIOEventListenerVariable(value)
                         } else {
-                            this.server.addLog(`Input ${outputName} not found in device ${this.name}'s outputs: ${JSON.stringify(Array.from(this.outputNames.values()))}`, "error");
+                            this.server.addLog("Server", `Input ${outputName} not found in device ${this.name}'s outputs: ${JSON.stringify(Array.from(this.outputNames.values()))}`, "error");
                         }
                     });
                     break;
 
                 case "sendLogs":
-                    this.addLog(msg.logs, msg.logType);
+                    this.server.addLog(this.name, msg.logs, msg.logType);
                     break;
                     
                 case "modifyLogFilters":
                     this.server.modifyFilters(msg.filters)
                     break;
 
+                    
                 case "getDeviceLogs":
                     this.sendMessage(JSON.stringify({
                         'type': "getLogs",
@@ -691,7 +1094,6 @@ class DEVICE {
                 case "sendNodePositions":
                     this.server.saveNodePositions(msg.nodePositions)
                     break;
-
 
                 case "createVirtualDevice":
                   this.server.createVirtualDevice(msg.name,msg.inputs, msg.outputs)
@@ -708,20 +1110,22 @@ class DEVICE {
                     break;
 
                 case "requestPersistentLink":
-                    this.server.addPersistentLink(msg.outputDeviceName, msg.outputName, msg.inputDeviceName, msg.inputName)
-                    // this.server.requestLink(msg.outputDeviceName, msg.outputName, msg.inputDeviceName, msg.inputName, true);
-                    break;
-
-                case "requestNodeLink":
-                    this.server.addPersistentLink(msg.srcDevice, msg.srcIOname, msg.trgDevice, msg.trgIOname)
+                    this.server.addPersistentLink(msg.outputDeviceName, msg.outputName, msg.inputDeviceName, msg.inputName, msg.encrypt_algorithm, msg.key_size, msg.highest_compatible, msg.isHybrid)
                     break;
 
                 case "breakPersistentLink":
                     this.server.breakPersistentLink(msg.outputDeviceName, msg.outputName, msg.inputDeviceName, msg.inputName)
                     break;
 
+
+                case "updatePersistentLink":
+                    this.server.updatePersistentLink(msg.linkName, msg.outputDeviceName, msg.outputName, msg.inputDeviceName, msg.inputName, 
+                                msg.encrypt_algorithm, msg.key_Length, msg.prefer_Highest_Key, msg.isHybrid)
+                    break;
+
                 case "removeDeviceByName":
                     this.server.removeDeviceByName(msg.deviceName)
+                    break;
 
                 case "requestLinkDataInspect":
                     let lastMessage = this.server.requestLinkDataInspection(msg.linkName);
@@ -748,6 +1152,8 @@ class DEVICE {
 
                 case "changeStatus":
                     if (this.validStatuses.includes(msg.statusState)) {
+                        console.log("Status set to:")
+                        console.log(msg.statusState)
                         this.statusState = msg.statusState;
                     } else {
                         this.server.addLog(`Invalid Status ${msg.statusState}} from Device ${this.name}`, "error")
@@ -760,7 +1166,15 @@ class DEVICE {
                         ioName: msg.ioName,
                         editIOData: msg.editIOData,
                     }))
+                    break;
 
+                case "updateWidgets":
+                    this.modify_widget(msg.widgetName, msg.widget);
+                    break;
+
+                case "updateWidgetsKeyPair":
+                    this.modify_widget_key_pair(msg.widgetName, msg.keyPair) 
+                    break;
             }
         })
         this.pingInterval = setInterval(() => {
@@ -771,7 +1185,6 @@ class DEVICE {
     }
     
     deactivate() {
-        this.server.deviceLogs.deleteItem(this.name)
         this.inputs.forEach((input) => {
             input.deactivate()
         });
@@ -801,10 +1214,13 @@ class DEVICE {
             outputs:       [],
             all_inputs:    [],
             all_outputs:   [],
-            widgets:       {},
+            widgets:       [],
+            deviceInfo:    this.deviceInfo,
             nodePosition:  this.nodePosition,
             isNode:        this.isnode,
+            connectedTo:   this.getConnectedDevices(),
             statusState:   this.statusState,
+            supportedEncryptionStandards:  this.supportedEncryptionStandards,
         }
 
         this.inputs.forEach((input, inputName) => {
@@ -823,7 +1239,6 @@ class DEVICE {
         
         this.widgets.forEach((widget, widgetName) => {
             availableIO.widgets[widgetName] = widget
-            // availableIO.widgets.push(widget)
         })
 
         return availableIO
@@ -837,7 +1252,7 @@ class DEVICE {
 }
 
 class VIRTUALDEVICE {
-    constructor(serverContext, name, inputs, outputs, deviceInfo) {
+    constructor(serverContext, name, inputs, outputs, deviceInfo, isNode) {
         this.socket        = new WebSocket('ws://localhost:8080');
         this.serverContext = serverContext
         this.name          = name
@@ -849,6 +1264,10 @@ class VIRTUALDEVICE {
         this.localContext  = this;
         this.intervalArray = new Map();
         this.serverLogs    = []
+        this.isNode        = false
+        if (isNode) {
+            this.isNode    = true
+        }
         this.main()
     }
 
@@ -900,7 +1319,6 @@ class VIRTUALDEVICE {
     createRGBCreator(localContext, args) {
         const {maxPixelBrightness, sendInterval, color, noPixels, rgbFormat} = args;
 
-
         function generatePixels(maxPixelBrightness, color, noPixels, rgbFormat) {
             if (rgbFormat === "rgb_2D") {
                 // RGB format: [[r, g, b], [r, g, b], ...]
@@ -951,6 +1369,7 @@ class VIRTUALDEVICE {
 
     main() {
         this.socket.addEventListener('open', () => {
+
             setTimeout(() => {
                 this.socket.send(JSON.stringify({
                     type:        "registerDevice",
@@ -958,6 +1377,7 @@ class VIRTUALDEVICE {
                     inputNames:  this.inputName,
                     outputNames: this.outputNames,
                     deviceInfo:  this.deviceInfo,
+                    isNode:      this.isNode,
                 }))
             }, 500);
 
@@ -975,12 +1395,9 @@ class VIRTUALDEVICE {
                     }
                 }
             }, 2000)
-
         })
-
         
         let checkerInterval = setInterval(() => {
-            // very poor, need to be fixed in the futurre by doing this server-class
             if (!this.serverContext.connectedDevices.has(this.name)) {
                  this.localContext.intervalArray.forEach((interval) => {
                     clearInterval(interval)
@@ -1031,13 +1448,13 @@ class IO {
     }
 
     sendMessage(msg) {
-        this.device.sendMessage(msg) //funnybusnes
+        this.device.sendMessage(msg) 
     }
 
     getMessageEventListener() {
         return this.eventListener
     }
 }
-const server = new SERVER(8080, "webClient", "savedData.json")
-server.loadLinks()
+
+const server = new SERVER(8080, "webClient", "savedData.json")  
 
