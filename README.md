@@ -4,18 +4,31 @@ This server represents devices as nodes, which inputs and outputs which can be l
 
 ## How to connect to the server:
 
-1. Create a webSocket Client that connects to the server url.
-2. Send a registeration message to the server.
+1. Run server.js
+2. Create a webSocket Client that connects to the server url.
+3. Send a registeration message to the server.
 
 A simple registeration message for a device with one input and output.
 
 ```js
-deviceASocket.send(JSON.stringify({
+ws.send(JSON.stringify({
         type: "registerDevice",
-        name: "DeviceA",
+        name: "DeviceA", 
         isNode: true,
         inputNames: ["wordInput"],
         outputNames: ["wordOutput"],
         deviceInfo: "Example Device",
+    }))
+```
+
+To request a link, from 'wordOutput' to another device, DeviceB's output "wordOutput", simply send to the server: 
+
+```js
+ws.send(JSON.stringify({
+        type:             "requestLink",
+        outputDeviceName: "DeviceA",
+        outputName:       "wordOutput",
+        inputDeviceName:  "DeviceB",
+        inputName:        "wordInput",
     }))
 ```
