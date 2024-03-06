@@ -1,12 +1,21 @@
-Node Websocket Server with Admin Dashboard [not Finished] Pure JS
+# Node WebSocket Server
 
-Websocket Clients connect to this server and register input/outputs, which can be 'connected' or linked to another nodes IO's, such links can optionally persist through device/network disconection and data can be observed realtime by the server. 
+This server represents devices as nodes, which inputs and outputs which can be linked together through a GUI or API calls. This server is ideal for hightly technical 'smart-home' concepts, where any aritary webSocket client can be a node, and linked to others. This allows for reprogramming extraordinarily quickly, avoiding the tedious programming required to otherwise link nodes together.
 
-One Client will be a web-browser which will can control the server and receive live updates for the following information:
+## How to connect to the server:
 
-* Node Information (with each Node can have 'widgets' to control the device e.g. Volume Slider.) 
-* List of Links between Outputs=>Inputs with options.
-* List of connected Devices each with available IO listed.
-* Log Data.
+1. Create a webSocket Client that connects to the server url.
+2. Send a registeration message to the server.
 
+A simple registeration message for a device with one input and output.
 
+```js
+deviceASocket.send(JSON.stringify({
+        type: "registerDevice",
+        name: "DeviceA",
+        isNode: true,
+        inputNames: ["wordInput"],
+        outputNames: ["wordOutput"],
+        deviceInfo: "Example Device",
+    }))
+```
