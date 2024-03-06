@@ -1,9 +1,9 @@
-# Node WebSocket Server
+# Node WebSocket Server + React Interface
 
 This server represents devices as nodes, which inputs and outputs which can be linked together through a GUI or API calls. This server is ideal for hightly technical 'smart-home' concepts, where any aritary webSocket client can be a node, and linked to others. This allows for reprogramming extraordinarily quickly, avoiding the tedious programming required to otherwise link nodes together.
 
 ![image](https://github.com/TheTheoM/nodeServer/assets/103237702/cb0113df-60a5-44d3-ad96-f09925294ba7)
-A screenshot of the React-Web-Interface for this server. This is not included in this repo, but this image is for illustrative purposes.
+A screenshot of the React-Web-Interface for this server. 
 
 
 ## How to connect to the server:
