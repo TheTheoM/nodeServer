@@ -3,26 +3,22 @@ const WebSocket = require("ws")
 const deviceASocket = new WebSocket('ws://localhost:8080');
 const deviceBSocket = new WebSocket('ws://localhost:8080');
 
-let moderatorPosition = 0;
-let uranium           = 0;
-let uraniumAmount     = 0;
-
-// DeviceA outputs an integer 
+let variableM = 1;
 
 
 deviceASocket.addEventListener('open', () => {
-    console.log('Connected to WebdeviceASocket server');
+    console.log('Connected to WebSocket server');
     setTimeout(() => {
         deviceASocket.send(JSON.stringify({
         type: "registerDevice",
-        name: "Uranium Supply",
+        name: "DeviceA",
         isNode: true,
         inputNames: [],
-        outputNames: ["uranium"],
-        deviceInfo: "A very real uranium supplier.",
+        outputNames: ["numberOut"],
+        deviceInfo: "A Device using a widget to influence its output.",
         widgets: [
             {
-            widgetName: "uraniumAmount",
+            widgetName: "variableM",
             value: "1",
             widgetType: "slider",
             values: ["1", "100"],
@@ -33,60 +29,39 @@ deviceASocket.addEventListener('open', () => {
 
     setTimeout(() => {
         deviceASocket.send(JSON.stringify({
-            type: "requestPersistentLink",
-            outputDeviceName: "Uranium Supply",
-            outputName: "uraniumAmount",
-            inputDeviceName: "Fission Reactor",
-            inputName: "uranium",
-
+            type:               "requestPersistentLink",
+            outputDeviceName:   "DeviceA",
+            outputName:         "numberOut",
+            inputDeviceName:    "DeviceB",
+            inputName:          "numberIn",
         }))
-
     }, 1000)
-
-
 })
 
 deviceASocket.addEventListener("message", (msg) => {
     let data = JSON.parse(msg.data)
     switch (data.type) {
         case ("updateIO"): {
-            if (data.editIOData["uraniumAmount"]) {
-                uraniumAmount = data.editIOData["uraniumAmount"]
+            if (data.editIOData["variableM"]) {
+                variableM = data.editIOData["variableM"]
             }
             break;
         }
     }
 })
 
-setInterval(() => {
-    deviceASocket.send(JSON.stringify({
-        type: "sendOutputs",
-        outputs: {
-        "uranium": uraniumAmount,
-        },    
-    }))
 
-  
-}, 200);
 
 deviceBSocket.addEventListener('open', () => {
-    console.log('Connected to WebdeviceBSocket server');
+    console.log('Connected to WebSocket server');
     setTimeout(() => {
         deviceBSocket.send(JSON.stringify({
         type: "registerDevice",
-        name: "Fission Reactor",
+        name: "DeviceB",
         isNode: true,
-        inputNames: ["uranium"],
-        outputNames: ["Energy"],
-        deviceInfo: "A very real reactor.",
-        widgets: [
-            {
-            widgetName: "moderator",
-            value: "1",
-            widgetType: "slider",
-            values: ["1", "100"],
-            }
-        ]
+        inputNames: ["numberIn"],
+        outputNames: [],
+        deviceInfo: "Device B logs all msgs received",
         }))
     }, 500);
 
@@ -94,47 +69,51 @@ deviceBSocket.addEventListener('open', () => {
 
 deviceBSocket.addEventListener("message", (msg) => {
     let data = JSON.parse(msg.data)
-
     switch (data.type) {
-        case ("updateIO"): {
-            if (data.editIOData["moderator"]) {
-                moderatorPosition = data.editIOData["moderator"]
-            }
-            break;
-        }
         case ("sendInputs"): {
-            if (data.inputs['uranium']) {
-                uranium = data.inputs['uranium']
-            }
+            if (data.inputs['numberIn']) {
+                let number = parseInt(data.inputs['numberIn'])
+                
+                if (number > 140) {
+                    deviceBSocket.send(JSON.stringify({
+                        type: "sendLogs",
+                        logs: `RCVD Number Too High!: ${number}`,
+                        logType: "error",
+                    }))
 
+                    //Causes a red ring around the node.
+                    
+                    deviceBSocket.send(JSON.stringify({   
+                        type: "changeStatus",
+                        "statusState": "fault",
+                    }))
+                } else {
+                    deviceBSocket.send(JSON.stringify({
+                        type: "sendLogs",
+                        logs: `RCVD Number: ${number}`,
+                        logType: "info",
+                    }))
+
+                    // No ring around the node.
+
+                    deviceBSocket.send(JSON.stringify({
+                        type: "changeStatus",
+                        "statusState": "online",
+                    }))
+                }
+            }
             break;
         }
     }
 
 })
 
+// Send Number to DeviceB, the widget will alter the value of variableM, see DeviceA onMessage.
 setInterval(() => {
-    function fissionSimulator(uranium, moderatorPosition) {
-        let energy = uranium * ((3 * 10**8) ** 2)
-        let moderatedEnergy = energy / moderatorPosition
-        return moderatedEnergy;
-    }
-
-    let energy = fissionSimulator(uranium, moderatorPosition)
-    console.log(energy)
-    deviceBSocket.send(JSON.stringify({
+    deviceASocket.send(JSON.stringify({
         type: "sendOutputs",
         outputs: {
-        "Energy": energy,
+            "numberOut": variableM * 3 + 5,
         },    
     }))
-
-    deviceBSocket.send(JSON.stringify({
-        type: "sendLogs",
-        logType: "info",
-        logs: `Energy Produced ${energy}W`,    
-    }))
-
 }, 200);
-
-
