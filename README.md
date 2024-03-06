@@ -8,7 +8,7 @@ A screenshot of the React-Web-Interface for this server. This is not included in
 
 ## How to connect to the server:
 
-1. Run server.js: ```node server.js```
+1. Run server.js:  ```node server.js```
 2. Create a webSocket Client that connects to the server url.
 3. Send a registeration message to the server.
 
