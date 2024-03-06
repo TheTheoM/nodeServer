@@ -12,6 +12,8 @@ A screenshot of the React-Web-Interface for this server. This is not included in
 2. Create a webSocket Client that connects to the server url.
 3. Send a registeration message to the server.
 
+*An example, including webSocket functionality is included in ./examples*
+
 A simple registeration message for a device with one input and output.
 
 ```js
