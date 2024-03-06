@@ -4,7 +4,7 @@ This server represents devices as nodes, which inputs and outputs which can be l
 
 ## How to connect to the server:
 
-1. Run server.js
+1. Run server.js: ```js node server.js```
 2. Create a webSocket Client that connects to the server url.
 3. Send a registeration message to the server.
 
