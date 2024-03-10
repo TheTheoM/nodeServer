@@ -37,3 +37,10 @@ ws.send(JSON.stringify({
         inputName:        "wordInput",
     }))
 ```
+
+## How to Start the React Web-Interface
+### 1. Ensure Node is installed
+### 2. CD into the downloaded Directory
+### 3. Install Required Packages
+``` npm install ```
+### npm start
