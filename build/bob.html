@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Flexible CSS Grid Example</title>
+  <style>
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-gap: 10px;
+    }
+
+    .grid-item {
+      background-color: lightblue;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .content {
+      width: 100%;
+      background-color: lightgreen;
+    }
+  </style>
+</head>
+<body>
+  <div class="grid-container">
+    <div class="grid-item">
+      <div class="content">Item 1Item 1Item 1Item 1Item 1Item 1Item 1Item 1</div>
+    </div>
+    <div class="grid-item">
+      <div class="content">Item 2</div>
+    </div>
+    <div class="grid-item">
+      <div class="content">Item 3</div>
+    </div>
+    <div class="grid-item">
+      <div class="content">Item 4</div>
+    </div>
+    <div class="grid-item">
+        <div class="content">Item 4</div>
+      </div>
+      <div class="grid-item">
+        <div class="content">Item 4</div>
+      </div>
+  </div>
+</body>
+</html>
