@@ -43,4 +43,5 @@ ws.send(JSON.stringify({
 ### 2. CD into the downloaded Directory
 ### 3. Install Required Packages
 ``` npm install ```
-### npm start
+### 4. Start the Program
+``` npm start ```
