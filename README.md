@@ -40,7 +40,7 @@ ws.send(JSON.stringify({
 
 ## How to Start the React Web-Interface
 ### 1. Ensure Node is installed
-### 2. CD into the downloaded Directory
+### 2. download the 'build' folder and CD into it
 ### 3. Install Required Packages
 ``` npm install ```
 ### 4. Start the Program
