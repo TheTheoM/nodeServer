@@ -39,7 +39,7 @@ ws.send(JSON.stringify({
 
 # Installation:
 
-## Ensure Node is installed and download this entire repository. 
+### Ensure Node is installed and download this entire repository. 
 
 ## Starting the nodeServer:
 ### 1. cd into the repo. You should see a 'package.json' file and a 'server.js'
