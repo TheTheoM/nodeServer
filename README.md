@@ -49,20 +49,20 @@ ws.send(JSON.stringify({
 ``` node server ```
 
 ## How to Start the React Web-Interface:
-        ### 1. cd into the reactInterface folder
-        ### 2. Create a new file called '.env' and enter the following: [ONE-TIME STEP]
-        ```REACT_APP_WEBSOCKET_SERVER_IP=localhost:8080```
-        REACT_APP_WEBSOCKET_SERVER_IP is an react environmental variable, telling it to communicate with the nodeServer at localhost:8080. 
-        #### Note 1: If you want to access this server from devices other than your machine, you will need to replace localhost with your machines-ip, and ensure firewalls not blocking it.
-        #### Note 2: Changing env variables requires restarting the interface via step 4 to take affect.
-        
-        ### 3. Install Required Packages for the react app: [ONE-TIME STEP]
-        ``` npm install ```
-        ### 4. Start the react interface
-        ``` npm run start ```
-        
-        ## After completing this steps succesfully, all needed to run this again is:
-        ``` node server ```
-        ``` cd reactInterface```
-        ``` npm run start ```
+### 1. cd into the reactInterface folder
+### 2. Create a new file called '.env' and enter the following: [ONE-TIME STEP]
+```REACT_APP_WEBSOCKET_SERVER_IP=localhost:8080```
+#### REACT_APP_WEBSOCKET_SERVER_IP is an react environmental variable, telling it to communicate with the nodeServer at localhost:8080. 
+#### Note 1: If you want to access this server from devices other than your machine, you will need to replace localhost with your machines-ip, and ensure firewalls not blocking it.
+#### Note 2: Changing env variables requires restarting the interface via step 4 to take affect.
+
+### 3. Install Required Packages for the react app: [ONE-TIME STEP]
+``` npm install ```
+### 4. Start the react interface
+``` npm run start ```
+
+## After completing this steps succesfully, all needed to run this again is:
+``` node server ```
+``` cd reactInterface```
+``` npm run start ```
 
