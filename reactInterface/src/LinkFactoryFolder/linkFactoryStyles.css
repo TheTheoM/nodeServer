@@ -1,0 +1,99 @@
+
+.LinkFactory {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-gap: 50px;
+    padding: 17px;
+}
+
+.LinkFactory .potentialLink {
+    max-width:  575px;
+    min-height: 200px;
+    border-radius: 20px;
+    background: linear-gradient(145deg, #1f1e1e, #242323);
+    box-shadow:  0px 0px 20px #131212;
+    overflow: hidden;
+}
+
+.LinkFactory .infoContainer {
+    width: 70%;
+    height: 100%;
+    float: left;
+    padding: 10px;
+}
+
+.LinkFactory .deviceInfoContainer {
+    padding: 20px;
+    width: 50%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+.LinkFactory .outputDeviceInfo {
+    float: left;
+}
+.LinkFactory .inputDeviceInfo {
+    float: right;
+}
+
+.LinkFactory .info {
+    height: 100%;
+    width: 100%;
+    background-color: #161616;
+    border-radius: 20px 0px 0px 20px;
+}
+
+.LinkFactory .buttonContainer {
+    width: 30%;
+    height: 100%;
+    float: right;
+    display: flex;
+    flex-direction: column;
+    justify-content:  space-between;
+    padding-top:    20px;
+    padding-bottom: 20px;
+    padding-right:  10px;
+}
+
+.LinkFactory .linkButton {
+    height: 30px;
+    width: 100%;
+    border-radius: 20px;
+    background-color: rgb(46, 42, 42);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+}
+
+.LinkFactory .Temporary {
+    background-color: #074227;
+
+}
+
+.LinkFactory .Temporary:hover { 
+    box-shadow: 0px 0px 20px #074227;
+}
+
+.LinkFactory .Persistent {
+    background-color: #074227;
+
+}
+
+.LinkFactory .Persistent:hover { 
+    box-shadow: 0px 0px 20px #074227;
+}
+
+.LinkFactory .Reject {
+    background-color: #50120b;
+
+}
+
+.LinkFactory .Reject:hover { 
+    box-shadow: 0px 0px 20px #50120b;
+}

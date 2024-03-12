@@ -1,0 +1,195 @@
+.LinkDeviceCyber  {
+    font-size: medium;
+    display: flex;
+    height: 100%;
+    width: 100%;
+    max-width: 450px;
+}
+
+.activeLinksContainer {
+    display: grid;
+    grid-gap: 30px;
+    padding: 17px;
+    /* grid-template-columns: repeat(auto-fit, 385px); */
+    grid-template-columns: repeat(auto-fill, minmax(350px, 2fr));
+    justify-items: center;
+    /* grid-gap: 20px; */
+    transition: 1s all ease;
+}
+
+.LinkDeviceCyber .weirdShapeContainer {
+    height: 100%;
+    width: 15%;
+    padding-right: 5px;
+    position: relative;
+
+}
+
+.LinkDeviceCyber .textContainer {
+    height: 100%;
+    width:  100%;
+}
+
+.LinkDeviceCyber .textContainer .linkText {
+    position: absolute;
+    bottom: 0%;
+    left: 57%;
+    transform: translate(-50%, -50%) rotate(-90deg);
+    white-space: nowrap;
+    color: #222121;
+    font-weight: bolder;
+    font-family: 'Roboto', sans-serif;
+    font-size: xx-large;
+    margin-bottom: 30px;
+}
+
+.LinkDeviceCyber .textContainer p{
+    margin: 0;
+}
+
+.LinkDeviceCyber .weirdShape {
+    height: 100%;
+    width: 100%;
+    /* clip-path: polygon(0% 2.LinkDeviceCyber .39%, 19.LinkDeviceCyber .36% 2.LinkDeviceCyber .39%, 39.LinkDeviceCyber .46% 0%, 100% 0%, 100% 100%, 19.LinkDeviceCyber .36% 100%, 0% 96.LinkDeviceCyber .35%); */
+    clip-path: polygon(0% 3%, 20% 3%, 40% 0%, 100% 0%, 100% 100%, 20% 100%, 0% 97%);
+    /* border-radius: 3px; */
+    background-color: var(--cyberRed);
+    /* display: flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle; */
+
+}
+
+.LinkDeviceCyber .linkInfoContainer {
+    width: 88%;
+}
+
+.LinkDeviceCyber .lastMessageContainer {
+    height: 80%;
+    border: 1px solid var(--cyberRed);
+    word-wrap: break-word;
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+}
+.LinkDeviceCyber .lastMessage {
+    margin: 7px;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.LinkDeviceCyber .linkLastMsg {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items:     center;
+    justify-content: space-around;
+    vertical-align:  middle;
+    text-align:      center;
+}
+
+.LinkDeviceCyber .ViewLinkButtonContainer {
+    width: 240px;
+    height: 33px;
+    background-color: var(--cyberRed);
+    display: flex;
+    align-items:     center;
+    justify-content: space-around;
+    vertical-align:  middle;
+    text-align:      center;
+    clip-path: polygon(8.99% 0%, 33.11% 0%, 66.44% 0%, 91.67% 0%, 100% 46.67%, 91.67% 100%, 8.27% 100%, 0.04% 46.05%);
+    box-shadow: inset 0px 0px 10px 10px var(--cyberRed);
+}
+
+
+.LinkDeviceCyber .ViewLinkButtonContainer button {
+    border: 1px solid var(--cyberRed);
+    clip-path: polygon(8.99% 0%, 33.11% 0%, 66.44% 0%, 91.67% 0%, 100% 46.67%, 91.67% 100%, 8.27% 100%, 0.04% 46.05%);
+    height: 90%;
+    width:  96%;
+    border: 1px solid var(--cyberRed);
+    background-color: black;
+}
+
+.LinkDeviceCyber .linkLastMsg button:hover {
+    background-color: brown;
+    box-shadow: inset 0px 0px 5px 10px brown;
+}
+
+
+.LinkDeviceCyber .ViewLinkButtonContainer button h3 {
+    margin: 0;
+    color: var(--cyberRed);
+    font-size: 1.6vh;
+    cursor: pointer;
+}
+
+.LinkDeviceCyber .breakLinkIcon {
+    color: var(--cyberRed);
+    height: 1.5em;
+    width:  1.5em;
+    margin: 1px;
+    cursor: pointer;
+}
+.LinkDeviceCyber .breakLinkIcon:hover {
+    color: rgb(255, 0, 0);
+
+}
+
+.LinkDeviceCyber .disconLinkIcon:hover {
+    color: rgb(255, 0, 0);
+}
+
+.LinkDeviceCyber .disconLinkIcon {
+    color: var(--cyberRed);
+    height: 1.8em;
+    width:  1.8em;
+}
+
+.LinkDeviceCyber .componentContainer {
+    min-height: 230px;
+    overflow-y: hidden;
+    overflow-x: scroll;
+    transition: min-height 0.3s ease;
+}
+.LinkDeviceCyber .linkInfo {
+    height: 100%;
+    width: 100%;
+    border: 2px solid var(--cyberRed);
+    padding: 7px;
+}
+
+.LinkDeviceCyber .infoGrid {
+    display: grid;
+    /* border-radius: 15px; */
+    overflow: hidden;
+    height: 80%;
+    width: 100%;
+    grid-template-columns: repeat(2, 50%); 
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows:    1fr 1fr;
+  }
+
+.LinkDeviceCyber .infoGrid .cell > * { 
+    margin: 0;
+    color: var(--cyberRed);
+}
+
+.LinkDeviceCyber .infoGrid .cell {
+    border: 2px solid var(--cyberRed);
+    width: 100%;
+    height: 100%; 
+    padding: 5px; 
+    text-align: center;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* .LinkDeviceCyber .cell:nth-child(odd) {
+background-color: #f8f8f8; 
+} */
+
