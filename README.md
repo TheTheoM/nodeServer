@@ -7,7 +7,7 @@ A screenshot of the React-Web-Interface for this server.
 
 In essense, I created this because I wanted a slick, easy interface for connecting devices together with  logging, widgets, a status bar and with the ability to see the data being transmitted. I didn't like having to program connecting devices together every time I made a new device pretty much. 
 
-For example, I coded a python device called 'G-Keys' (visible above) which outputs if the 6 macro keys on my keyboard are pressed, which is connected to 'RCVR' (a speaker amp), with 3 of the keys if pressed actions respectively a volume up, volume down or muting command. If I want to change which keys do that, its a matter of just drawing the connection. Easy right?
+For example, A Python Device named 'G-Keys' (shown above) was designed to detect input from the six macro keys on my keyboard. This device outputs to 'RCVR,' a speaker amplifier. When three specific keys are pressed, corresponding actions are triggered: volume up, volume down, or muting commands, respectively. If I want to change which keys do that, its a matter of just drawing the connection. Easy right?
 
 I also made it with two themes, one normal and one cyberpunky, I will need to add the button to do so, but currently its toggled by a isCyber variable in some react components.
 
