@@ -6,12 +6,11 @@ This server represents devices as nodes, which inputs and outputs which can be l
 A screenshot of the React-Web-Interface for this server. 
 
 
-## How to connect to the server:
+## How to connect to the server: See Installation for this to work.
 
 1. Run server.js:  ```node server.js```
 2. Create a webSocket Client that connects to the server url.
 3. Send a registeration message to the server.
-
 
 A simple registeration message for a device with one input and output. Note: A complete example, including webSocket functionality, is in the examples folder.
 
@@ -50,15 +49,20 @@ ws.send(JSON.stringify({
 ``` node server ```
 
 ## How to Start the React Web-Interface:
+        ### 1. cd into the reactInterface folder
+        ### 2. Create a new file called '.env' and enter the following: [ONE-TIME STEP]
+        ```REACT_APP_WEBSOCKET_SERVER_IP=localhost:8080```
+        REACT_APP_WEBSOCKET_SERVER_IP is an react environmental variable, telling it to communicate with the nodeServer at localhost:8080. 
+        #### Note 1: If you want to access this server from devices other than your machine, you will need to replace localhost with your machines-ip, and ensure firewalls not blocking it.
+        #### Note 2: Changing env variables requires restarting the interface via step 4 to take affect.
+        
+        ### 3. Install Required Packages for the react app: [ONE-TIME STEP]
+        ``` npm install ```
+        ### 4. Start the react interface
+        ``` npm run start ```
+        
+        ## After completing this steps succesfully, all needed to run this again is:
+        ``` node server ```
+        ``` cd reactInterface```
+        ``` npm run start ```
 
-### 1. cd into the reactInterface folder
-### 2. Create a new file called '.env' and enter the following: [ONE-TIME STEP]
-```REACT_APP_WEBSOCKET_SERVER_IP=localhost:8080```
-REACT_APP_WEBSOCKET_SERVER_IP is an react environmental variable, telling it to communicate with the nodeServer at localhost:8080. 
-#### Note 1: If you want to access this server from devices other than your machine, you will need to replace localhost with your machines-ip, and ensure firewalls not blocking it.
-#### Note 2: Changing env variables requires restarting the interface via step 4 to take affect.
-
-### 3. Install Required Packages for the react app: [ONE-TIME STEP]
-``` npm install ```
-### 4. Start the react interface
-``` npm run start ```
