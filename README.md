@@ -1,4 +1,4 @@
-# Node WebSocket Server + React Interface
+# Node WebSocket Server + React Interface BETA
 
 This server represents devices as nodes, which inputs and outputs which can be linked together through a GUI or API calls. This server is ideal for hightly technical 'smart-home' concepts, where any aritary webSocket client can be a node, and linked to others. This allows for reprogramming extraordinarily quickly, avoiding the tedious programming required to otherwise link nodes together.
 
