@@ -5,6 +5,7 @@ This server represents devices as nodes, which inputs and outputs which can be l
 ![image](https://github.com/TheTheoM/nodeServer/assets/103237702/cb0113df-60a5-44d3-ad96-f09925294ba7)
 A screenshot of the React-Web-Interface for this server. 
 
+In essense, I created this because I wanted a slick, easy interface for connecting devices together with  logging, widgets, a status bar and with the ability to see the data being transmitted. I didn't like having to program connecting devicees together every time I made a new device pretty much.  
 
 ## How to connect to the server: See Installation for this to work.
 
