@@ -19,7 +19,6 @@ const WebSocketClient = () => {
   const [isWebSocketClosed, setIsWebSocketClosed] = useState("closed")
   const [linkFactoryMap, setLinkFactoryMap] = useState({})
   const reconnectionInterval = useRef()
-  // const ws_url = "ws://192.168.1.123:8080"
   const ws_url = `ws://${process.env.REACT_APP_WEBSOCKET_SERVER_IP}`
   console.log(process.env)
   const webSocket = useRef(null)
