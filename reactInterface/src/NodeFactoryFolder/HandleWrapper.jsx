@@ -15,10 +15,6 @@ function HandleWrapper({type, id,  style, isConnectable }) {
     setMenuVisible(false);
   };
 
-  useEffect(() => {
-  }, [isMenuVisible])
-
-
   return (
     <div className="HandleContainer" onMouseEnter={handleHover} onMouseLeave={handleLeave}>
         <Handle  type={type} id = {id}  style = {style} isConnectable={isConnectable} onMouseEnter={handleHover} onMouseLeave={handleLeave}/>

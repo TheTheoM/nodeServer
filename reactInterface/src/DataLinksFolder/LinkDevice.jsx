@@ -9,6 +9,8 @@ import "./DataLinks.css"
 const LinkDevice = (props) => {
   const [isInspectClicked, setIsInspectClicked] = useState(false)
   const [inspectInterval, setInspectInterval]   = useState()
+  const [isDiscMenuVisible, setIsDiscMenuVisible] = useState(false);
+  const [isPermMenuVisible, setIsPermMenuVisible] = useState(false);
 
   const removeLink = () => {
     clearInterval(inspectInterval)
@@ -28,9 +30,22 @@ const LinkDevice = (props) => {
     }
   };
 
-  useEffect(() => {
-    console.log(props.lastMessage)
-  }, [props.lastMessage])
+  const handleDiscHover = () => {
+    setIsDiscMenuVisible(true);
+  };
+
+  const handleDiscLeave = () => {
+    setIsDiscMenuVisible(false);
+  };
+
+
+  const handlePermHover = () => {
+    setIsPermMenuVisible(true);
+  };
+
+  const handlePermLeave = () => {
+    setIsPermMenuVisible(false);
+  };
 
   const BreakPermanentLink = () => {
     props.Server_BreakPermanentLink(props.outputDevice, props.outputName, props.inputDevice, props.inputName)
@@ -72,11 +87,31 @@ const LinkDevice = (props) => {
 
   
           <div className="linkLastMsg">
-            <DisconnectLink onClick={removeLink}  className="disconLinkIcon"/>
+            <div>
+              <DisconnectLink onClick={removeLink}  className="disconLinkIcon" onMouseEnter={handleDiscHover} onMouseLeave={handleDiscLeave}/>
+              {(isDiscMenuVisible) ? 
+                  <div className={`handleHoverMenuLinkDevice`}>
+                      <p>Disconnect Link</p>
+                  </div>
+                  :    
+                  null
+              }
+            </div>
             <button onClick = {inspectData}>
               {isInspectClicked ? <h3>View Link Details</h3> : <h3>View Link Data</h3>}
             </button>
-            {props.isPersistent ? <BreakLink onClick = {BreakPermanentLink} className = "breakLinkIcon"/> : 'и'}
+            {props.isPersistent ? 
+              <div>
+                <BreakLink onClick = {BreakPermanentLink} className = "breakLinkIcon"  onMouseEnter={handlePermHover} onMouseLeave={handlePermLeave}/>
+                {(isPermMenuVisible) ? 
+                  <div className={`handleHoverMenuLinkDevice`}>
+                      <p>Remove Link</p>
+                  </div>
+                  :    
+                  null
+              }
+              </div> 
+              : 'и'}
           </div>
       </div>
     </div>

@@ -7,11 +7,13 @@ import RectangleDiv from "../rectangleDiv"
 import AddWithNoOutline from "../IconComponents/AddWithNoOutline"
 import CreateFakeDevice from "./CreateFakeDevice"
 import "./DisplayDevicesStyles.css"
+import Encrypt from '../IconComponents/Encrypt.jsx';
 
 const DisplayDeviceIO = (props) => {
   const [potentialLinkSet, setPotentialLinkSet] = useState(new Map());
   const [showDeviceCreation,setShowDeviceCreation] = useState(0);
-  const isCyber = 1
+  const [isCyber, setIsCyber] = useState(0)
+
   function addFakeDevice() {
     setShowDeviceCreation(!showDeviceCreation)
   }
@@ -51,7 +53,9 @@ const DisplayDeviceIO = (props) => {
   return (
     <RectangleDiv
       menuName={"Device IO"}
-      rightItemList={<div className='resizeArrowContainer' onClick={addFakeDevice}><AddWithNoOutline/></div>}
+      rightItemList={[<div className='resizeArrowContainer' onClick={addFakeDevice}><AddWithNoOutline/></div>, 
+                      <div className='resizeArrowContainer' onClick={() => {setIsCyber(!isCyber)}} ><Encrypt width = {'1.2rem'}/></div>]}
+
       MenuItem={
           showDeviceCreation ? (
             <CreateFakeDevice setShowDeviceCreation = {setShowDeviceCreation} createNewDevice = {props.createNewDevice}/>

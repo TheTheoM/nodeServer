@@ -44,7 +44,6 @@ const PersistentLinks = (props) => {
       }
     }
 
-
     useEffect(() => {
       if (
         prevProps.current.outputDeviceName !== props.outputDeviceName ||
@@ -52,7 +51,6 @@ const PersistentLinks = (props) => {
         prevProps.current.outputName !== props.outputName ||
         prevProps.current.inputName !== props.inputName
       ) {
-        // Update the state with the new prop values
         setNewLinkData({
           outputDeviceName: props.outputDeviceName,
           inputDeviceName: props.inputDeviceName,
@@ -140,7 +138,7 @@ const PersistentLinks = (props) => {
             <div className="PersLinkInfo">
               <div className="PersTitleBox">
                 <p>{`${(props.outputName)} > ${(props.inputName)}`}</p>
-                <div className="crossDropShadow">
+                <div style={{marginRight: "15px"}}>
                   <Cross onClick={ontoggleConfigButton} className="cross" width = "1em" height = "1em" color = "#B22222"/>
                 </div>
               </div>

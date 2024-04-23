@@ -4,7 +4,7 @@
     grid-gap: 30px;
     padding: 17px;
     /* grid-template-columns: repeat(auto-fit, 385px); */
-    grid-template-columns: repeat(auto-fill, minmax(300px, 2fr));
+    grid-template-columns: repeat(auto-fill, minmax(350px, 2fr));
     justify-items: center;
     /* grid-gap: 20px; */
     transition: 1s all ease;
@@ -12,7 +12,7 @@
 
 .LinkDevice {
     /* height: 220px; */
-    /* width:  350px; */
+    width:  100%;
     border-radius: 15px;
     overflow: hidden;
     /* background: linear-gradient(145deg, #1f1e1e, #242323); */
@@ -33,7 +33,6 @@
 
 .LinkDevice .lastMessageContainer {
     word-wrap: break-word;
-    border-radius: 10px;
     overflow: hidden;
     height: 80%;
     width: 100%;
@@ -112,6 +111,8 @@
     color: rgb(223, 32, 32);
     height: 1.8em;
     width:  1.8em;
+    cursor: pointer;
+    position: relative;
 }
 
 .LinkDevice .componentContainer {
@@ -125,6 +126,22 @@
     width: 100%;
     padding: 7px;
 }
+
+.handleHoverMenuLinkDevice {
+    position: absolute;
+    z-index: 1000;
+    background-color: rgb(51, 51, 54);
+    min-width:  50px;
+    border-radius: 5px 0px 0px 5px;
+    border-radius: 5px;
+    font-size: 0.9em;
+}
+
+.handleHoverMenuLinkDevice > *{
+    margin: 0px;
+    padding: 5px;
+}
+
 
 .LinkDevice  .infoGrid {
     display: grid;

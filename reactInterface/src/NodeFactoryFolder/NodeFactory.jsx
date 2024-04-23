@@ -7,19 +7,28 @@ import Widget from "../DisplayDevicesFolder/Widget.jsx";
 import AddWithNoOutline from '../IconComponents/AddWithNoOutline';
 import "./nodeFactoryStyles.css"
 import LinkInfoWindow from "./LinkInfoWindow.jsx"
+import Encrypt from '../IconComponents/Encrypt.jsx';
+import { debounce } from 'lodash';
 
 const proOptions = { hideAttribution: true };
 const nodeTypes = { textUpdater: Node };
 
 export default function NodeFactory(props) {
     const [nodes, setNodes, onNodesChange] = useNodesState();
-    const [edges, setEdges] = useEdgesState([{}]);
-    const [last, setLast]                  = useState()
-
-    const minDistance = 50;
-
     const [selectedEdgeInfo, setSelectedEdgeInfo] = useState(null)
     const [displayLinkData, setDisplayLinkData] = useState(0)
+    const [edges, setEdges] = useEdgesState([{}]);
+    const [isCyber,   setIsCyber] = useState(0)
+    const [last, setLast] = useState()
+    const minDistance = 50;
+
+    const sendNodePositions = () => {
+      const nodePositions = nodes.map((node) => ({ position: node.position, name: node.key }));
+      console.log(nodePositions)
+      props.sendNodePositions(nodePositions);
+    };
+    const debouncedSendNodePositions = debounce(sendNodePositions, 200); 
+
 
     useEffect(() => {
       if (JSON.stringify(props.availableIO) !== JSON.stringify(last)) {
@@ -61,7 +70,6 @@ export default function NodeFactory(props) {
       }
     }, [props.availableIO]);
 
-    
     useEffect(() => {
       let localEdges = [];
       for (const key in props.activeLinks) {
@@ -86,9 +94,6 @@ export default function NodeFactory(props) {
     []);
 
     function onEdges(params) {
-      // REDO this function is gross
- 
-
       let selectedEdge = params.filter(edge => (edge.type === 'select' && edge.selected))[0]
 
       if (selectedEdge) {
@@ -106,22 +111,31 @@ export default function NodeFactory(props) {
         props.breakPersistentLink(outputDevice, outputName, inputDevice, inputName)
       }
     }
-
     
     function hideDisplayLinkData() {
       setDisplayLinkData(0)
-
     }
     
     function saveNodePositions() {
       props.sendNodePositions(nodes.map((node) => {return {position: node.position, name: node.key}}))
     }
 
+    function toggleCyber() {
+      setIsCyber(!isCyber)
+    }
+
+    useEffect(() => {
+      debouncedSendNodePositions();
+      return () => {
+        debouncedSendNodePositions.cancel();
+      };
+    }, [nodes]);
 
     return (
       <RectangleDiv
         menuName={"Node Factory"}
-        rightItemList={<div className='resizeArrowContainer' onClick={saveNodePositions} ><AddWithNoOutline/></div>}
+        rightItemList={[<div className='resizeArrowContainer' onClick={toggleCyber} ><Encrypt width = {'1.2rem'}/></div>]
+        }
         MenuItem={
           <div className="nodeFactory" style={{height: "550px"}}>
               <ReactFlow
@@ -136,11 +150,9 @@ export default function NodeFactory(props) {
                   >
                   <Background/>
               </ReactFlow>
-
-
                 <LinkInfoWindow displayLinkData = {displayLinkData}  hideDisplayLinkData = {hideDisplayLinkData} selectedEdgeInfo = {selectedEdgeInfo} activeLinks = {props.activeLinks}
                   breakLink_By_LinkName  = {props.breakLink_By_LinkName} requestLinkDataInspect  = {props.requestLinkDataInspect}
-                  Server_BreakPermanentLink  = {props.Server_BreakPermanentLink}
+                  Server_BreakPermanentLink  = {props.Server_BreakPermanentLink} isCyber = {isCyber}
                 />
           </div>
         }

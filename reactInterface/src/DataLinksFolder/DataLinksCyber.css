@@ -11,7 +11,8 @@
     grid-gap: 30px;
     padding: 17px;
     /* grid-template-columns: repeat(auto-fit, 385px); */
-    grid-template-columns: repeat(auto-fill, minmax(350px, 2fr));
+    grid-template-columns: repeat(auto-fill, minmax(380px, 2fr));
+
     justify-items: center;
     /* grid-gap: 20px; */
     transition: 1s all ease;
@@ -146,6 +147,7 @@
     color: var(--cyberRed);
     height: 1.8em;
     width:  1.8em;
+    cursor: pointer;
 }
 
 .LinkDeviceCyber .componentContainer {

@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import RectangleDiv from "../rectangleDiv"
 import LinkDeviceCyber from './LinkDeviceCyber';
+import Encrypt from '../IconComponents/Encrypt.jsx';
+
 // import "./DataLinksCyber.css"
 // import "./DataLinks.css"
 import LinkDevice from './LinkDevice';
 const DataLinks = (props) => {
-    const isCyber = 1
+    const [isCyber, setIsCyber] = useState(0)
     return  (
         <RectangleDiv 
             menuName={"Active Data Links:"}
+            rightItemList={[<div className='resizeArrowContainer' onClick={() => {setIsCyber(!isCyber)}} ><Encrypt width = {'1.2rem'}/></div>]}
             MenuItem={
                 <div className="activeLinksContainer">
                     {Object.keys(props.activeLinks).map((linkName) => {
