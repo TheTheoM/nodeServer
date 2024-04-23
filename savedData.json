@@ -1120,11 +1120,251 @@
           "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -75 dBm",
           "time": "2024-04-23T03:09:52.036Z",
           "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -72 dBm",
+          "time": "2024-04-23T03:09:55.036Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -70 dBm",
+          "time": "2024-04-23T03:09:58.036Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -72 dBm",
+          "time": "2024-04-23T03:10:01.036Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -73 dBm",
+          "time": "2024-04-23T03:10:04.050Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -71 dBm",
+          "time": "2024-04-23T03:10:07.036Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -70 dBm",
+          "time": "2024-04-23T03:10:10.036Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -71 dBm",
+          "time": "2024-04-23T03:10:13.039Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -74 dBm",
+          "time": "2024-04-23T03:10:16.036Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -74 dBm",
+          "time": "2024-04-23T03:10:19.036Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -70 dBm",
+          "time": "2024-04-23T03:10:22.035Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -70 dBm",
+          "time": "2024-04-23T03:10:25.035Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -69 dBm",
+          "time": "2024-04-23T03:10:28.035Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -71 dBm",
+          "time": "2024-04-23T03:10:31.036Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -71 dBm",
+          "time": "2024-04-23T03:10:34.036Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -72 dBm",
+          "time": "2024-04-23T03:10:37.035Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -71 dBm",
+          "time": "2024-04-23T03:10:40.035Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -71 dBm",
+          "time": "2024-04-23T03:10:43.035Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -71 dBm",
+          "time": "2024-04-23T03:10:46.036Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -74 dBm",
+          "time": "2024-04-23T03:10:49.035Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -70 dBm",
+          "time": "2024-04-23T03:10:52.035Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -70 dBm",
+          "time": "2024-04-23T03:10:55.035Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -71 dBm",
+          "time": "2024-04-23T03:10:58.035Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -71 dBm",
+          "time": "2024-04-23T03:11:01.035Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -74 dBm",
+          "time": "2024-04-23T03:11:04.036Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -76 dBm",
+          "time": "2024-04-23T03:11:07.035Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -74 dBm",
+          "time": "2024-04-23T03:11:10.038Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -70 dBm",
+          "time": "2024-04-23T03:11:13.040Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -70 dBm",
+          "time": "2024-04-23T03:11:16.034Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -71 dBm",
+          "time": "2024-04-23T03:11:19.034Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -71 dBm",
+          "time": "2024-04-23T03:11:22.034Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -72 dBm",
+          "time": "2024-04-23T03:11:25.034Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -71 dBm",
+          "time": "2024-04-23T03:11:28.035Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -71 dBm",
+          "time": "2024-04-23T03:11:31.034Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -70 dBm",
+          "time": "2024-04-23T03:11:34.033Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -71 dBm",
+          "time": "2024-04-23T03:11:37.035Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -74 dBm",
+          "time": "2024-04-23T03:11:40.037Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -71 dBm",
+          "time": "2024-04-23T03:11:43.033Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -74 dBm",
+          "time": "2024-04-23T03:11:46.048Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -68 dBm",
+          "time": "2024-04-23T03:11:49.033Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -74 dBm",
+          "time": "2024-04-23T03:11:52.034Z",
+          "logType": "info"
         }
       ],
       "position": {
-        "x": -88.36798904860123,
-        "y": 77.216311012023
+        "x": 142.42762620736903,
+        "y": 50.52566162867953
       }
     },
     "webClient": {
