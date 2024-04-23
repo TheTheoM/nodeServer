@@ -177,11 +177,15 @@ const PersistentLinks = (props) => {
           </div>        
         :
           <div className="PersistentLinkCyber">
-
+            <div className="LeftShape">
+                <div className="textContainer">
+                  <p>{props.isActive ? "LINK ACTIVE" : "OFFLINE"}</p>
+                </div>
+            </div>
               <div className="PersLinkInfo">
                 <div className="PersTitleBox">
                   <p>{`${(props.outputName)} > ${(props.inputName)}`}</p>
-                  <div className="crossDropShadow">
+                  <div style={{marginRight: "15px"}}>
                     <Cross onClick={ontoggleConfigButton} className="cross" width = "1em" height = "1em" color = "#B22222"/>
                   </div>
                 </div>

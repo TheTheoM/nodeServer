@@ -23,6 +23,7 @@
     min-height: 200px;
     font-size: medium;
     display: flex;
+    max-width: 480px;
 }
 
 
