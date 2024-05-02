@@ -206,6 +206,8 @@ fromHere
     display: grid;
     padding: 17px;
     grid-template-columns: repeat(auto-fit, minmax(370px, 1fr));
+    justify-items: center;
     grid-gap: 20px;
     transition: 1s all ease;
+    
 }

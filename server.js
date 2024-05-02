@@ -865,10 +865,11 @@ class LINK {
     }
 
     activate() {
-        let outputListener = this.outputDeviceObject.getMessageEventListener();
-        let inputListener  = this.inputDeviceObject.getMessageEventListener();
+        // let outputListener = this.outputDeviceObject.getMessageEventListener();
+        let outputListener = this.outputDeviceObject.addListener(this.inputDeviceObject.name);
+        // let inputListener  = this.inputDeviceObject.getMessageEventListener(this.outputDeviceObject.name);
 
-        if (!(outputListener && inputListener)) {
+        if (!(outputListener)) {
             throw new Error(`Link Failure. Listeners Error. Output: ${this.outputListener} Input: ${this.inputL}`)
         }
 
@@ -901,8 +902,8 @@ class LINK {
     }
 
     deactivate() {
-        let outputListener = this.outputDeviceObject.getMessageEventListener();
-        outputListener.removeAllListeners("change");
+        let outputListener = this.outputDeviceObject.removeListener(this.inputDeviceObject.name);
+        // outputListener.removeAllListeners("change");
         
         if (!this.serverContext.activeLinks.deleteItem(this.name)) {
             throw new Error("Deactivation Error. Link potentially doesn't exist.")
@@ -1062,7 +1063,7 @@ class DEVICE {
                     this.outputs = this.create_IO_objects(msg.outputs, false)
                     break
 
-                case "sendOutputs":
+                case "sendOutputs": //The outputs of the device.
                     Object.entries(msg.outputs).forEach(([key, value]) => {
                         let outputName = key;
                         if (this.outputNames.has(outputName)) {
@@ -1152,8 +1153,6 @@ class DEVICE {
 
                 case "changeStatus":
                     if (this.validStatuses.includes(msg.statusState)) {
-                        console.log("Status set to:")
-                        console.log(msg.statusState)
                         this.statusState = msg.statusState;
                     } else {
                         this.server.addLog(`Invalid Status ${msg.statusState}} from Device ${this.name}`, "error")
@@ -1417,7 +1416,7 @@ class IO {
         this.deviceName = device.name
         this.isInput = isInput;
         this.isAvailable = true;
-        this.eventListener = new VariableWatcher(false)
+        this.outputEventListeners = {}; // This is sent out of this device. to other devices. Output ->
         if (this.isInput) {
             this.sendInputToDevice()
         }
@@ -1427,8 +1426,23 @@ class IO {
         this.isAvailable = isAvailable;
     }
 
+    addListener(listenerName) {
+        let listener = new VariableWatcher(false);
+        this.outputEventListeners[listenerName] = listener;
+        return listener;
+    }
+
+    removeListener(listenerName) {
+        if (this.outputEventListeners[listenerName]) {
+            this.outputEventListeners[listenerName].removeAllListeners("change");
+            delete this.outputEventListeners[listenerName];
+        }
+    }
+
     sendInputToDevice() {
-        this.eventListener.on("change", (value) => {
+        let listener = new VariableWatcher(false);
+        this.outputEventListeners['default'] = listener
+        listener.on("change", (value) => {
             let msg = JSON.stringify({
                 type: "sendInputs",
                 inputs: {
@@ -1440,11 +1454,16 @@ class IO {
     }
 
     deactivate() {
-        this.eventListener.removeAllListeners("change");
+        Object.entries(this.outputEventListeners).forEach(([key, variablewatcher]) => {
+            variablewatcher.removeAllListeners("change");
+        })
     }
+        // this.eventListener.removeAllListeners("change");
 
     setIOEventListenerVariable(value) {
-        this.eventListener.setVariable(value)
+        Object.entries(this.outputEventListeners).forEach(([key, variablewatcher]) => {
+            variablewatcher.setVariable(value)
+        })
     }
 
     sendMessage(msg) {

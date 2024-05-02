@@ -7,12 +7,14 @@
 }
 
 .activeLinksContainer {
-    height: 100%;
-    width: 100%;
     display: grid;
     grid-gap: 30px;
     padding: 17px;
+    /* grid-template-columns: repeat(auto-fit, 385px); */
     grid-template-columns: repeat(auto-fill, minmax(380px, 2fr));
+
+    justify-items: center;
+    /* grid-gap: 20px; */
     transition: 1s all ease;
 }
 
