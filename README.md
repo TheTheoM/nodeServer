@@ -42,32 +42,20 @@ ws.send(JSON.stringify({
     }))
 ```
 
-# Installation:
-
-### Ensure Node is installed https://nodejs.org/en/download and download this entire repository. 
-
-## Starting the nodeServer:
-### 1. cd into the repo. You should see a 'package.json' file and a 'server.js'
-### 2. Install Required Packages for the server: [ONE-TIME STEP]
-``` npm install ```
-### 4. Start the Server (Note: May raise an error about a file not existing, ignore it. It will create the log-file).
-``` node server ```
-
-## How to Start the React Web-Interface:
-### 1. cd into the reactInterface folder
-### 2. Create a new file called '.env' and enter the following: [ONE-TIME STEP]
+## Installation
+### 1. cd into the repo
+``` npm install . ```
+### 2. ``` cd reactInterface ```
+### 3. Create a new file called '.env' and enter the following: [ONE-TIME STEP]
 ```REACT_APP_WEBSOCKET_SERVER_IP=localhost:8080```
-####         -        REACT_APP_WEBSOCKET_SERVER_IP is an react environmental variable, telling it to communicate with the nodeServer at localhost:8080. 
-####         -        Note 1: If you want to access this server from devices other than your machine, you will need to replace localhost with your machines-ip, and ensure firewalls not blocking it.
-####         -        Note 2: Changing env variables requires restarting the interface via step 4 to take affect.
+####         -Change localhost to PC IP if you wish.
+### 4. Install Required Packages for the react app: [ONE-TIME STEP]
+``` npm install .```
 
-### 3. Install Required Packages for the react app: [ONE-TIME STEP]
-``` npm install ```
-### 4. Start the react interface
+## Running nodeServer:
+``` node server.js ``` From root directory of the repo
+## Running react Website:
+``` cd reactInterface ```
 ``` npm run start ```
 
-## After completing this steps succesfully, all needed to run this again is:
-``` node server ```
-``` cd reactInterface```
-``` npm run start ```
 
