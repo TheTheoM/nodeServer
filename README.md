@@ -3,7 +3,7 @@
 Node based WebSocket server. Devices are represented as 'nodes' with their inputs and outputs connectable to other node outputs and inputs respectively. 
 
 ![image](https://github.com/TheTheoM/nodeServer/assets/103237702/cb0113df-60a5-44d3-ad96-f09925294ba7)
-A screenshot of the React-Web-Interface. 
+^ React-Web-Interface ^. 
 
 ## How to connect to the server: See Installation for this to work.
 
