@@ -11,6 +11,7 @@ Supports:
 * Persistent Links (Will reconnect after disconnection or server restart)
 * Experimental Key exchange for RSA (Beta)
 * Device Logging
+* Optional Cyberpunk Styling
   
 ## How to connect to the server: See Installation for this to work.
 
