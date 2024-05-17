@@ -1,15 +1,9 @@
 # Node WebSocket Server + React Interface BETA
 
-This server represents devices as nodes, which inputs and outputs which can be linked together through a GUI or API calls. This server is ideal for hightly technical 'smart-home' concepts, where any arbitrary webSocket client can be a node, and linked to others. This allows for reprogramming extraordinarily quickly, avoiding the tedious programming required to otherwise link nodes together.
+Node based WebSocket server. Devices are represented as 'nodes' with their inputs and outputs connectable to other node outputs and inputs respectively. 
 
 ![image](https://github.com/TheTheoM/nodeServer/assets/103237702/cb0113df-60a5-44d3-ad96-f09925294ba7)
-A screenshot of the React-Web-Interface for this server. 
-
-In essense, I created this because I wanted a slick, easy interface for connecting devices together with  logging, widgets, a status bar and with the ability to see the data being transmitted. I didn't like having to program connecting devices together every time I made a new device pretty much. 
-
-For example, A Python Device named 'G-Keys' (shown above) was designed to detect input from the six macro keys on my keyboard. This device outputs to 'RCVR,' a speaker amplifier. When three specific keys are pressed, corresponding actions are triggered: volume up, volume down, or muting commands, respectively. If I want to change which keys do that, its a matter of just drawing the connection. Easy right?
-
-I also made it with two themes, one normal and one cyberpunky, I will need to add the button to do so, but currently its toggled by a isCyber variable in some react components.
+A screenshot of the React-Web-Interface. 
 
 ## How to connect to the server: See Installation for this to work.
 
