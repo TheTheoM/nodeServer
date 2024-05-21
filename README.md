@@ -46,13 +46,12 @@ ws.send(JSON.stringify({
 
 ## Installation
 ### 1. cd into the repo
-``` npm install . ```
-### 2. ``` cd reactInterface ```
-### 3. Create a new file called '.env' and enter the following:
+### 2. ``` npm install . ```
+### 3. ``` cd reactInterface ```
+### 4. Create a new file called '.env' and enter the following:
 ```REACT_APP_WEBSOCKET_SERVER_IP=localhost:8080```
 ####         -Change localhost to PC IP if you wish.
-### 4. Install Required Packages for the react app:
-``` npm install .```
+### 5. ``` npm install .```
 
 ## Running nodeServer:
 ``` node server.js ``` From root directory of the repo
