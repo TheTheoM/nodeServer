@@ -49,7 +49,7 @@ To send any message to the server, you'd send a JSON encoded dictionary which al
 ### Registering a Device:
 
 - You send this to the server after connection, to tell it the device name, inputs outputs etc.
-
+```
 {
 "type": "registerDevice"                     // [required]
 "name":  device_name,                        // [string len > 0] [required],
@@ -60,7 +60,7 @@ To send any message to the server, you'd send a JSON encoded dictionary which al
 "widgets": {{..}, {}}                        // [array of dictionaries len > 0] [optional] [For syntax see "Creating Widgets"]
 "supportedEncryptionStandards": {{..}, {}},  // [array of dictionaries len > 0] [optional] [for syntax see "Encryption"]
 }
-
+```
 
 
 
