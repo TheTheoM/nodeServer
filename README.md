@@ -62,9 +62,24 @@ All messages sent to and from the server are in the same basic JSON encoded stru
 }
 ```
 
-- Upon sending this to the server, you will receive one of two messages:
+- Upon sending this to the server, you will *receive*  one of two messages:
   1. "nameTaken" [failure]
-  2. "connected" [success]
+     ```
+        {
+          type: "nameTaken",
+          proposedName: newName,
+        }
+      ```
+       - For example, if your taken name is "Bob", your proposed name will be "Bob-1", which is free at the time of message.
+
+  3. "connected" [success]
+    ```
+    {
+      type: "connected",
+    }
+    ```
+- You will this to indicate succesfully connection and all server functionality is now available. To see what you can now do see "I'm connected to the server, now what?"
+
 
 #### Widgets:
 - These are items that will appear on the node on the GUI, allowing control of the device without connecting another to it. Widgets can only be added in registration currently. Widgets can be live updated by its device any time after registration.
@@ -103,26 +118,8 @@ All messages sent to and from the server are in the same basic JSON encoded stru
         }
       ```
 
- 
-### "nameTaken":
-- You will *receive* this if a device already exists which that name, you will receive a proposed free name, which is your name with a number appended.
-  ```
-    {
-      type: "nameTaken",
-      proposedName: newName,
-    }
-  ```
-  For example, if your taken name is "Bob", your proposed name will be "Bob-1", which is free at the time of message.
-- 
 
-### "connected":
-- You will *receive* this to indicate succesfully connection and all server functionality is now available.
-    ```
-    {
-      type: "connected",
-    }
-  ```
-- To see what you can now do see "I'm connected to the server, now what?"
+
 
 
 
