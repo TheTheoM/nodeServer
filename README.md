@@ -70,7 +70,7 @@ All messages sent to and from the server are in the same basic JSON encoded stru
           proposedName: newName,
         }
       ```
-       - For example, if your taken name is "Bob", your proposed name will be "Bob-1", which is free at the time of message.
+        - For example, if your taken name is "Bob", your proposed name will be "Bob-1", which is free at the time of message.
 
   3. "connected" [success]
     ```
@@ -78,7 +78,7 @@ All messages sent to and from the server are in the same basic JSON encoded stru
       type: "connected",
     }
     ```
-- You will this to indicate succesfully connection and all server functionality is now available. To see what you can now do see "I'm connected to the server, now what?"
+      - Receiving this indicates succesful registration. To see what you can now do see "I'm connected to the server, now what?"
 
 
 #### Widgets:
