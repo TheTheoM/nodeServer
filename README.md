@@ -57,8 +57,8 @@ All messages sent to and from the server are in the same basic JSON encoded stru
   "inputNames": ["input_1", "input_N"],        // [required] [array of strings len >= 0]  [For no inputs, leave as empty array "[]"]
   "outputNames": ["output_1", "output_N"],     // [required] [array of strings len >= 0]  [For no outputs, leave as empty array "[]"]
   "deviceInfo": "Device B",                    // [required] [string] 
-  "widgets": {{..}, {}}                        // [optional] [array of dictionaries len > 0] [For syntax see "Creating Widgets"]
-  "supportedEncryptionStandards": {{..}, {}},  // [optional] [array of dictionaries len > 0] [for syntax see "Encryption"]
+  "widgets": [{..}, {}],                        // [optional] [array of dictionaries len > 0] [For syntax see "Creating Widgets"]
+  "supportedEncryptionStandards": [{..}, {}],  // [optional] [array of dictionaries len > 0] [for syntax see "Encryption"]
 }
 ```
 
