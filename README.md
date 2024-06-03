@@ -40,9 +40,9 @@ Supports:
 All messages sent to and from the server are in the same basic JSON encoded structure, a "type" key which indicated what command and arguments for said command for example:
 ```
 {
-"type": commandName,
-"arg_1": val,
-"arg_N": val,
+  "type": commandName,
+  "arg_1": val,
+  "arg_N": val,
 }
 ```
 ## What you need for connecting to the server:
@@ -51,14 +51,14 @@ All messages sent to and from the server are in the same basic JSON encoded stru
 - You *send* this to the server after initial connection, to tell it the device name, inputs outputs etc.
 ```
 {
-"type": "registerDevice"                     // [required]
-"name":  device_name,                        // [string len > 0] [required],
-"isNode": true,                              // [boolean] [required] [to be depracated],
-"inputNames": ["input_1", "input_N"],        // [array of strings len >= 0] [required] [For no inputs, leave as empty array "[]"]
-"outputNames": ["output_1", "output_N"],     // [array of strings len >= 0] [required] [For no outputs, leave as empty array "[]"]
-"deviceInfo": "Device B",                    // [string] [required]
-"widgets": {{..}, {}}                        // [array of dictionaries len > 0] [optional] [For syntax see "Creating Widgets"]
-"supportedEncryptionStandards": {{..}, {}},  // [array of dictionaries len > 0] [optional] [for syntax see "Encryption"]
+  "type": "registerDevice"                     // [required]
+  "name":  device_name,                        // [required] [string len > 0] ,
+  "isNode": true,                              // [required] [boolean] [to be depracated],
+  "inputNames": ["input_1", "input_N"],        // [required] [array of strings len >= 0]  [For no inputs, leave as empty array "[]"]
+  "outputNames": ["output_1", "output_N"],     // [required] [array of strings len >= 0]  [For no outputs, leave as empty array "[]"]
+  "deviceInfo": "Device B",                    // [required] [string] 
+  "widgets": {{..}, {}}                        // [optional] [array of dictionaries len > 0] [For syntax see "Creating Widgets"]
+  "supportedEncryptionStandards": {{..}, {}},  // [optional] [array of dictionaries len > 0] [for syntax see "Encryption"]
 }
 ```
 
