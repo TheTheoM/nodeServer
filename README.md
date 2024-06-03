@@ -19,31 +19,6 @@ Supports:
 2. Create a webSocket Client that connects to the server url.
 3. Send a registeration message to the server.
 
-A simple registeration message for a device with one input and output. Note: A complete example, including webSocket functionality, is in the examples folder.
-
-```js
-ws.send(JSON.stringify({
-        type: "registerDevice",
-        name: "DeviceA", 
-        isNode: true,
-        inputNames: ["wordInput"],
-        outputNames: ["wordOutput"],
-        deviceInfo: "Example Device",
-    }))
-```
-
-To request a link, from 'wordOutput' to another device, DeviceB's output "wordOutput", simply send to the server: 
-
-```js
-ws.send(JSON.stringify({
-        type:             "requestLink",
-        outputDeviceName: "DeviceA",
-        outputName:       "wordOutput",
-        inputDeviceName:  "DeviceB",
-        inputName:        "wordInput",
-    }))
-```
-
 ## Installation
 ### 1. cd into the repo
 ### 2. ``` npm install . ```
@@ -57,6 +32,35 @@ ws.send(JSON.stringify({
 ``` node server.js ``` From root directory of the repo
 ## Running react Website:
 ``` cd reactInterface ```
+
 ``` npm run start ```
+
+# API Reference:
+
+To send any message to the server, you'd send a JSON encoded dictionary which always has a "type" and required arguments for said type, for example:
+{
+"type": commandName,
+"arg_1": val,
+"arg_N": val,
+}
+
+## What you need for connecting to the server:
+
+### Registering a Device:
+
+- You send this to the server after connection, to tell it the device name, inputs outputs etc.
+
+{
+"type": "registerDevice"                     // [required]
+"name":  device_name,                        // [string len > 0] [required],
+"isNode": true,                              // [boolean] [required] [to be depracated],
+"inputNames": ["input_1", "input_N"],        // [array of strings len >= 0] [required] [For no inputs, leave as empty array "[]"]
+"outputNames": ["output_1", "output_N"],     // [array of strings len >= 0] [required] [For no outputs, leave as empty array "[]"]
+"deviceInfo": "Device B",                    // [string] [required]
+"widgets": {{..}, {}}                        // [array of dictionaries len > 0] [optional] [For syntax see "Creating Widgets"]
+"supportedEncryptionStandards": {{..}, {}},  // [array of dictionaries len > 0] [optional] [for syntax see "Encryption"]
+}
+
+
 
 
