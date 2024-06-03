@@ -46,9 +46,9 @@ To send any message to the server, you'd send a JSON encoded dictionary which al
 
 ## What you need for connecting to the server:
 
-### Registering a Device:
 
-- You send this to the server after connection, to tell it the device name, inputs outputs etc.
+### "registerDevice":
+- You *send* this to the server after initial connection, to tell it the device name, inputs outputs etc.
 ```
 {
 "type": "registerDevice"                     // [required]
@@ -61,6 +61,30 @@ To send any message to the server, you'd send a JSON encoded dictionary which al
 "supportedEncryptionStandards": {{..}, {}},  // [array of dictionaries len > 0] [optional] [for syntax see "Encryption"]
 }
 ```
+- Upon sending this to the server, you will receive one of two messages:
+  1. "nameTaken" [failure]
+  2. "connected" [success]
+ 
+### "nameTaken":
+- You will *receive* this if a device already exists which that name, you will receive a proposed free name, which is your name with a number appended.
+  ```
+    {
+      type: "nameTaken",
+      proposedName: newName,
+    }
+  ```
+  For example, if your taken name is "Bob", your proposed name will be "Bob-1", which is free at the time of message.
+- 
+
+### "connected":
+- You will *receive* this to indicate succesfully connection and all server functionality is now available.
+    ```
+    {
+      type: "connected",
+    }
+  ```
+- To see what you can now do see "I'm connected to the server, now what?"
 
 
+### I'm connected to the server, now what?
 
