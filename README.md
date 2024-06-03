@@ -71,6 +71,7 @@ All messages sent to and from the server are in the same basic JSON encoded stru
         }
       ```
         - For example, if your taken name is "Bob", your proposed name will be "Bob-1", which is free at the time of message.
+        - After a new name, resend the registration message.
 
   3. "connected" [success]
       ```
