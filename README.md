@@ -54,11 +54,11 @@ All messages sent to and from the server are in the same basic JSON encoded stru
   "type": "registerDevice"                     // [required]
   "name":  device_name,                        // [required] [string len > 0] ,
   "isNode": true,                              // [required] [boolean] [to be depracated],
-  "inputNames": ["input_1", "input_N"],        // [required] [array of strings len >= 0]  [For no inputs, leave as empty array "[]"]
-  "outputNames": ["output_1", "output_N"],     // [required] [array of strings len >= 0]  [For no outputs, leave as empty array "[]"]
+  "inputNames": ["input_1", "input_N"],        // [required] [array of str len >= 0]  [For no inputs, leave as empty array "[]"]
+  "outputNames": ["output_1", "output_N"],     // [required] [array of str len >= 0]  [For no outputs, leave as empty array "[]"]
   "deviceInfo": "Device B",                    // [required] [string] 
-  "widgets": [{..}, {}],                        // [optional] [array of dictionaries len > 0] [For syntax see "Creating Widgets"]
-  "supportedEncryptionStandards": [{..}, {}],  // [optional] [array of dictionaries len > 0] [for syntax see "Encryption"]
+  "widgets": [{..}, {}],                       // [optional] [array of dicts len > 0] [For syntax see "Widgets" below]
+  "supportedEncryptionStandards": [{..}, {}],  // [optional] [array of dicts len > 0] [for syntax see "Encryption" below]
 }
 ```
 
@@ -115,14 +115,9 @@ All messages sent to and from the server are in the same basic JSON encoded stru
         {
            'type': 'updateWidgetsKeyPair',
            'widgetName': widgetName,
-           'keyPair': {key: newValue}, /// [The key is from the widget creation e.g. value, values, style]
+           'keyPair': {key: newValue}, /// [The key is from the widget creation e.g. value, values, style e.g. {"value": 10}]
         }
       ```
-
-
-
-
-
 
 
 ### I'm connected to the server, now what?
