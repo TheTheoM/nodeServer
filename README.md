@@ -169,15 +169,15 @@ All messages sent to and from the server are in the same basic JSON encoded stru
   2. A Device outputs a message:
      - Every time your device wants to output something to one or more of its output, you send this to the server which then routes it to the input of a connected device.
     - You can send any JSON serializable data: str, int, array, dict, ... etc.
-    - ```
-        {
-          "type": "sendOutputs",
-          "outputs": {
-              "outputName_1": outputedValue_1, 
-              "outputName_N": outputedValue_N,  
-          }
-        }
-      ```
+      - ```
+            {
+              "type": "sendOutputs",
+              "outputs": {
+                  "outputName_1": outputedValue_1, 
+                  "outputName_N": outputedValue_N,  
+              }
+            }
+        ```
   3. A device receives a message through its input 
      - When device A outputs a message to Device B, the server will send the outputted messaged to Device B.
      - ```
