@@ -122,36 +122,63 @@ All messages sent to and from the server are in the same basic JSON encoded stru
 
 ### I'm connected to the server, now what?
 #### How data is routed?
-
   - Given Device A's outputs is connected to Device B's inputs, Device A sends its output data to the server, which then sends it to Device B.
-  - Device A -> Server ->  Device B 
-  - Device A ["sendOutputs"] -> Server ->   ["sendInputs"]Device B 
-
-
-Each device can:
-#### 1. Send Outputs     "sendOutputs"
-  - The device sends its outputs to the server, which then routes it to the input of a connected device.
-  - You can send any JSON serializable data: str, int, array, dict, ... etc.
-  - ```
-    {
-      "type": "sendOutputs",
-      "outputs": {
-          "outputName_1": outputedValue_1, 
-          "outputName_N": outputedValue_N,  
+  - Device A -> Server ->  Device B
+    
+  1. A Data Link must be created between two devices. This can be done through two ways:
+     a. Temporary Link: "requestLink"
+       - The link will break on device disconnection or server restart.
+       - Creating the Link: "requestLink"
+       - Breaking the Link: "breakLink"
+           - ```
+             {
+               'type': 'requestLink' or 'breakLink',
+               'outputDeviceName': "deviceA",          // [Required]
+               'outputName':       "output IO name",   // [Required]
+               'inputDeviceName':  "deviceB",          // [Required]
+               'inputName':        "input IO name",    // [Required]
+              }
+           ```
+     
+     b. Persistent Link:  "requestPersistentLink"
+        - The link will persist and reestablish itself upon device reconnection and server restart.
+           - To Create a Link use type "requestPersistentLink":
+           - To break an already created link use type "breakPersistentLink":
+              - ```
+                 {
+                   'type': 'requestPersistentLink' or 'breakPersistentLink',
+                   'outputDeviceName': "deviceA",          // [Required]
+                   'outputName':       "output IO name",   // [Required]
+                   'inputDeviceName':  "deviceB",          // [Required]
+                   'inputName':        "input IO name",    // [Required]
+                  }
+               ```
+          - Updating/modifying the Link TODO. Update the API for this as well.:
+  
+  2. A Device outputs a message:
+     - Every time your device wants to output something to one or more of its output, you send this to the server which then routes it to the input of a connected device.
+    - You can send any JSON serializable data: str, int, array, dict, ... etc.
+    #### Send Outputs "sendOutputs"
+    - ```
+      {
+        "type": "sendOutputs",
+        "outputs": {
+            "outputName_1": outputedValue_1, 
+            "outputName_N": outputedValue_N,  
+        }
       }
-    }
-    ```
-#### 2. Receive Inputs   "sendInputs"
- - A device receives data from its inputs through this meessage from the server.
- - ```
-   {
-     "type": "sendInputs",
-      "inputs": {
-         "inputName_1": "inputtedValue_1",
-         "inputName_N": "inputtedValue_N",--
+      ```
+  3. A device receives a message through its input 
+     - When device A outputs a message to Device B, the server will send the outputted messaged to Device B.
+     - ```
+       {
+         "type": "sendInputs",
+          "inputs": {
+             "inputName_1": "inputtedValue_1",
+             "inputName_N": "inputtedValue_N",--
+           }
        }
-   }
-   ```
+       ```
 #### 3. Send Logs        "sendLogs"
 - You can send logs to the server, which are visible in the Logging Panel in the react interface. The server stores them in a JSON file, so logs persitent through disconnections and server restarts untill the JSON file fills up.
 - ```
@@ -170,5 +197,5 @@ Each device can:
     }
   ```
 
-statusState
+
 
