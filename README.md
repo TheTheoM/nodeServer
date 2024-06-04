@@ -124,7 +124,8 @@ All messages sent to and from the server are in the same basic JSON encoded stru
 #### How data is routed?
 
   - Given Device A's outputs is connected to Device B's inputs, Device A sends its output data to the server, which then sends it to Device B.
-  - Device A -> Server -> Device B
+  - Device A -> Server ->  Device B 
+  - Device A ["sendOutputs"] -> Server ->   ["sendInputs"]Device B 
 
 
 Each device can:
@@ -141,9 +142,33 @@ Each device can:
     }
     ```
 #### 2. Receive Inputs   "sendInputs"
-
+ - A device receives data from its inputs through this meessage from the server.
+ - ```
+   {
+     "type": "sendInputs",
+      "inputs": {
+         "inputName_1": "inputtedValue_1",
+         "inputName_N": "inputtedValue_N",--
+       }
+   }
+   ```
 #### 3. Send Logs        "sendLogs"
+- You can send logs to the server, which are visible in the Logging Panel in the react interface. The server stores them in a JSON file, so logs persitent through disconnections and server restarts untill the JSON file fills up.
+- ```
+    {
+        type: "sendLogs",
+        logs: "log message", [required] [str len > 0]
+        logType: "error",    [required] ["error", "fault", "info", "success"]
+    }
+  ```
 #### 4. Change Status    "changeStatus"
+- You can send logs to the server, which are visible in the Logging Panel in the react interface. The server stores them in a JSON file, so logs persitent through disconnections and server restarts untill the JSON file fills up.
+- ```
+    {
+        type: "changeStatus",
+        statusState: "error",  [required] ["offline", "online", "alert", "fault", "criticalFault"]
+    }
+  ```
 
-
+statusState
 
