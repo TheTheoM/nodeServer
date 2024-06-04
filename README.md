@@ -45,9 +45,19 @@ All messages sent to and from the server are in the same basic JSON encoded stru
   "arg_N": val,
 }
 ```
+## High Level Overview:
+
+1. Connect to the Server as a websocket client.
+2. Send a registration message to the Server.
+3. Send your device's Outputs to the Server
+4. Receive messages from your device's Inputs to the Server
+   
+
+
+
 ## What you need for connecting to the server:
 
-### "registerDevice":
+### Registering a device "registerDevice":
 - You *send* this to the server after initial connection, to tell it the device name, inputs outputs etc.
 ```
 {
