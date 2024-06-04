@@ -121,4 +121,29 @@ All messages sent to and from the server are in the same basic JSON encoded stru
 
 
 ### I'm connected to the server, now what?
+#### How data is routed?
+
+  - Given Device A's outputs is connected to Device B's inputs, Device A sends its output data to the server, which then sends it to Device B.
+  - Device A -> Server -> Device B
+
+
+Each device can:
+#### 1. Send Outputs     "sendOutputs"
+  - The device sends its outputs to the server, which then routes it to the input of a connected device.
+  - You can send any JSON serializable data: str, int, array, dict, ... etc.
+  - ```
+    {
+      "type": "sendOutputs",
+      "outputs": {
+          "outputName_1": outputedValue_1, 
+          "outputName_N": outputedValue_N,  
+      }
+    }
+    ```
+#### 2. Receive Inputs   "sendInputs"
+
+#### 3. Send Logs        "sendLogs"
+#### 4. Change Status    "changeStatus"
+
+
 
