@@ -142,28 +142,28 @@ All messages sent to and from the server are in the same basic JSON encoded stru
        - Creating the Link: "requestLink"
        - Breaking the Link: "breakLink"
            - ```
-             {
-               'type': 'requestLink' or 'breakLink',
-               'outputDeviceName': "deviceA",          // [Required]
-               'outputName':       "output IO name",   // [Required]
-               'inputDeviceName':  "deviceB",          // [Required]
-               'inputName':        "input IO name",    // [Required]
-              }
-           ```
+               {
+                 'type': 'requestLink' or 'breakLink',
+                 'outputDeviceName': "deviceA",          // [Required]
+                 'outputName':       "output IO name",   // [Required]
+                 'inputDeviceName':  "deviceB",          // [Required]
+                 'inputName':        "input IO name",    // [Required]
+                }
+             ```
      
      b. Persistent Link:  "requestPersistentLink"
         - The link will persist and reestablish itself upon device reconnection and server restart.
            - To Create a Link use type "requestPersistentLink":
            - To break an already created link use type "breakPersistentLink":
               - ```
-                 {
-                   'type': 'requestPersistentLink' or 'breakPersistentLink',
-                   'outputDeviceName': "deviceA",          // [Required]
-                   'outputName':       "output IO name",   // [Required]
-                   'inputDeviceName':  "deviceB",          // [Required]
-                   'inputName':        "input IO name",    // [Required]
-                  }
-               ```
+                   {
+                     'type': 'requestPersistentLink' or 'breakPersistentLink',
+                     'outputDeviceName': "deviceA",          // [Required]
+                     'outputName':       "output IO name",   // [Required]
+                     'inputDeviceName':  "deviceB",          // [Required]
+                     'inputName':        "input IO name",    // [Required]
+                    }
+                ```
           - Updating/modifying the Link TODO. Update the API for this as well.:
   
   2. A Device outputs a message:
@@ -181,23 +181,23 @@ All messages sent to and from the server are in the same basic JSON encoded stru
   3. A device receives a message through its input 
      - When device A outputs a message to Device B, the server will send the outputted messaged to Device B.
      - ```
-       {
-         "type": "sendInputs",
-          "inputs": {
-             "inputName_1": "inputtedValue_1",
-             "inputName_N": "inputtedValue_N",--
-           }
-       }
+         {
+           "type": "sendInputs",
+            "inputs": {
+               "inputName_1": "inputtedValue_1",
+               "inputName_N": "inputtedValue_N",--
+             }
+         }
        ```
 #### 3. Send Logs        "sendLogs"
 - You can send logs to the server, which are visible in the Logging Panel in the react interface. The server stores them in a JSON file, so logs persitent through disconnections and server restarts untill the JSON file fills up.
-- ```
-    {
-        type: "sendLogs",
-        logs: "log message", [required] [str len > 0]
-        logType: "error",    [required] ["error", "fault", "info", "success"]
-    }
-  ```
+  - ```
+      {
+          type: "sendLogs",
+          logs: "log message", [required] [str len > 0]
+          logType: "error",    [required] ["error", "fault", "info", "success"]
+      }
+    ```
 #### 4. Change Status    "changeStatus"
 - You can send logs to the server, which are visible in the Logging Panel in the react interface. The server stores them in a JSON file, so logs persitent through disconnections and server restarts untill the JSON file fills up.
 - ```
