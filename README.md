@@ -120,7 +120,7 @@ All messages sent to and from the server are in the same basic JSON encoded stru
       ```
 
 
-### I'm connected to the server, now what?
+## I'm connected to the server, now what?
 #### How data is routed?
   - Given Device A's outputs is connected to Device B's inputs, Device A sends its output data to the server, which then sends it to Device B.
   - Device A -> Server ->  Device B
