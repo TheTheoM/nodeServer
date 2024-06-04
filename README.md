@@ -47,10 +47,11 @@ All messages sent to and from the server are in the same basic JSON encoded stru
 ```
 ## High Level Overview:
 
-1. Connect to the Server as a websocket client.
+1. Connect to the Server as a websocket client. You handle this.
 2. Send a registration message to the Server.
 3. Send your device's Outputs to the Server
 4. Receive messages from your device's Inputs to the Server
+5. Optionally send logs, status, widgets etc.
    
 
 
