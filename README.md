@@ -135,17 +135,17 @@ All messages sent to and from the server are in the same basic JSON encoded stru
   - Device A -> Server ->  Device B
   - There are two types of Data Links:
      1. Temporary Link:
-       - The link will break on device disconnection or server restart.
-       - When creating a link, use type: "requestLink" when breaking it, type: "breakLink".
-           - ```
-               {
-                 'type': 'requestLink' or 'breakLink',
-                 'outputDeviceName': "deviceA",          // [Required]
-                 'outputName':       "output IO name",   // [Required]
-                 'inputDeviceName':  "deviceB",          // [Required]
-                 'inputName':        "input IO name",    // [Required]
-                }
-             ```
+         - The link will break on device disconnection or server restart.
+         - When creating a link, use type: "requestLink" when breaking it, type: "breakLink".
+             - ```
+                 {
+                   'type': 'requestLink' or 'breakLink',
+                   'outputDeviceName': "deviceA",          // [Required]
+                   'outputName':       "output IO name",   // [Required]
+                   'inputDeviceName':  "deviceB",          // [Required]
+                   'inputName':        "input IO name",    // [Required]
+                  }
+               ```
      
      2. Persistent Link:
          - This link will persist and reestablish itself upon device reconnection and server restart.
