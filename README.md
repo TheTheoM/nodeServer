@@ -13,27 +13,35 @@ Supports:
 * Device Logging
 * Optional Cyberpunk Styling
   
-## How to connect to the server: See Installation for this to work.
-
-1. Run server.js:  ```node server.js```
-2. Create a webSocket Client that connects to the server url.
-3. Send a registeration message to the server.
-
-## Installation
-### 1. cd into the repo
-### 2. ``` npm install . ```
-### 3. ``` cd reactInterface ```
-### 4. Create a new file called '.env' and enter the following:
+### Installation
+#### 1. ``` cd <repository_name>```
+#### 2. ``` npm install . ```
+#### 3. ``` cd reactInterface ```
+#### 4. Create a new file called '.env' and enter the following:
 ```REACT_APP_WEBSOCKET_SERVER_IP=localhost:8080```
-####         -Change localhost to PC IP if you wish.
-### 5. ``` npm install .```
+   Change "localhost" to your PC's IP if you wish.
+#### 5. ``` npm install .```
 
-## Running nodeServer:
+### Running nodeServer:
 ``` node server.js ``` From root directory of the repo
-## Running react Website:
-``` cd reactInterface ```
 
+### Running react Website:
+``` cd reactInterface ```
 ``` npm run start ```
+
+## High Level Overview:
+
+### To Connect:
+  1. Connect to the Server (server.js, port 8080) as a websocket client. You handle this. 
+  2. You send a registration message to the Server. See **Registering a device**
+
+### To send/receive Data:
+  - If your device has outputs, it will send data to the server as needed. See **Device Send Outputs**
+  - If your device has inputs, it will receive data from the server via incoming messages. See **Device Receiving Inputs**
+
+### Additional Capabilities:
+  5.  Send logs, status, widgets etc.
+
 
 # API Reference:
 
@@ -45,35 +53,23 @@ All messages sent to and from the server are in the same basic JSON encoded stru
   "arg_N": val,
 }
 ```
-## High Level Overview:
 
-1. Connect to the Server as a websocket client. You handle this.
-2. Send a registration message to the Server. **Registering a device**
-3. Send your device's Outputs to the Server   **Send Outputs
-4. Receive messages from your device's Inputs to the Server
-5. Optionally send logs, status, widgets etc.
-   
-
-
-
-## What you need for connecting to the server:
-
-### Registering a device "registerDevice":
+## Registering a device:
 - You *send* this to the server after initial connection, to tell it the device name, inputs outputs etc.
 ```
-{
-  "type": "registerDevice"                     // [required]
-  "name":  device_name,                        // [required] [string len > 0] ,
-  "isNode": true,                              // [required] [boolean] [to be depracated],
-  "inputNames": ["input_1", "input_N"],        // [required] [array of str len >= 0]  [For no inputs, leave as empty array "[]"]
-  "outputNames": ["output_1", "output_N"],     // [required] [array of str len >= 0]  [For no outputs, leave as empty array "[]"]
-  "deviceInfo": "Device B",                    // [required] [string] 
-  "widgets": [{..}, {}],                       // [optional] [array of dicts len > 0] [For syntax see "Widgets" below]
-  "supportedEncryptionStandards": [{..}, {}],  // [optional] [array of dicts len > 0] [for syntax see "Encryption" below]
-}
+  {
+    "type": "registerDevice"                     // [required]
+    "name":  device_name,                        // [required] [string len > 0] ,
+    "isNode": true,                              // [required] [boolean] [to be depracated],
+    "inputNames": ["input_1", "input_N"],        // [required] [array of str len >= 0]  [For no inputs, leave as empty array "[]"]
+    "outputNames": ["output_1", "output_N"],     // [required] [array of str len >= 0]  [For no outputs, leave as empty array "[]"]
+    "deviceInfo": "Device B",                    // [required] [string] 
+    "widgets": [{..}, {}],                       // [optional] [array of dicts len > 0] [For syntax see "Widgets" below]
+    "supportedEncryptionStandards": [{..}, {}],  // [optional] [array of dicts len > 0] [for syntax see "Encryption" below]
+  }
 ```
 
-- Upon sending this to the server, you will *receive*  one of two messages:
+#### Upon sending this to the server, you will *receive* one of two messages:
   1. "nameTaken" [failure]
       ```
         {
@@ -81,36 +77,35 @@ All messages sent to and from the server are in the same basic JSON encoded stru
           proposedName: newName,
         }
       ```
-        - For example, if your taken name is "Bob", your proposed name will be "Bob-1", which is free at the time of message.
+        - For example, if your taken name is "Bob", your proposed name will be "Bob-N" e.g "Bob-1", which is free at the time of message.
         - After a new name, resend the registration message.
 
   3. "connected" [success]
       ```
-      {
-        type: "connected",
-      }
+        {
+          type: "connected",
+        }
       ```
       - Receiving this indicates succesful registration. To see what you can now do see "I'm connected to the server, now what?"
-
 
 #### Widgets:
 - These are items that will appear on the node on the GUI, allowing control of the device without connecting another to it. Widgets can only be added in registration currently. Widgets can be live updated by its device any time after registration.
 
 - Syntax:
-```
- {"widgets": [
-      {
-       "widgetName": "uniqueName", // [string len > 0, used to identify the widget]
-       "widgetType": "slider",     // [One of the below List.] 
-       "value": 0,                 // [Initial Value for all, or icon name for "displayIcon"]
-       "values": ["0", "200"],     // [Values for dropdown, Range for sliders, alternative values for toggle, unused for all else.]
-       "style": {                  // [Optional CSS styles applied only to displayIcon] 
-         "cssStyleName": "styleValue",
-       },
-      {...}
-    },]
-  }
-```
+  ```
+   {"widgets": [
+        {
+         "widgetName": "uniqueName", // [string len > 0, used to identify the widget]
+         "widgetType": "slider",     // [One of the below List.] 
+         "value": 0,                 // [Initial Value for all, or icon name for "displayIcon"]
+         "values": ["0", "200"],     // [Values for dropdown, Range for sliders, alternative values for toggle, unused for all else.]
+         "style": {                  // [Optional CSS styles applied only to displayIcon] 
+           "cssStyleName": "styleValue",
+         },
+        {...}
+      },]
+    }
+  ```
 - Widget Types:
      - "dropDown"    [Drop down menu]
      - "toggle"      [togglee switch]
@@ -130,7 +125,7 @@ All messages sent to and from the server are in the same basic JSON encoded stru
         }
       ```
 
-### Creating a Link:
+## Creating a Link:
   - Given Device A's outputs is connected to Device B's inputs, Device A sends its output data to the server, which then sends it to Device B.
   - Device A -> Server ->  Device B
   - There are two types of Data Links:
@@ -162,8 +157,7 @@ All messages sent to and from the server are in the same basic JSON encoded stru
         - Updating/modifying the Link TODO. Update the API for this as well.:
 
 
-### Device Outputting:
-
+## Device Outputting:
   - Every time your device wants to output something to one or more of its output, you send this to the server which then routes it to the input of a connected device.
   - You can send any JSON serializable data: str, int, array, dict, ... etc.
   - ```
@@ -176,7 +170,7 @@ All messages sent to and from the server are in the same basic JSON encoded stru
       }
     ```
 
-### Device Receiving an Input:
+## Device Receiving Inputs:
   - When device A outputs a message to Device B, the server will send the outputted messaged to one of Device B's inputs.
   - Received message from server:
     - ```
@@ -188,23 +182,24 @@ All messages sent to and from the server are in the same basic JSON encoded stru
           }
         }
       ```
-### Send Logs "sendLogs"
+## Additional Capabilities 
+  ### Send Logs "sendLogs"
+    - You can send logs to the server, which are visible in the Logging Panel in the react interface. The server stores them in a JSON file, so logs persitent through disconnections and server restarts untill the JSON file fills up.
+      - ```
+          {
+              type: "sendLogs",
+              logs: "log message", [required] [str len > 0]
+              logType: "error",    [required] ["error", "fault", "info", "success"]
+          }
+        ```
+  ### Changing Device Status "changeStatus"
   - You can send logs to the server, which are visible in the Logging Panel in the react interface. The server stores them in a JSON file, so logs persitent through disconnections and server restarts untill the JSON file fills up.
-    - ```
-        {
-            type: "sendLogs",
-            logs: "log message", [required] [str len > 0]
-            logType: "error",    [required] ["error", "fault", "info", "success"]
-        }
-      ```
-### Changing Device Status "changeStatus"
-- You can send logs to the server, which are visible in the Logging Panel in the react interface. The server stores them in a JSON file, so logs persitent through disconnections and server restarts untill the JSON file fills up.
-- ```
-    {
-        type: "changeStatus",
-        statusState: "error",  [required] ["offline", "online", "alert", "fault", "criticalFault"]
-    }
-  ```
+  - ```
+      {
+          type: "changeStatus",
+          statusState: "error",  [required] ["offline", "online", "alert", "fault", "criticalFault"]
+      }
+    ```
 
 
 
