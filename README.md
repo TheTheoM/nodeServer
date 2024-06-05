@@ -17,7 +17,7 @@ Supports:
 #### 1. ``` cd <repository_name>```
 #### 2. ``` npm install . ```
 #### 3. ``` cd reactInterface ```
-#### 4. Create a new file called '.env' and enter the following:
+#### 4. Create a new file inside reactInterface called '.env' inside and enter:
 ```REACT_APP_WEBSOCKET_SERVER_IP=localhost:8080```
    Change "localhost" to your PC's IP if you wish.
 #### 5. ``` npm install .```
