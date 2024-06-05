@@ -39,6 +39,16 @@ Supports:
   - If your device has outputs, it will send data to the server as needed. See **Device Send Outputs**
   - If your device has inputs, it will receive data from the server via incoming messages. See **Device Receiving Inputs**
 
+### Creating / managing Links:
+  - Done through the React GUI by 'drawing' connections between nodes or by using API calls.
+  - There are two types of links: Temporary and Persistent, with the GUI defaulting to Persistent links.
+    - Temporary Links 'break' or stop routing data after a device reconnection or server restart.
+    - Persistent Links automatically reestablishes a data link, even after device disconnection or server restart.
+  
+  - See **Creating a Link** for information on creating, modifying or destroying both links.
+ 
+   
+
 ### Additional Capabilities:
   5.  Send logs, status, widgets etc.
 
@@ -93,13 +103,14 @@ All messages sent to and from the server are in the same basic JSON encoded stru
 
 - Syntax:
   ```
-   {"widgets": [
+   {registration...,
+     "widgets": [
         {
          "widgetName": "uniqueName", // [string len > 0, used to identify the widget]
          "widgetType": "slider",     // [One of the below List.] 
          "value": 0,                 // [Initial Value for all, or icon name for "displayIcon"]
          "values": ["0", "200"],     // [Values for dropdown, Range for sliders, alternative values for toggle, unused for all else.]
-         "style": {                  // [Optional CSS styles applied only to displayIcon] 
+         "style": {                  // [Optional CSS styles applicable only for widgetType "displayIcon"] 
            "cssStyleName": "styleValue",
          },
         {...}
@@ -117,45 +128,47 @@ All messages sent to and from the server are in the same basic JSON encoded stru
 
 - Updating Widget Value:
     - Sent after registeration, from device to server.
+    - The keyPair consists of keys from the widgets section of the registration message and their corresponding new values.
       ```
         {
            'type': 'updateWidgetsKeyPair',
            'widgetName': widgetName,
-           'keyPair': {key: newValue}, /// [The key is from the widget creation e.g. value, values, style e.g. {"value": 10}]
+           'keyPair': {key: newValue}, // [The key is from the widget creation, e.g., "value", "values", "style" such as {"value": 10}]
         }
       ```
 
 ## Creating a Link:
-  - Given Device A's outputs is connected to Device B's inputs, Device A sends its output data to the server, which then sends it to Device B.
-  - Device A -> Server ->  Device B
+  - Given Device A's output is connected to Device B's input, Device A sends its output data to the server, which then sends it to Device B.
+  - So Data flows like this: Device A -> Server -> Device B
   - There are two types of Data Links:
-     1. Temporary Link:
-         - The link will break on device disconnection or server restart.
-         - When creating a link, use type: "requestLink" when breaking it, type: "breakLink".
-             - ```
-                 {
-                   'type': 'requestLink' or 'breakLink',
-                   'outputDeviceName': "deviceA",          // [Required]
-                   'outputName':       "output IO name",   // [Required]
-                   'inputDeviceName':  "deviceB",          // [Required]
-                   'inputName':        "input IO name",    // [Required]
-                  }
-               ```
+    
+  1. Temporary Link:
      
-     2. Persistent Link:
-         - This link will persist and reestablish itself upon device reconnection and server restart.
-         - When creating a link, use type: "requestPersistentLink" when breaking it, type: "breakPersistentLink".
-            - ```
-                 {
-                   'type': 'requestPersistentLink' or 'breakPersistentLink',
-                   'outputDeviceName': "deviceA",          // [Required]
-                   'outputName':       "output IO name",   // [Required]
-                   'inputDeviceName':  "deviceB",          // [Required]
-                   'inputName':        "input IO name",    // [Required]
-                  }
-              ```
-        - Updating/modifying the Link TODO. Update the API for this as well.:
-
+     - The link will break on device disconnection or server restart.
+     - When creating a link, use type: "requestLink" when breaking it, type: "breakLink".
+     ```
+      {
+        'type': 'requestLink' or 'breakLink',
+        'outputDeviceName': "deviceA",          // [Required]
+        'outputName':       "output IO name",   // [Required]
+        'inputDeviceName':  "deviceB",          // [Required]
+        'inputName':        "input IO name",    // [Required]
+     }
+     ```
+  
+  3. Persistent Link:
+     
+     - This link will persist and reestablish itself upon device reconnection and server restart.
+     - When creating a link, use type: "requestPersistentLink" when breaking it, type: "breakPersistentLink".
+       ```
+       {
+         'type': 'requestPersistentLink' or 'breakPersistentLink',
+         'outputDeviceName': "deviceA",          // [Required]
+         'outputName':       "output IO name",   // [Required]
+         'inputDeviceName':  "deviceB",          // [Required]
+         'inputName':        "input IO name",    // [Required]
+       }
+       ```
 
 ## Device Outputting:
   - Every time your device wants to output something to one or more of its output, you send this to the server which then routes it to the input of a connected device.
@@ -184,14 +197,14 @@ All messages sent to and from the server are in the same basic JSON encoded stru
       ```
 ## Additional Capabilities 
   ### Send Logs "sendLogs"
-    - You can send logs to the server, which are visible in the Logging Panel in the react interface. The server stores them in a JSON file, so logs persitent through disconnections and server restarts untill the JSON file fills up.
-      - ```
-          {
-              type: "sendLogs",
-              logs: "log message", [required] [str len > 0]
-              logType: "error",    [required] ["error", "fault", "info", "success"]
-          }
-        ```
+  - You can send logs to the server, which are visible in the Logging Panel in the react interface. The server stores them in a JSON file, so logs persitent through disconnections and server restarts untill the JSON file fills up.
+  - ```
+    {
+      type: "sendLogs",
+      logs: "log message", [required] [str len > 0]
+      logType: "error",    [required] ["error", "fault", "info", "success"]
+    }
+    ```
   ### Changing Device Status "changeStatus"
   - You can send logs to the server, which are visible in the Logging Panel in the react interface. The server stores them in a JSON file, so logs persitent through disconnections and server restarts untill the JSON file fills up.
   - ```
