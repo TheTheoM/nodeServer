@@ -40,18 +40,15 @@ Supports:
   - If your device has inputs, it will receive data from the server via incoming messages. See **Device Receiving Inputs**
 
 ### Creating / managing Links:
-  - Done through the React GUI by 'drawing' connections between nodes or by using API calls.
+  - A link routes data from an output to input. Can be created through the React GUI by 'drawing' connections between nodes or by using API calls.
   - There are two types of links: Temporary and Persistent, with the GUI defaulting to Persistent links.
     - Temporary Links 'break' or stop routing data after a device reconnection or server restart.
     - Persistent Links automatically reestablishes a data link, even after device disconnection or server restart.
   
-  - See **Creating a Link** for information on creating, modifying or destroying both links.
- 
-   
+  - See **Creating a Link** for information on API calls to create, modifye or destroy both links.
 
 ### Additional Capabilities:
   5.  Send logs, status, widgets etc.
-
 
 # API Reference:
 
@@ -112,9 +109,10 @@ All messages sent to and from the server are in the same basic JSON encoded stru
          "values": ["0", "200"],     // [Values for dropdown, Range for sliders, alternative values for toggle, unused for all else.]
          "style": {                  // [Optional CSS styles applicable only for widgetType "displayIcon"] 
            "cssStyleName": "styleValue",
+           "cssStyleName": "styleValue",
          },
-        {...}
-      },]
+        {...},
+      ]
     }
   ```
 - Widget Types:
