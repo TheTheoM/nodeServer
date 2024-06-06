@@ -34,7 +34,7 @@ Supports:
 
 ### To Connect:
   1. Connect to the Server (server.js, port 8080) as a websocket client. You handle this. 
-  2. You send a registration message to the Server. See **Registering a device**
+  2. You send a registration message to the Server with your device info. See **Registering a device**
 
 ### To send/receive Data:
   - If your device has outputs, it will send data to the server as needed. See **Device Send Outputs**
@@ -46,7 +46,7 @@ Supports:
     - Temporary Links 'break' or stop routing data after a device reconnection or server restart.
     - Persistent Links automatically reestablishes a data link, even after device disconnection or server restart.
   
-  - See **Creating a Link** for information on API calls to create, modifye or destroy both links.
+  - See **Creating a Link** for information on API calls to create, modify or destroy both links.
 
 ### Additional Capabilities:
   5.  Send logs, status, widgets etc.
@@ -97,7 +97,12 @@ All messages sent to and from the server are in the same basic JSON encoded stru
       - Receiving this indicates succesful registration. To see what you can now do see "I'm connected to the server, now what?"
 
 #### Widgets:
-- These are items that will appear on the node on the GUI, allowing control of the device without connecting another to it. Widgets can only be added in registration currently. Widgets can be live updated by its device any time after registration.
+<img align="right" width="130px" height="130px"  src="https://github.com/TheTheoM/nodeServer/assets/103237702/b94e4bcc-53bb-4ca9-8063-efc6bf9c672f">
+- These are items that will appear on the node on the GUI, allowing control of the device without connecting another to it. 
+- Widgets can only be added in registration currently. Widgets can be live updated by its device any time after registration.
+For example, see the integer slider and icon on the Node ->.
+<br />
+<br clear="right"/>
 
 - Syntax:
   ```
