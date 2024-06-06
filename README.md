@@ -30,6 +30,7 @@ Supports:
 ``` npm run start ```
 
 ## High Level Overview:
+- There are fully functional example clients in /examples .
 
 ### To Connect:
   1. Connect to the Server (server.js, port 8080) as a websocket client. You handle this. 
