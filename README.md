@@ -19,7 +19,8 @@ Supports:
 #### 3. ``` cd reactInterface ```
 #### 4. Create a new file inside reactInterface called '.env' inside and enter:
 ```REACT_APP_WEBSOCKET_SERVER_IP=localhost:8080```
-   Change "localhost" to your PC's IP if you wish.
+  - Change "localhost" to your PC's IP if you wish. 
+  - Note: Creating the file via text redirection echo "" > didn't work with react for me.
 #### 5. ``` npm install .```
 
 ### Running nodeServer:
