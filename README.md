@@ -13,7 +13,7 @@ Supports:
 * Device Logging
 * Optional Cyberpunk Styling
   
-### Installation
+### Installation [One-Time]
 #### 1. ``` cd <repository_name>```
 #### 2. ``` npm install . ```
 #### 3. ``` cd reactInterface ```
@@ -23,12 +23,12 @@ Supports:
   - Note: Creating the file via text redirection echo "" > didn't work with react for me.
 #### 5. ``` npm install .```
 
-### Running nodeServer:
-``` node server.js ``` From root directory of the repo
-
-### Running react Website:
+### Running React GUI:
 ``` cd reactInterface ```
 ``` npm run start ```
+
+### Running nodeServer:
+``` node server.js ``` From root directory of the repo
 
 ## High Level Overview:
 - There are fully functional example clients in /exampleClients.
