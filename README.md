@@ -15,13 +15,11 @@ Supports:
   
 ### Installation [One-Time]
 #### 1. ``` cd <repository_name>```
-#### 2. ``` npm install . ```
+#### 2. ``` npm install . ```    // Installing packages for server.js
 #### 3. ``` cd reactInterface ```
-#### 4. Create a new file inside reactInterface called '.env' inside and enter:
+#### 4. [Optional] Change "localhost" to your PC's IP if you wish in .env
 ```REACT_APP_WEBSOCKET_SERVER_IP=localhost:8080```
-  - Change "localhost" to your PC's IP if you wish. 
-  - Note: Creating the file via text redirection echo "" > didn't work with react for me.
-#### 5. ``` npm install .```
+#### 5. ``` npm install .```    // Installing packages for react GUI
 
 ### Running React GUI:
 ``` cd reactInterface ```
