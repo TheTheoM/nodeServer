@@ -22,11 +22,10 @@ Supports:
 #### 5. ``` npm install .```    // Installing packages for react GUI
 
 ### Running React GUI:
-``` cd reactInterface ```
-``` npm run start ```
+``` npm run start ```  // from inside '/reactInterface'
 
 ### Running nodeServer:
-``` node server.js ``` From root directory of the repo
+``` node server.js ``` // From root directory of the repo
 
 ## High Level Overview:
 - There are fully functional example clients in /exampleClients.
