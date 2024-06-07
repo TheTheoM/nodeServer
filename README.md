@@ -1,6 +1,6 @@
 # Node WebSocket Server + React Interface BETA
 
-Node based WebSocket server. Devices are represented as 'nodes' with inputs and outputs connectable with 'links' to other node IO's. 
+Node based WebSocket server. Devices are represented as 'nodes' with inputs and outputs connectable via links to other node IO's. 
 
 ![image](https://github.com/TheTheoM/nodeServer/assets/103237702/cb0113df-60a5-44d3-ad96-f09925294ba7)
 ^ React-Web-Interface ^. 
