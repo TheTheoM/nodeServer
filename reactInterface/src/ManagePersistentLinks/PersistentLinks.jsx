@@ -129,9 +129,9 @@ const PersistentLinks = (props) => {
     return  (
       <div className="PersistentLink">
         <div className=" titleDiv deviceTitle  " id='statusTitle'>
-            <Encrypt width="1.3em" height="1.3em" color  = "turquoise" onClick={() => {setShowConfig(!showConfig)}}/>
+            <Encrypt width="1.3em" height="1.3em" color  = "turquoise" onClick={() => {setShowConfig(!showConfig)}} style={{ cursor: 'pointer' }}/>
             <h3>{`${(props.outputName)} > ${(props.inputName)}`}</h3>
-            <Cross onClick={ontoggleConfigButton} className="cross" width = "1em" height = "1em" color = "#B22222" style={{marginTop: "9px"}}/>
+            <Cross onClick={ontoggleConfigButton} className="cross" width = "1em" height = "1em" color = "#B22222" style={{marginTop: "9px",  cursor: 'pointer' }}/>
         </div>
         {!showConfig ? 
           <>
@@ -166,7 +166,7 @@ const PersistentLinks = (props) => {
               </div>
             </div>
             <div className="PersLinkDelButton">
-                <button className='UpdateButton' onClick={onUpdateButton}>Update</button>
+                <button className='UpdateButton' onClick={onUpdateButton}  >Update</button>
             </div>
           </>
         :

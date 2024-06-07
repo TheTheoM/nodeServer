@@ -2,6 +2,8 @@ import { useState, useHook, useEffect, useCallback } from "react";
 import "./nodeFactoryStyles.css"
 import LinkDeviceCyber from "../DataLinksFolder/LinkDeviceCyber"
 import LinkDevice from "../DataLinksFolder/LinkDevice"
+import Cross from '../IconComponents/Cross.jsx';
+
 function LinkInfoWindow(props) {
   const [title, setTitle] = useState("NAME FAILED")
   const [linkTitle, setLinkTitle] = useState(null)
@@ -38,11 +40,16 @@ function LinkInfoWindow(props) {
     setStyleName("invisible")
     props.hideDisplayLinkData()
   }
+
+  function closeLinkData() {
+    setStyleName("invisible")    
+    props.hideDisplayLinkData()
+  }
   
   return (
     <div className={`LinkInfoWindowContainer ${styleName}`}>
+      <div className="ExitLinkInfo" onClick = {closeLinkData}><Cross/></div>
       <div className={`LinkInfoWindow nodrag ${styleName}`} style = {{borderColor: props.isCyber ? "var(--cyberRed)" :  "black"}}>
-        {/* <p>{title}</p> */}
         {props.selectedEdgeInfo && linkTitle && props.activeLinks && Object.keys(props.activeLinks).includes(linkTitle) ?
           props.isCyber ? 
             <LinkDeviceCyber

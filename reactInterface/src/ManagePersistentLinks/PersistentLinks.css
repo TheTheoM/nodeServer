@@ -23,7 +23,8 @@
     height: 100%;
     overflow: hidden;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(370px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    justify-items: center;
     grid-gap: 30px;
     padding: 17px;
 }
@@ -466,6 +467,7 @@
     width: 60%;
     margin-right: 10px;
     background-image: linear-gradient(145deg, #0c2947, #284953, #2a4f5e);
+    cursor: pointer;
 }
 
 .PersistentLink  .PersLinkBox {

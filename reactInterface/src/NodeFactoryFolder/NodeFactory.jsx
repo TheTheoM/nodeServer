@@ -24,7 +24,6 @@ export default function NodeFactory(props) {
 
     const sendNodePositions = () => {
       const nodePositions = nodes.map((node) => ({ position: node.position, name: node.key }));
-      console.log(nodePositions)
       props.sendNodePositions(nodePositions);
     };
     const debouncedSendNodePositions = debounce(sendNodePositions, 200); 

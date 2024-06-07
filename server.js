@@ -117,32 +117,30 @@ class SERVER {
                 if (msg.type === "registerDevice") {
                     this.addLog("Server",  `Device: ${msg.name} registered. Ip: ${ip}`, "info")
 
-                    if (this.connectedDevices.has(msg.name)){
-                        let newName = msg.name
+                    if (this.connectedDevices.has(msg.name)) { 
+                        let newName = msg.name;
                         if (msg.name.includes(this.reactClientName)) {
-                            for (let i = 0; i < 20; i ++ ) {
-                                newName = `${msg.name}-${i}`
-                                if (!this.connectedDevices.has(newName)) { 
-                                    break;
-                                } 
+                            let i = 0;
+                            while (this.connectedDevices.has(newName)) {
+                                newName = `${msg.name}-${i}`;
+                                i++;
                             }
-
+                    
                             socket.send(JSON.stringify({
                                 type: "nameTaken",
                                 proposedName: newName,
-                            }))
-
+                            }));
+                    
                         } else {
                             socket.send(JSON.stringify({
                                 type: "nameTaken"
-                            }))
+                            }));
                         }
-
+                    
                         setTimeout(() => {
-                            socket.close()
+                            socket.close();
                         }, 100);
-
-                    } else {
+                    }else {
                         let device = new DEVICE(socket, this.serverContext, msg.name, msg.inputNames,
                                                 msg.outputNames, msg.deviceInfo, msg.widgets, msg.isNode,
                                                 msg.supportedEncryptionStandards)
@@ -214,7 +212,7 @@ class SERVER {
         if (this.printLogs && deviceName === "Server") {console.log(log)}
 
         if (!this.connectedDevices.has(deviceName)) {
-            console.log(`Raise error. Device ${deviceName} doesn't exist.`)
+            console.log(`Failure to add log. Device ${deviceName} doesn't exist.`)
             return null
         }
         
@@ -423,7 +421,7 @@ class SERVER {
     }
 
     createVirtualDevice(name,inputs, outputs) {
-        return new VIRTUALDEVICE(this.serverContext, name, inputs, outputs, "VirtualDevice")
+        return new VIRTUALDEVICE(this.serverContext, name, inputs, outputs, "VirtualDevice", true)
 
     }
 
@@ -815,10 +813,8 @@ class SERVER {
 
         this.activeLinks.forEach((link) => {
             if (link.outputDeviceObject.device.name === deviceName || link.inputDeviceObject.device.name === deviceName) {
-                this.addLog("Server", "Link found.", 'info')
+                this.addLog("Server", "Link deactivated due to disconnected device, device Name: " + deviceName, 'info')
                 link.deactivate()
-            } else {
-                this.addLog("Server", "Link not found.", "error")
             }
         })
         let device = this.connectedDevices.get(deviceName)
@@ -850,7 +846,7 @@ class SERVER {
 class LINK {
     constructor(serverContext, outputDeviceObject, inputDeviceObject, outputDevice, inputDevice, isPersistent) {
         if (!(outputDeviceObject && inputDeviceObject)) {
-            this.serverContext.addLog(`Link Warning. Devices Null. OutputDevice: ${outputDeviceObject} InputDevice: ${inputDeviceObject}`, "warning")
+            this.serverContext.addLog("Server", `Link Warning. Devices Null. OutputDevice: ${outputDeviceObject} InputDevice: ${inputDeviceObject}`, "warning")
         }
         this.outputDeviceObject = outputDeviceObject;
         this.inputDeviceObject  = inputDeviceObject;
@@ -884,7 +880,7 @@ class LINK {
             this.inputDevice.addConnectedDevice(input_device_IO_Name, output_device_name)
 
         } else {
-            this.serverContext.addLog(`Link Activation Failure: Link Exists. Name: ${this.name}`, "error")
+            this.serverContext.addLog("Server",`Link Activation Failure: Link Exists. Name: ${this.name}`, "error")
             return false
         }
 
@@ -898,7 +894,7 @@ class LINK {
         this.inputDeviceObject.setAvailability(false)
 
 
-        this.serverContext.addLog(`Link: ${this.name}: Activated`, 'info')
+        this.serverContext.addLog("Server", `Link: ${this.name}: Activated`, 'info')
     }
 
     deactivate() {
@@ -920,7 +916,7 @@ class LINK {
         this.outputDeviceObject.setAvailability(true)
         this.inputDeviceObject.setAvailability(true)
 
-        this.serverContext.addLog(`Link: ${this.name}: Deactivated`, "info")
+        this.serverContext.addLog("Server",`Link: ${this.name}: Deactivated`, "info")
     }
 
 
@@ -1058,25 +1054,35 @@ class DEVICE {
         this.ws.on('message', (msg) => {
             msg = JSON.parse(msg);
             switch (msg.type) {
-                case "registerIO":
-                    this.inputs  = this.create_IO_objects(msg.inputs, true)
-                    this.outputs = this.create_IO_objects(msg.outputs, false)
+                case "registerIO": // To add/remove new inputs outputs after registration.
+                    if (msg.inputs && msg.outputs) {
+                        this.inputs      = this.create_IO_objects(msg.inputs, true)
+                        this.inputNames  = new Map(msg.inputs.map(value => [value, value]))
+                        this.outputs     = this.create_IO_objects(msg.outputs, false)
+                        this.outputNames = new Map(msg.outputs.map(value => [value, value]))
+                        // this.inputNames  = msg.inputs
+                        this.server.checkForPersistentLink()
+                    }
                     break
 
-                case "sendOutputs": //The outputs of the device.
-                    Object.entries(msg.outputs).forEach(([key, value]) => {
-                        let outputName = key;
-                        if (this.outputNames.has(outputName)) {
-                            let inputEventListener = this.outputs.get(outputName)
-                            inputEventListener.setIOEventListenerVariable(value)
-                        } else {
-                            this.server.addLog("Server", `Input ${outputName} not found in device ${this.name}'s outputs: ${JSON.stringify(Array.from(this.outputNames.values()))}`, "error");
-                        }
-                    });
-                    break;
+                case "sendOutputs":
+                    if ((msg.outputs)) {
+                        Object.entries(msg.outputs).forEach(([key, value]) => {
+                            let outputName = key;
+                            if (this.outputNames.has(outputName)) {
+                                let inputEventListener = this.outputs.get(outputName)
+                                inputEventListener.setIOEventListenerVariable(value)
+                            } else {
+                                this.server.addLog("Server", `Input ${outputName} not found in device ${this.name}'s outputs: ${JSON.stringify(Array.from(this.outputNames.values()))}`, "error");
+                            }
+                        });
+                    }
+                    break
 
                 case "sendLogs":
-                    this.server.addLog(this.name, msg.logs, msg.logType);
+                    if ((this.name && msg.logs && msg.logType)) {
+                        this.server.addLog(this.name, msg.logs, msg.logType);
+                    }
                     break;
                     
                 case "modifyLogFilters":
@@ -1093,11 +1099,15 @@ class DEVICE {
                     break
 
                 case "sendNodePositions":
-                    this.server.saveNodePositions(msg.nodePositions)
+                    if ((msg.nodePositions)) {
+                        this.server.saveNodePositions(msg.nodePositions)
+                    }
                     break;
 
                 case "createVirtualDevice":
-                  this.server.createVirtualDevice(msg.name,msg.inputs, msg.outputs)
+                    if ((msg.name && msg.inputs && msg.outputs)) {
+                        this.server.createVirtualDevice(msg.name,msg.inputs, msg.outputs)
+                    }
                   break;
                     
                 case "requestIO":
@@ -1107,25 +1117,42 @@ class DEVICE {
                     break;
 
                 case "requestLink":
-                    this.server.requestLink(msg.outputDeviceName, msg.outputName, msg.inputDeviceName, msg.inputName, false);
+                    if ((msg.outputDeviceName && msg.outputName && msg.inputDeviceName && msg.inputName)) {
+                        this.server.requestLink(msg.outputDeviceName, msg.outputName, msg.inputDeviceName, msg.inputName, false);
+                    }
+                    break;
+
+                case "breakLink":
+                    if ((msg.outputDeviceName && msg.outputName && msg.inputDeviceName && msg.inputName)) {
+                        let linkName = `${msg.outputDeviceName}-${msg.outputName}=>${msg.inputDeviceName}-${msg.inputName}`;
+                        this.server.breakLinkByName(msg.linkName)
+                    }
                     break;
 
                 case "requestPersistentLink":
-                    this.server.addPersistentLink(msg.outputDeviceName, msg.outputName, msg.inputDeviceName, msg.inputName, msg.encrypt_algorithm, msg.key_size, msg.highest_compatible, msg.isHybrid)
-                    break;
+                    if ((msg.outputDeviceName && msg.outputName && msg.inputDeviceName && msg.inputName)) {
+                        this.server.addPersistentLink(msg.outputDeviceName, msg.outputName, msg.inputDeviceName, msg.inputName, msg.encrypt_algorithm, msg.key_size, msg.highest_compatible, msg.isHybrid)
+                        break;
+                    }
 
                 case "breakPersistentLink":
-                    this.server.breakPersistentLink(msg.outputDeviceName, msg.outputName, msg.inputDeviceName, msg.inputName)
+                    if ((msg.outputDeviceName && msg.outputName && msg.inputDeviceName && msg.inputName)) {
+                        this.server.breakPersistentLink(msg.outputDeviceName, msg.outputName, msg.inputDeviceName, msg.inputName)
+                    }
                     break;
 
 
                 case "updatePersistentLink":
-                    this.server.updatePersistentLink(msg.linkName, msg.outputDeviceName, msg.outputName, msg.inputDeviceName, msg.inputName, 
-                                msg.encrypt_algorithm, msg.key_Length, msg.prefer_Highest_Key, msg.isHybrid)
+                    if ((msg.outputDeviceName && msg.outputName && msg.inputDeviceName && msg.inputName)) {
+                        this.server.updatePersistentLink(msg.linkName, msg.outputDeviceName, msg.outputName, msg.inputDeviceName, msg.inputName, 
+                                    msg.encrypt_algorithm, msg.key_Length, msg.prefer_Highest_Key, msg.isHybrid)
+                    }
                     break;
 
                 case "removeDeviceByName":
-                    this.server.removeDeviceByName(msg.deviceName)
+                    if (msg.deviceName) {
+                        this.server.removeDeviceByName(msg.deviceName)
+                    }
                     break;
 
                 case "requestLinkDataInspect":
@@ -1140,7 +1167,9 @@ class DEVICE {
                     break;
 
                 case "breakLink_By_LinkName":
-                    this.server.breakLinkByName(msg.linkName)
+                    if (msg.linkName) {
+                        this.server.breakLinkByName(msg.linkName)
+                    }
                     break;
 
                 case "requestAvailableIO":
@@ -1155,24 +1184,30 @@ class DEVICE {
                     if (this.validStatuses.includes(msg.statusState)) {
                         this.statusState = msg.statusState;
                     } else {
-                        this.server.addLog(`Invalid Status ${msg.statusState}} from Device ${this.name}`, "error")
+                        this.server.addLog("Server",`Invalid Status ${msg.statusState}} from Device ${this.name}`, "error")
                     }
                     break;
 
                 case "requestEditIO":
-                    this.server.sendMessageToDevice(msg.device, JSON.stringify({
-                        type: "updateIO",
-                        ioName: msg.ioName,
-                        editIOData: msg.editIOData,
-                    }))
+                    if (msg.device && msg.ioName && msg.editIOData) {
+                        this.server.sendMessageToDevice(msg.device, JSON.stringify({
+                            type: "updateIO",
+                            ioName: msg.ioName,
+                            editIOData: msg.editIOData,
+                        }))
+                    }
                     break;
 
                 case "updateWidgets":
-                    this.modify_widget(msg.widgetName, msg.widget);
+                    if (msg.widgetName && msg.widget) {
+                        this.modify_widget(msg.widgetName, msg.widget);
+                    }
                     break;
 
                 case "updateWidgetsKeyPair":
-                    this.modify_widget_key_pair(msg.widgetName, msg.keyPair) 
+                    if (msg.widgetName && msg.keyPair) {
+                        this.modify_widget_key_pair(msg.widgetName, msg.keyPair) 
+                    }
                     break;
             }
         })
@@ -1401,7 +1436,7 @@ class VIRTUALDEVICE {
                  this.localContext.intervalArray.forEach((interval) => {
                     clearInterval(interval)
                 })
-                this.serverContext.addLog(`DEVICE: Virtual ${this.name} deactivated intervals`, 'info')
+                this.serverContext.addLog(this.name, `DEVICE: Virtual ${this.name} deactivated intervals`, 'info')
                 clearInterval(checkerInterval)
             }
         }, 5000)
@@ -1476,4 +1511,3 @@ class IO {
 }
 
 const server = new SERVER(8080, "webClient", "savedData.json")  
-

@@ -107,17 +107,13 @@ const DeviceIO = (props) => {
           </div>
           {showDeviceInfo ? 
           <div className="DeviceInfoWindow">
+            <h3>ENCRYPTION STANDARDS: </h3> 
 
-            {Object.keys(availableEncrypt).length === 0 ? <h3>ENCRYPTION NOT SUPPORTED</h3> : (
-              <>
-              <h3>ENCRYPTION STANDARDS: </h3> 
-                {Object.entries(availableEncrypt).map(([key, value]) => (
-                  <li key={key}>
-                    {key}  {"=>"} {value}
-                  </li>
-                ))}
-              </>
-            )}
+            {Object.entries(availableEncrypt).map(([key, value]) => (
+              <li key={key}>
+                {key}  {"=>"} {value}
+              </li>
+            ))}
 
             <p>Connected Devices:</p>
             <ul>

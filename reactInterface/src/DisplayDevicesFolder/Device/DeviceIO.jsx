@@ -11,7 +11,7 @@ import "../DisplayDevicesStyles.css"
 import "./Device.css"
 
 const DeviceIO = ({deviceName, inputs, outputs, widgets, sendMapToLinkFactory, addInputCallback,
-                   addOutputCallback, statusState, deleteDeviceCallback, requestEditIO}) => {
+                   addOutputCallback, statusState, deleteDeviceCallback, requestEditIO, all_inputs, all_outputs}) => {
   const [isInputClicked, setIsInputClicked]     = useState(false);
   const [isOutputClicked, setIsOutputClicked]   = useState(false);
   const [clickedInput, setClickedInput]         = useState("");
@@ -80,7 +80,7 @@ const DeviceIO = ({deviceName, inputs, outputs, widgets, sendMapToLinkFactory, a
 
   return (
     <div className="DeviceIO">
-        <div className=" titleDiv deviceTitle  " id='statusTitle'>
+        <div className=" titleDiv deviceTitle  " id='statusTitle' >
             <div className={`statusDiv ${status}`}></div>
             <h3>{deviceName}</h3>
             <Cross onClick={removeDevice} className="cross" width = "1em" height = "1em" color = "#B22222"/>
@@ -135,9 +135,17 @@ const DeviceIO = ({deviceName, inputs, outputs, widgets, sendMapToLinkFactory, a
                   
                   </React.Fragment>
                   :
-                  outputs.map((word, index) => (
-                    <Label Icon={Socket}  key = {index} text = {word} onClick={outputClicked}/>
-                  ))
+                  all_outputs.map((word, index) => {
+                    if (outputs.includes(word)) {
+                      return <Label Icon={Socket}  key = {index} text = {word} onClick={outputClicked}/>
+                    } else {
+                      return (
+                        <div style={{'filter': 'brightness(0.5)', 'cursor' : '!important not-allowed'}}>
+                          <Label Icon={Socket}  key = {index} text = {word} style={{'cursor' : '!important not-allowed'}}/>
+                        </div>
+                      )
+                    }
+                  })
                   }
               </div>
               </React.Fragment>

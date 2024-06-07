@@ -21,8 +21,8 @@
     height: 12%;
     background-color: var(--cyberRed);
     clip-path: polygon(0% 0%, 100% 100%, 0% 100%);
-    padding-top: 2.3%;
-    padding-left: 2px;
+    padding-top: 3%;
+    padding-right: 10px;
     position: absolute;
     z-index: 100;
     /* top: 220px; */
@@ -35,8 +35,8 @@
     background: linear-gradient(145deg, #1f1e1e, #242323);
     height: calc(100% - 32px);
     height: 100%;
-    padding: 7px;
-    padding-top: 16px;
+    padding: 16px;
+    padding-top: 19px;
     width: 100%;
     clip-path: inherit;
     color: var(--cyberRed);

@@ -95,6 +95,8 @@ const DisplayDeviceIO = (props) => {
                     deleteDeviceCallback = {props.deleteDeviceCallback}
                     statusState={props.availableIO[ioName].statusState}
                     connectedTo={props.availableIO[ioName].connectedTo}
+                    all_inputs ={props.availableIO[ioName].all_inputs}
+                    all_outputs ={props.availableIO[ioName].all_outputs}
                 />
               }
             })}

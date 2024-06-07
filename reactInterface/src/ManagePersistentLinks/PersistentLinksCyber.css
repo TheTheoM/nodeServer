@@ -45,7 +45,11 @@
     background: var(--cyberRed);
     min-height: 200px;
     font-size: medium;
-
+    animation: widen 0.8s 1;
+    animation-timing-function: cubic-bezier(0.39, 0.575, 0.565, 1);
+    animation-timing-function: cubic-bezier(0.785, 0.135, 0.15, 0.86)(3);
+    animation-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+    animation-timing-function: ease;
 }
 
 .PersLinkInfo {
@@ -211,6 +215,8 @@
     background-color: brown;
 }
 
+
+
 .AbstractPersLinkTypeShape {
     height: 100%;
     width: 100%;
@@ -221,6 +227,20 @@
     clip-path: polygon(0% 3%, 20% 3%, 40% 0%, 58% 0%,  58%  88%,  100%  100%,   20% 100%, 0% 97%);
     background-color: var(--cyberRed);
 }
+
+
+
+@keyframes widen {
+    0% {
+        width: 0px;
+        
+    }
+    100% {
+        width: 350x;
+    }
+}
+
+
 
 .UpdatePersLinkContainer {
     width: 100%;
@@ -235,10 +255,14 @@
 }
 
 .UpdatePersLinkContainer > .UpdateButtonContainer > button {
+    /* background-color: #f45951; */
+    /* background-color: black; */
     background-color: black;
     color: var(--cyberRed);
 }
 .UpdatePersLinkContainer > .configButtonContainer > button {
+    /* background-color: #f45951; */
+    /* background-color: black; */
     background-color: black;
     color: var(--cyberRed);
 }

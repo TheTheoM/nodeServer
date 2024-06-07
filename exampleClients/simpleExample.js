@@ -1,11 +1,15 @@
 const WebSocket = require("ws")
 
+
+
+// Connect two devices to Server
 const deviceASocket = new WebSocket('ws://localhost:8080');
 const deviceBSocket = new WebSocket('ws://localhost:8080');
 
 
 deviceASocket.addEventListener('open', () => {
     console.log('DeviceA Connected To Server');
+    // Sending Registration Message
     deviceASocket.send(JSON.stringify({
         type: "registerDevice",
         name: "DeviceA",
@@ -18,8 +22,13 @@ deviceASocket.addEventListener('open', () => {
 
 deviceASocket.addEventListener("message", (msg) => {
     let data = JSON.parse(msg.data)
-    if (data.type === "sendInputs" && data.inputs && data.inputs.wordInput) {
-        console.log(`DeviceA received ${data.inputs.wordInput}`)
+    console.log("Received  message: ")
+    console.log(data)
+
+    if (data.type === "sendInputs") {
+        if (data.inputs.hasOwnProperty("wordInput")) {
+            console.log(`DeviceA received input from input: "wordInput": ${data.inputs.wordInput}`)
+        }
     } 
 })
 
@@ -37,8 +46,10 @@ deviceBSocket.addEventListener('open', () => {
 
 deviceBSocket.addEventListener("message", (msg) => {
     let data = JSON.parse(msg.data)
-    if (data.type === "sendInputs" && data.inputs && data.inputs.wordInput) {
-        console.log(`DeviceB received ${data.inputs.wordInput}`)
+    if (data.type === "sendInputs") {
+        if (data.inputs.hasOwnProperty("wordInput")) {
+            console.log(`DeviceB received input from input: "wordInput": ${data.inputs.wordInput}`)
+        }
     } 
 })
 
@@ -60,13 +71,13 @@ setTimeout(() => {
     }))
 }, 1000)
 
-// Device A continuously sends "Hello, World!" as output, facilitated by the previously established link to device B.
+// Device A continuously sends "Hello, World!" as output, which the server will route to device B.
 
 setInterval(() => {
     deviceASocket.send(JSON.stringify({
         type: "sendOutputs",
         outputs: {
-        "wordOutput": "Hello, World!",
+            "wordOutput": "Hello, World!",
         },    
     }))
 }, 200);

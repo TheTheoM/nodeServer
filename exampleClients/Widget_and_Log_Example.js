@@ -1,17 +1,17 @@
 const WebSocket = require("ws")
 
-const DeviceCSocket = new WebSocket('ws://localhost:8080');
-const DeviceDSocket = new WebSocket('ws://localhost:8080');
+const deviceASocket = new WebSocket('ws://localhost:8080');
+const deviceBSocket = new WebSocket('ws://localhost:8080');
 
 let variableM = 1;
 
 
-DeviceCSocket.addEventListener('open', () => {
+deviceASocket.addEventListener('open', () => {
     console.log('Connected to WebSocket server');
     setTimeout(() => {
-        DeviceCSocket.send(JSON.stringify({
+        deviceASocket.send(JSON.stringify({
         type: "registerDevice",
-        name: "DeviceC",
+        name: "DeviceA",
         isNode: true,
         inputNames: [],
         outputNames: ["numberOut"],
@@ -28,17 +28,17 @@ DeviceCSocket.addEventListener('open', () => {
     }, 500);
 
     setTimeout(() => {
-        DeviceCSocket.send(JSON.stringify({
+        deviceASocket.send(JSON.stringify({
             type:               "requestPersistentLink",
-            outputDeviceName:   "DeviceC",
+            outputDeviceName:   "DeviceA",
             outputName:         "numberOut",
-            inputDeviceName:    "DeviceD",
+            inputDeviceName:    "DeviceB",
             inputName:          "numberIn",
         }))
     }, 1000)
 })
 
-DeviceCSocket.addEventListener("message", (msg) => {
+deviceASocket.addEventListener("message", (msg) => {
     let data = JSON.parse(msg.data)
     switch (data.type) {
         case ("updateIO"): {
@@ -52,12 +52,12 @@ DeviceCSocket.addEventListener("message", (msg) => {
 
 
 
-DeviceDSocket.addEventListener('open', () => {
+deviceBSocket.addEventListener('open', () => {
     console.log('Connected to WebSocket server');
     setTimeout(() => {
-        DeviceDSocket.send(JSON.stringify({
+        deviceBSocket.send(JSON.stringify({
         type: "registerDevice",
-        name: "DeviceD",
+        name: "DeviceB",
         isNode: true,
         inputNames: ["numberIn"],
         outputNames: [],
@@ -67,7 +67,7 @@ DeviceDSocket.addEventListener('open', () => {
 
 })
 
-DeviceDSocket.addEventListener("message", (msg) => {
+deviceBSocket.addEventListener("message", (msg) => {
     let data = JSON.parse(msg.data)
     switch (data.type) {
         case ("sendInputs"): {
@@ -75,7 +75,7 @@ DeviceDSocket.addEventListener("message", (msg) => {
                 let number = parseInt(data.inputs['numberIn'])
                 
                 if (number > 140) {
-                    DeviceDSocket.send(JSON.stringify({
+                    deviceBSocket.send(JSON.stringify({
                         type: "sendLogs",
                         logs: `RCVD Number Too High!: ${number}`,
                         logType: "error",
@@ -83,12 +83,12 @@ DeviceDSocket.addEventListener("message", (msg) => {
 
                     //Causes a red ring around the node.
                     
-                    DeviceDSocket.send(JSON.stringify({   
+                    deviceBSocket.send(JSON.stringify({   
                         type: "changeStatus",
                         "statusState": "fault",
                     }))
                 } else {
-                    DeviceDSocket.send(JSON.stringify({
+                    deviceBSocket.send(JSON.stringify({
                         type: "sendLogs",
                         logs: `RCVD Number: ${number}`,
                         logType: "info",
@@ -96,7 +96,7 @@ DeviceDSocket.addEventListener("message", (msg) => {
 
                     // No ring around the node.
 
-                    DeviceDSocket.send(JSON.stringify({
+                    deviceBSocket.send(JSON.stringify({
                         type: "changeStatus",
                         "statusState": "online",
                     }))
@@ -108,9 +108,9 @@ DeviceDSocket.addEventListener("message", (msg) => {
 
 })
 
-// Send Number to DeviceD, the widget will alter the value of variableM, see DeviceC onMessage.
+// Send Number to DeviceB, the widget will alter the value of variableM, see DeviceA onMessage.
 setInterval(() => {
-    DeviceCSocket.send(JSON.stringify({
+    deviceASocket.send(JSON.stringify({
         type: "sendOutputs",
         outputs: {
             "numberOut": variableM * 3 + 5,
