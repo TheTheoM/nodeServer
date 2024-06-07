@@ -18,7 +18,7 @@ Supports:
 #### 2. ``` npm install . ```    // Installing packages for server.js
 #### 3. ``` cd reactInterface ```
 #### 4. [Optional] Change "localhost" to your PC's IP if you wish in .env
-```REACT_APP_WEBSOCKET_SERVER_IP=localhost:8080```
+```REACT_APP_WEBSOCKET_SERVER_IP=localhost:8080``` => ```REACT_APP_WEBSOCKET_SERVER_IP=192.168.255.255:8080```
 #### 5. ``` npm install .```    // Installing packages for react GUI
 
 ### Running React GUI:
