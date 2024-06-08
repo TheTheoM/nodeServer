@@ -107,7 +107,7 @@ class SERVER {
     }
 
     main() {
-        this.serverLogVirtDevice = this.createVirtualDevice("Server", {}, {})
+        this.serverLogVirtDevice = this.createVirtualDevice("Server", {}, {}, false)
 
         this.server.on('connection', (socket, req) => {
             this.addLog("Server", "Device: Device connected.", "info")
@@ -420,8 +420,8 @@ class SERVER {
           }
     }
 
-    createVirtualDevice(name,inputs, outputs) {
-        return new VIRTUALDEVICE(this.serverContext, name, inputs, outputs, "VirtualDevice", true)
+    createVirtualDevice(name,inputs, outputs, isNode) {
+        return new VIRTUALDEVICE(this.serverContext, name, inputs, outputs, "VirtualDevice", isNode)
 
     }
 
@@ -1106,7 +1106,7 @@ class DEVICE {
 
                 case "createVirtualDevice":
                     if ((msg.name && msg.inputs && msg.outputs)) {
-                        this.server.createVirtualDevice(msg.name,msg.inputs, msg.outputs)
+                        this.server.createVirtualDevice(msg.name,msg.inputs, msg.outputs, true)
                     }
                   break;
                     
@@ -1299,7 +1299,7 @@ class VIRTUALDEVICE {
         this.intervalArray = new Map();
         this.serverLogs    = []
         this.isNode        = false
-        if (isNode) {
+        if (isNode) { 
             this.isNode    = true
         }
         this.main()
