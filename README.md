@@ -217,4 +217,9 @@ For example, see the integer slider and icon on the Node ->.
     ```
 
 
+## Future Improvements:
+
+* Adding optional typing to IO ports, as to allow connections only of the same type to avoid incompatability.
+* Add password protection to access server
+
 
