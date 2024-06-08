@@ -1,6 +1,6 @@
 # Node WebSocket Server + React Interface BETA
 
-Node based WebSocket server. Devices are represented as 'nodes' with inputs and outputs connectable with 'links' to other node IO's. 
+Node based WebSocket server. Devices are represented as 'nodes' with inputs and outputs connectable via links to other node IO's. 
 
 ![image](https://github.com/TheTheoM/nodeServer/assets/103237702/cb0113df-60a5-44d3-ad96-f09925294ba7)
 ^ React-Web-Interface ^. 
@@ -15,20 +15,17 @@ Supports:
   
 ### Installation [One-Time]
 #### 1. ``` cd <repository_name>```
-#### 2. ``` npm install . ```
+#### 2. ``` npm install . ```    // Installing packages for server.js
 #### 3. ``` cd reactInterface ```
-#### 4. Create a new file inside reactInterface called '.env' inside and enter:
-```REACT_APP_WEBSOCKET_SERVER_IP=localhost:8080```
-  - Change "localhost" to your PC's IP if you wish. 
-  - Note: Creating the file via text redirection echo "" > didn't work with react for me.
-#### 5. ``` npm install .```
+#### 4. [Optional] Change "localhost" to your PC's IP if you wish in .env
+```REACT_APP_WEBSOCKET_SERVER_IP=localhost:8080``` => ```REACT_APP_WEBSOCKET_SERVER_IP=192.168.255.255:8080```
+#### 5. ``` npm install .```    // Installing packages for react GUI
 
 ### Running React GUI:
-``` cd reactInterface ```
-``` npm run start ```
+``` npm run start ```  // from inside '/reactInterface'
 
 ### Running nodeServer:
-``` node server.js ``` From root directory of the repo
+``` node server.js ``` // From root directory of the repo
 
 ## High Level Overview:
 - There are fully functional example clients in /exampleClients.
@@ -219,5 +216,10 @@ For example, see the integer slider and icon on the Node ->.
       }
     ```
 
+
+## Future Improvements:
+
+* Adding optional typing to IO ports, as to allow connections only of the same type to avoid incompatability.
+* Add password protection to access server
 
 
