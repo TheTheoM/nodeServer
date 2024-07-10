@@ -3,7 +3,7 @@ import ReactFlow, { useNodesState, useEdgesState, addEdge, Background,updateEdge
 import RectangleDiv from '../rectangleDiv';
 import 'reactflow/dist/style.css';
 import Node from './Node';
-import Widget from "../DisplayDevicesFolder/Widget.jsx";
+import Widget from "./Widget.jsx";
 import AddWithNoOutline from '../IconComponents/AddWithNoOutline';
 import "./nodeFactoryStyles.css"
 import LinkInfoWindow from "./LinkInfoWindow.jsx"

@@ -96,8 +96,8 @@ export default function Widget(props) {
     
     } else if (widgetType === 'toggle') {
         return (
-            <div className="widgetContainer">
-                <div className="RGBCreatorHorizontalContainer nodrag ">
+            <div className="widgetContainer" style={{"padding": "0px"}}>
+                <div className="RGBCreatorHorizontalContainer nodrag">
                     {values[0]}
                     <label className="label">
                         <div className="toggle nodrag">

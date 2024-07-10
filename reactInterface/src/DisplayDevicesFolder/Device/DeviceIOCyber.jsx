@@ -6,7 +6,7 @@ import Cross from '../../IconComponents/Cross';
 import Info from "../../IconComponents/Info"
 import Label from "../Label"
 import Edit from '../../IconComponents/Edit';
-import Widget from "../Widget";
+// import Widget from "../Widget";
 import "../DisplayDevicesStyles.css"
 import "./DeviceCyber.css"
 

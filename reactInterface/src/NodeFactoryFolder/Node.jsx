@@ -1,6 +1,6 @@
 import { useState, useHook, useEffect, useCallback } from "react";
 import { Handle, Position } from 'reactflow';
-import Widget from "../DisplayDevicesFolder/Widget";
+import Widget from "./Widget";
 import HandleWrapper from "./HandleWrapper"
 import _debounce from 'lodash/debounce';
 import "./nodeFactoryStyles.css"
@@ -11,8 +11,8 @@ function Node({ data, isConnectable }) {
   const [widgetList, setWidgetList] = useState([])
   const [editIOData, setEditIOData] = useState({})
   const [status, setStatus] = useState("");
+  const [nodeHeight, setNodeHeight] = useState("200px");
   const validStatuses = ["offline", "alert", "fault", "criticalFault", "online"];
-
   const handleHover = () => {
     setMenuVisible(true);
   };
@@ -79,8 +79,27 @@ function Node({ data, isConnectable }) {
     setEditIOData({})
   }
 
+
+  useEffect(() => {
+    const spacing = 15
+    const widgetSpacing = 60
+
+    let height_inputs = Math.max(data.inputs.length * spacing, 200) 
+
+    let height_outputs = Math.max(data.outputs.length * spacing, 200) 
+
+    let height_widgetList = Math.max(widgetList.length * widgetSpacing, 200) 
+
+    let height = Math.max(height_inputs, height_outputs, height_widgetList) + "px"
+
+    console.log(height)
+
+    setNodeHeight(height)
+
+  }, [data.inputs, data.outputs, widgetList])
+
   return (
-    <div className="nodeContainer">
+    <div className="nodeContainer" style={{'height': nodeHeight}}>
       <div className="inputNodes">
         {(data.inputs).map(value => {
             return <HandleWrapper type="target" key = {value.toString()} id = {value.toString()}  style = {{"transform": "scale(1.5)", "border" : "1px solid #a3ffa3", "position" : 'relative'}} isConnectable={isConnectable} />
@@ -95,7 +114,7 @@ function Node({ data, isConnectable }) {
         )}
       </div>
 
-      <div className="Node" >
+      <div className="Node" style={{'height': nodeHeight}}>
         <div className={`alertBar ${status}`}></div>
         <div className="inputBar"  id = {`-inputBar_${data.name}`}></div>
         <div className="outputBar" id = {`-outputBar_${data.name}`}></div>

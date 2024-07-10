@@ -1,7 +1,7 @@
 
 .Node {
-    width:  180px;
-    height: 180px;
+    min-width:  190px;
+    min-height: 190px;
     background-color: rgba(0, 0, 0, 0.686);
     border-radius: 15px;
     position: relative;
@@ -18,8 +18,8 @@
 }
 
 .inputBar {
-    width:  280px;
-    height: 280px;
+    width:  380px;
+    height: 380px;
     content: '';
     position: absolute;
     background-image: conic-gradient(transparent 30%, #0cf , transparent 100%);
@@ -30,8 +30,8 @@
 }
   
 .outputBar {
-    width:  280px;
-    height: 280px;
+    width:  380px;
+    height: 380px;
     content: '';
     position: absolute;
     background-image: conic-gradient(transparent 30%, #d000ff , transparent 100%);
@@ -108,7 +108,7 @@
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    height: 180px;
+    height: 100%;
     z-index: 1;
 }
 
@@ -119,7 +119,7 @@
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    height: 180px;
+    height: 100%;
     z-index: 1;
 }
 
@@ -314,3 +314,28 @@ input[type=number] {
     justify-content: center;
     align-items: center;
 }
+
+
+.widgetContainer .RGBCreatorHorizontalContainer {
+    display: flex;
+    justify-content: space-around;
+    vertical-align: middle;
+    align-items: center;
+    width: 100%;
+    font-size: 10px;
+    height: 50px;
+    border-radius: 15px;
+    text-shadow: 0px 0px 3px white;
+    background-color: #161616;
+    overflow: hidden;
+ }
+
+
+ 
+ .widgetContainer .RGBCreatorHorizontalContainer .toggle {
+    box-shadow: 3px 3px 10px #141313, -3px -3px 7px #302f2f, 4px 4px 4px 0px #222121 inset, -4px -4px 4px 0px #222121 inset;
+
+ }
+
+
+ 

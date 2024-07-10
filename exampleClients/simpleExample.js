@@ -22,8 +22,8 @@ deviceASocket.addEventListener('open', () => {
 
 deviceASocket.addEventListener("message", (msg) => {
     let data = JSON.parse(msg.data)
-    console.log("Received  message: ")
-    console.log(data)
+    // console.log("DeviceA Received  message: ")
+    // console.log(data)
 
     if (data.type === "sendInputs") {
         if (data.inputs.hasOwnProperty("wordInput")) {
@@ -46,6 +46,8 @@ deviceBSocket.addEventListener('open', () => {
 
 deviceBSocket.addEventListener("message", (msg) => {
     let data = JSON.parse(msg.data)
+    // console.log("DeviceB Received  message: ")
+    // console.log(data)
     if (data.type === "sendInputs") {
         if (data.inputs.hasOwnProperty("wordInput")) {
             console.log(`DeviceB received input from input: "wordInput": ${data.inputs.wordInput}`)
@@ -61,15 +63,15 @@ deviceBSocket.addEventListener("message", (msg) => {
 //       This type of link is established when both devices are online.
 
 
-setTimeout(() => {
-    deviceASocket.send(JSON.stringify({
-        type:             "requestLink",
-        outputDeviceName: "DeviceA",
-        outputName:       "wordOutput",
-        inputDeviceName:  "DeviceB",
-        inputName:        "wordInput",
-    }))
-}, 1000)
+// setTimeout(() => {
+//     deviceASocket.send(JSON.stringify({
+//         type:             "requestLink",
+//         outputDeviceName: "DeviceA",
+//         outputName:       "wordOutput",
+//         inputDeviceName:  "DeviceB",
+//         inputName:        "wordInput",
+//     }))
+// }, 1000)
 
 // Device A continuously sends "Hello, World!" as output, which the server will route to device B.
 
