@@ -54,8 +54,8 @@ export default function NodeFactory(props) {
                   position: { x, y },
                   data: {
                       name: ioName.toString(),
-                      inputs: props.availableIO[ioName].all_inputs,
-                      outputs: props.availableIO[ioName].all_outputs,
+                      inputs: props.availableIO[ioName].inputs,
+                      outputs: props.availableIO[ioName].outputs,
                       widgets: props.availableIO[ioName].widgets,
                       requestEditIO: props.requestEditIO,
                       statusState: props.availableIO[ioName].statusState,
@@ -66,6 +66,7 @@ export default function NodeFactory(props) {
         )
         setNodes(initialNodes)
         setLast(props.availableIO)
+        
       }
     }, [props.availableIO]);
 
@@ -92,25 +93,24 @@ export default function NodeFactory(props) {
         },
     []);
 
-    function onEdges(params) {
+    function onEdgesChange(params) {
       let selectedEdge = params.filter(edge => (edge.type === 'select' && edge.selected))[0]
-
       if (selectedEdge) {
         setDisplayLinkData(1)
         setSelectedEdgeInfo(selectedEdge)
-        return  
       }
       
-      setDisplayLinkData(0)
-      setSelectedEdgeInfo(null)
-      
-      let removeEdge = params.filter(edge => edge.type === 'remove')[0]
-      if (removeEdge) {
-        let [outputDevice, outputName, inputDevice, inputName] = removeEdge.id.split('.');
-        props.breakPersistentLink(outputDevice, outputName, inputDevice, inputName)
-      }
     }
     
+    function deleteEdge(edges) {
+      console.log(edges)
+      for (const index in edges) {
+        let edge = edges[index]
+        props.breakPersistentLink(edge.source, edge.sourceHandle, edge.target, edge.targetHandle)
+      }
+      hideDisplayLinkData()
+    }
+
     function hideDisplayLinkData() {
       setDisplayLinkData(0)
     }
@@ -141,17 +141,22 @@ export default function NodeFactory(props) {
                   nodes={nodes}
                   edges={edges}
                   onNodesChange={onNodesChange}
-                  onEdgesChange={onEdges}
+                  onEdgesChange={onEdgesChange}
                   nodeTypes = {nodeTypes}
                   fitView = {true}
                   proOptions={proOptions}
                   onConnect={onConnect}
+                  key = "reactFlow"
+                  onEdgesDelete = {deleteEdge}
+                  deleteKeyCode = {["Delete", "Backspace"]}
+                  // elevateNodesOnSelect = {false}
                   >
                   <Background/>
               </ReactFlow>
                 <LinkInfoWindow displayLinkData = {displayLinkData}  hideDisplayLinkData = {hideDisplayLinkData} selectedEdgeInfo = {selectedEdgeInfo} activeLinks = {props.activeLinks}
                   breakLink_By_LinkName  = {props.breakLink_By_LinkName} requestLinkDataInspect  = {props.requestLinkDataInspect}
-                  Server_BreakPermanentLink  = {props.Server_BreakPermanentLink} isCyber = {isCyber}
+                  Server_BreakPermanentLink  = {props.Server_BreakPermanentLink} isCyber = {isCyber}  key = "linkInfoWindow"
+
                 />
           </div>
         }

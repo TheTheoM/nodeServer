@@ -19,6 +19,7 @@ const ManagePersistentLinks = (props) => {
                     if (isCyber) {
                       return <PersistentLinksCyber 
                         name = {linkName}
+                        key = {linkName}
                         isActive          =  {props.activeLinks[linkName] ? true : false}  
                         outputDeviceName  = {props.persistentLinks[linkName].outputDeviceName}
                         outputName        = {props.persistentLinks[linkName].outputName}
@@ -31,6 +32,7 @@ const ManagePersistentLinks = (props) => {
                     } else {
                       return <PersistentLinks
                         name = {linkName}
+                        key = {linkName}
                         isActive          =  {props.activeLinks[linkName] ? true : false}  
                         outputDeviceName  = {props.persistentLinks[linkName].outputDeviceName}
                         outputName        = {props.persistentLinks[linkName].outputName}

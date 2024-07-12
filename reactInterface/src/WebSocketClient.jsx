@@ -17,6 +17,7 @@ let deviceName = "webClient"
 
 const WebSocketClient = () => {
   const [isWebSocketClosed, setIsWebSocketClosed] = useState("closed")
+  const canSendMessage = useRef(false);
   const [linkFactoryMap, setLinkFactoryMap] = useState({})
   const reconnectionInterval = useRef()
   // const ws_url = "ws://192.168.1.123:8080"
@@ -39,7 +40,7 @@ const WebSocketClient = () => {
 
 
   function toServer(message) {
-      if (webSocket.current) {
+      if ((webSocket.current) && (canSendMessage.current)) {
         webSocket.current.send((message))
       }
   }
@@ -67,7 +68,7 @@ const WebSocketClient = () => {
           toServer(JSON.stringify({
             type: "requestAvailableIO"
           }))
-        }, 400) 
+        }, 500) 
         ////////////////////////////////////
     };
 
@@ -91,6 +92,7 @@ const WebSocketClient = () => {
 
           case ("connected"):
             isConnected = true
+            canSendMessage.current = true
             break;
 
           case ('linkMapUpdate'):
@@ -141,13 +143,12 @@ const WebSocketClient = () => {
     }
 
     webSocket.current.onclose = function (event) {
-      setTimeout(() => {
-        console.log("Disconnected. ")
-        setContextValue((context) => {
-          return {...context, activeLinks: {}}
-        })
-        setIsWebSocketClosed("closed")
-      }, 1000);
+      canSendMessage.current = false
+      console.log("Disconnected. ")
+      setContextValue((context) => {
+        return {...context, activeLinks: {}}
+      })
+      setIsWebSocketClosed("closed")
     }
   }
 

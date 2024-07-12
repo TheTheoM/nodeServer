@@ -4,6 +4,9 @@ import Widget from "./Widget";
 import HandleWrapper from "./HandleWrapper"
 import _debounce from 'lodash/debounce';
 import "./nodeFactoryStyles.css"
+import debounce from "lodash.debounce";
+import {useUpdateNodeInternals } from 'reactflow';
+
 
 function Node({ data, isConnectable }) {
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -13,6 +16,12 @@ function Node({ data, isConnectable }) {
   const [status, setStatus] = useState("");
   const [nodeHeight, setNodeHeight] = useState("200px");
   const validStatuses = ["offline", "alert", "fault", "criticalFault", "online"];
+  const updateNodeInternals = useUpdateNodeInternals()
+
+  useEffect(() => {
+    updateNodeInternals(data.name)
+  }, [data]);
+
   const handleHover = () => {
     setMenuVisible(true);
   };
@@ -40,40 +49,40 @@ function Node({ data, isConnectable }) {
     }
   }, [data])
 
-  let i = 0;
-  let j = 0;
-
-  const onChange = useCallback((evt) => {
-    console.log(evt.target.value);
-  }, []);
-
-
-  const handleMouseMove = _debounce((e) => {
+  const handleMouseMove = (e) => {
     setPosition({ x: e.clientX, y: e.clientY });
-  }, 4); 
-
+  };
+  
   useEffect(() => {
-    window.addEventListener('mousemove', handleMouseMove);
+    let animationFrameId;
+  
+    const updatePosition = () => {
+      animationFrameId = requestAnimationFrame(updatePosition);
+  
+      const outputBarElement = document.getElementById(`-outputBar_${data.name}`);
+      const inputBarElement = document.getElementById(`-inputBar_${data.name}`);
+  
+      const outputRect = outputBarElement.getBoundingClientRect();
+      const inputRect = inputBarElement.getBoundingClientRect();
 
+      const x = position.x - (outputRect.x + outputRect.width / 2);
+      const y = position.y - (inputRect.y + outputRect.height / 2);
+
+      const angle = Math.atan2(y, x) * (180 / Math.PI);
+
+      outputBarElement.style.transform = `rotate(${angle}deg)`;
+      inputBarElement.style.transform = `rotate(${angle + 180}deg)`;
+    };
+  
+    window.addEventListener('mousemove', handleMouseMove);
+    updatePosition();
+  
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
+      cancelAnimationFrame(animationFrameId);
     };
-  }, [handleMouseMove]);
-
-  useEffect(() => {
-    const outputBarElement = document.getElementById(`-outputBar_${data.name}`)
-    const inputBarElement  = document.getElementById( `-inputBar_${data.name}`)
-    
-    let x  = (position.x - (outputBarElement.getBoundingClientRect().x + outputBarElement.getBoundingClientRect().width/2) )
-    let y  = (position.y - (inputBarElement.getBoundingClientRect().y  + outputBarElement.getBoundingClientRect().height/2))
-
-    let angle = Math.atan2(y,x) * (180 / Math.PI)
-    // outputBarElement.style.rotate = (angle + "deg")
-    // inputBarElement.style.rotate =  (angle + "deg")
-    outputBarElement.style.transform = `rotate(${angle}deg)`;
-    inputBarElement.style.transform = `rotate(${angle+180}deg)`; //Attempts GPU accel
-}, [position])
-
+  }, [position]);
+  
   function editIO(clickedOutput, editIOData) {
     data.requestEditIO(data.name, clickedOutput, editIOData)
     setEditIOData({})
@@ -92,24 +101,37 @@ function Node({ data, isConnectable }) {
 
     let height = Math.max(height_inputs, height_outputs, height_widgetList) + "px"
 
-    console.log(height)
-
     setNodeHeight(height)
 
   }, [data.inputs, data.outputs, widgetList])
 
+
+
+
+
   return (
     <div className="nodeContainer" style={{'height': nodeHeight}}>
       <div className="inputNodes">
-        {(data.inputs).map(value => {
-            return <HandleWrapper type="target" key = {value.toString()} id = {value.toString()}  style = {{"transform": "scale(1.5)", "border" : "1px solid #a3ffa3", "position" : 'relative'}} isConnectable={isConnectable} />
-            }
-          )}
+
+       {Object.entries(data.inputs).map(([value, dataType]) => {
+          return (
+            <HandleWrapper 
+              type="target" 
+              key={value.toString()} 
+              id={value.toString()} 
+              style={{
+                position: 'relative',
+              }} 
+              isConnectable={isConnectable} 
+              className = {dataType}
+            />
+);          })}
       </div>
 
       <div className="outputNodes">
-        {(data.outputs).map((value) => {
-          return <HandleWrapper type="source" key = {value.toString()} id = {value.toString()} style = {{"transform": "scale(1.5)", "border" : "1px solid #E85454",  "position" : 'relative'}} isConnectable={isConnectable} />
+
+        {Object.entries(data.outputs).map(([value, dataType]) => {
+          return <HandleWrapper type="source" key = {value.toString()} id = {value.toString()} style = {{"transform": "scale(1.5)","position" : 'relative'}} isConnectable={true} className = {`OutputIO ${dataType}`}/>
           }
         )}
       </div>

@@ -7,6 +7,8 @@
 
     min-width: 380px;
     max-width: 420px;
+    height: 250px;
+
 }
 
 .DeviceIO .cross:hover {
@@ -202,14 +204,44 @@
     min-height: 60px;
     background-color: #161616;
     border-radius: 15px;
+    /* border: 1.5px solid var(--cyberRed); */
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(40px, max-content));
-    grid-gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(70px, max-content));
+    grid-gap: 1.3rem;
     padding: 10px;
     margin: 5px;
     justify-content: center;
     align-items: center;
+    text-align: center;
+    overflow-x: hidden;
+    overflow-y: auto;
+    min-height: 50px;
+
 }
+
+
+.DeviceIO .IOContainer::-webkit-scrollbar {
+    top: 20px;
+    width: 5px;
+}
+
+.DeviceIO .IOContainer::-webkit-scrollbar-track {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: transparent;
+}
+
+.DeviceIO .IOContainer::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.664);
+    height: 20px;
+    border-radius: 5px;
+}
+
+.DeviceIO .IOContainer::-webkit-scrollbar-thumb:hover {
+    background: rgb(253, 253, 253); 
+    cursor: pointer;
+}
+
 
 .DeviceIO .deactivateIconHover:hover {
     color: white;

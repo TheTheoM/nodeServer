@@ -45,6 +45,7 @@ function LinkInfoWindow(props) {
     setStyleName("invisible")    
     props.hideDisplayLinkData()
   }
+
   
   return (
     <div className={`LinkInfoWindowContainer ${styleName}`}>

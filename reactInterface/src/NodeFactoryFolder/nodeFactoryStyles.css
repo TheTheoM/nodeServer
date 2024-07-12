@@ -9,6 +9,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    /* z-index: 1000; */
+}
+
+.react-flow__node react-flow__node-textUpdater nopan selected selectable {
+    z-index: 0;
 }
 
 .Node:hover > .outputBar,
@@ -87,29 +92,17 @@
     position: relative;
 }
 
-.HandleContainer {
-    position: relative;
-}
 
-.HandleContainer .input {
-    top: -9px;
-    right: 18px;
-}
-
-.HandleContainer .output {
-    top: -8px;
-    left: 18px;
-}
 
 .inputNodes {
     position: absolute;
-    left: -7px;
+    left: -10px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
     height: 100%;
-    z-index: 1;
+    z-index: 999;
 }
 
 .outputNodes {
@@ -125,20 +118,46 @@
 
 .handleHoverMenu {
     position: absolute;
-    z-index: 1000;
-    background-color: rgb(51, 51, 54);
-    height: 18px;
+    z-index: 100;
+    /* background-color: rgb(64, 64, 67); */
+    /* background-image: linear-gradient(45deg, #0cf, #d000ff); */
+    background-image: linear-gradient(45deg, rgb(0, 128, 160), #8300a0);
+    /* background-image: linear-gradient(145deg, #0c2947, #284953, #2a4f5e); */
+    box-shadow: inset 0px 0px 3px rgba(0, 0, 0, 0.731), 
+                 0px 0px 8px 0px rgb(17, 17, 17);
+    text-shadow: 0px 0px 5px black;
+    font-weight: 800;
+    min-height: 20px;
     min-width:  50px;
-    border-radius: 5px 0px 0px 5px;
     border-radius: 5px;
-    font-size: 10px;
-    padding-left: 5px;
-    box-shadow: 0px 0px 5px rgb(138, 136, 136);
+    font-size: 13px;
+    padding: 3px;
+    padding-bottom: -5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* overflow: hidden; */
 }
 
 .handleHoverMenu > *{
-    margin: 2px;
-    padding: 0;
+    margin: 0px;
+    padding: 0px;
+}
+
+.HandleContainer {
+    position: relative;
+    z-index: 1000;
+}
+
+.HandleContainer .input {
+    top: -9px;
+    right: 14px;
+}
+
+.HandleContainer .output {
+    top: -10px;
+    left: 14px;
 }
 
 .Node .NodeContent {
@@ -329,13 +348,98 @@ input[type=number] {
     background-color: #161616;
     overflow: hidden;
  }
-
-
  
  .widgetContainer .RGBCreatorHorizontalContainer .toggle {
     box-shadow: 3px 3px 10px #141313, -3px -3px 7px #302f2f, 4px 4px 4px 0px #222121 inset, -4px -4px 4px 0px #222121 inset;
 
  }
 
+.shadowContainer {
+    filter: drop-shadow(black 0px 0px 3px )  drop-shadow(rgba(0, 0, 0, 0.579) 0px 0px 3px );
+    transition: 0.3s all cubic-bezier(0.165, 0.84, 0.44, 1);
+}
 
+.shadowContainer:hover {
+    filter: drop-shadow(black 0px 0px 3px )   drop-shadow(black 0px 0px 3px ) drop-shadow(black 0px 0px 3px ) ;
+}
+
+/* HTML: <div class="triangle"></div> */
+
+.inputShape {
+    width:  9px;
+    height: 10px;
+    aspect-ratio: cos(30deg);
+    clip-path: polygon(0 0,100% 50%,0 100%);
+    background: #a3ffa3;
+    border-radius: 0;
+    box-shadow: 0px 0px 4px rebeccapurple;
+  }
  
+  /* Integer */
+  .int {
+    border: 1px solid blue;
+    background-color: blue;
+  }
+  
+  /* Float */
+  .float {
+    border: 1px solid cyan;
+    background-color: cyan;
+  }
+  
+  /* String */
+  .str {
+    border: 1px solid green;
+    background-color: lightgreen;
+  }
+  
+  /* Array */
+  .array {
+    border: 1px solid orange;
+    background-color: orange;
+  }
+
+  /* boolean */
+  .boolean {
+    border: 1px solid rgb(255, 255, 255);
+    background-color: white;
+  }
+
+  .typeless {
+    border: 1px solid rgb(135, 135, 135);
+    background-color: rgb(119, 119, 119);
+  }
+
+  .OutputIO {
+    background-color: transparent;
+  }
+
+
+
+ /* .float {
+    width:  30px;
+    height: 20px;
+    transform: scale(1);
+    position: relative;
+    left: -70px;
+    aspect-ratio: 1/cos(30deg);
+    clip-path: polygon(50% 0,100% 100%,0 100%);;
+    background: linear-gradient(45deg,#FA6900,#C02942);
+    border-radius: 0;
+ } */
+
+  
+  
+
+  /* .int {
+    --b:       2.3px; 
+    width:    100%;
+    height:   100%;
+    position: relative;
+    left: 5px;
+    aspect-ratio: 1/cos(30deg);
+    clip-path: polygon(50% 0,100% 100%,0 100%,50% 0,50% var(--b),calc(var(--b)*cos(30deg)) calc(100% - var(--b)/2),calc(100% - var(--b)*cos(30deg)) calc(100% - var(--b)/2),50% var(--b));
+    background: #a3ffa3;
+    border-radius: 0;
+  }
+ */

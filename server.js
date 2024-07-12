@@ -5,6 +5,11 @@ const { error, Console, log } = require('console');
 const fs                      = require('fs');
 const { setTimeout }          = require('timers');
 
+
+function isDict(value) {
+    return typeof value === 'object' && value !== null && !Array.isArray(value);
+  }
+
 class VariableWatcher extends EventEmitter {
   constructor(preventDuplicateValue) {
     super();
@@ -91,10 +96,10 @@ class SERVER {
         this.sendReactUpdate  = true;
         this.serverLogVirtDevice;
         this.maxLogCount = {
-            "info":    300,
-            "error":   300,
-            "warning": 300,
-            "success": 300,
+            "info":    50,
+            "error":   50,
+            "warning": 50,
+            "success": 50,
         }
         this.logFilters = {selectedDevices: [], time: {"from": new Date("2000-01-01"),  "to": new Date()},
                            alerts: ["warning", "error", "info", "success"],     search: ""};
@@ -102,8 +107,11 @@ class SERVER {
         this.printLogs     = true;
         this.sendUpdate    = true;
         this.pingTimeout   = 1500;
+        this.messagesPerSecond = 5; 
+        this.rateLimits = {};
         this.loadLinks()
         this.main()
+
     }
 
     main() {
@@ -168,6 +176,13 @@ class SERVER {
                                     persistentLinks:  this.getPersistentLinks(),
                                 })
                             );
+
+                            device.sendMessage(JSON.stringify({
+                                type: "availableIO",
+                                availableIO: this.getAvailableIO(),
+                            }))
+
+
                         }
                         this.connectedDevices.set(device.name, device)
                         this.checkForPersistentLink();
@@ -209,47 +224,77 @@ class SERVER {
     }
 
     addLog(deviceName, log, logType) {
-        if (this.printLogs && deviceName === "Server") {console.log(log)}
+        if (this.printLogs && deviceName === "Server") {
+            console.log(log);
+        }
 
         if (!this.connectedDevices.has(deviceName)) {
-            console.log(`Failure to add log. Device ${deviceName} doesn't exist.`)
-            return null
+            console.log(`Failure to add log. Device ${deviceName} doesn't exist.`);
+            return null;
         }
-        
-        let logData = {"name": deviceName, "log": log, "time":  new Date().toISOString(), "logType": logType}
+
+        if (deviceName.includes("webClient")) {
+            return null;
+        }
+
+        const now = Date.now();
+        if (!this.rateLimits[deviceName]) {
+            this.rateLimits[deviceName] = [];
+        }
+
+        // Remove logs older than one second
+        this.rateLimits[deviceName] = this.rateLimits[deviceName].filter(timestamp => now - timestamp < 1000);
+
+        if (this.rateLimits[deviceName].length >= this.messagesPerSecond) {
+            console.log(`Rate limit exceeded for device ${deviceName}`);
+            // if (deviceName !== "Server") {
+                // server.removeDeviceByName(deviceName)
+            // }
+            return null;
+        }
+
+        this.rateLimits[deviceName].push(now);
+
+        let logData = {
+            name: deviceName,
+            log: log,
+            time: new Date().toISOString(),
+            logType: logType
+        };
 
         try {
-            const excludedLogTypes  = [""] 
-            let parsedData =  this.validateDataStructure(this.savedLinkFiles, true);
+            let parsedData = this.validateDataStructure(this.savedLinkFiles, true);
             if (!parsedData.deviceData[deviceName]) {
-                parsedData.deviceData[deviceName] = {'logs': [], position: {'x': 0, 'y': 0}}
+                parsedData.deviceData[deviceName] = {
+                    logs: [],
+                    position: { x: 0, y: 0 }
+                };
             }
 
+            parsedData.deviceData[deviceName].logs.push(logData);
 
-            parsedData.deviceData[deviceName].logs.push(logData)
+            let currentDeviceLogs = parsedData.deviceData[deviceName].logs;
+            let maxSize = this.maxLogCount[logType];
+            let logs_not_logType = currentDeviceLogs.filter(log => log.hasOwnProperty('logType') && log.logType !== logType);
+            let logs_ARE_logType = currentDeviceLogs.filter(log => log.logType === logType);
+            let logs_ARE_logType_RESIZED = logs_ARE_logType.slice(-maxSize);
 
-            let currentDeviceLogs = parsedData.deviceData[deviceName].logs
-            let maxSize           = this.maxLogCount[logType]
-            let logs_not_logType  = currentDeviceLogs.filter((log) => (log.hasOwnProperty('logType') && log.logType !== logType))
-            let logs_ARE_logType  = currentDeviceLogs.filter((log) => (log.logType === logType))
-            let logs_ARE_logType_RESIZED  = logs_ARE_logType.slice(-maxSize)
+            let deviceLogsToAdd = [...logs_not_logType, ...logs_ARE_logType_RESIZED];
 
-            let deviceLogsToAdd   = [...logs_not_logType, ...logs_ARE_logType_RESIZED]
-
-            parsedData.deviceData[deviceName].logs = deviceLogsToAdd
+            parsedData.deviceData[deviceName].logs = deviceLogsToAdd;
             fs.writeFileSync(this.savedLinkFiles, JSON.stringify(parsedData, null, 2), 'utf-8');
-            } catch (error) {
-                console.log('Error parsing existing file content:' + error.stack );
+        } catch (error) {
+            console.log('Error parsing existing file content:' + error.stack);
         }
 
         if (this.sendReactUpdate) {
-            this.connectedDevices.forEach((device) => {
+            this.connectedDevices.forEach(device => {
                 if (device.name.includes(this.reactClientName)) {
                     device.sendMessage(
                         JSON.stringify({
                             type: "getLogs",
                             deviceLogs: this.getDeviceLogs(true),
-                          })
+                        })
                     );
                 }
             });
@@ -443,6 +488,7 @@ class SERVER {
                 name:        device.name,
                 inputs:      device.inputs,
                 outputs:     device.outputs,
+
             }
         }
 
@@ -861,23 +907,35 @@ class LINK {
     }
 
     activate() {
-        // let outputListener = this.outputDeviceObject.getMessageEventListener();
         let outputListener = this.outputDeviceObject.addListener(this.inputDeviceObject.name);
-        // let inputListener  = this.inputDeviceObject.getMessageEventListener(this.outputDeviceObject.name);
 
         if (!(outputListener)) {
             throw new Error(`Link Failure. Listeners Error. Output: ${this.outputListener} Input: ${this.inputL}`)
         }
 
-        if (!this.serverContext.activeLinks.has(this.name)) {
-            this.serverContext.activeLinks.set(this.name, this)
-            let output_device_IO_Name  = this.outputDeviceObject.name
-            let input_device_IO_Name   = this.inputDeviceObject.name
-            let output_device_name     = this.outputDevice.name
-            let input_device_name      = this.inputDevice.name
+        if (!this.serverContext.activeLinks.has(this.name)) { // If the list doesn't already exist.
 
-            this.outputDevice.addConnectedDevice(output_device_IO_Name, input_device_name)
-            this.inputDevice.addConnectedDevice(input_device_IO_Name, output_device_name)
+            console.log(this.outputDeviceObject.getDataType())
+            console.log(this.inputDeviceObject.getDataType())
+
+            let inputDataType = this.inputDeviceObject.getDataType()
+            let outputDataType = this.outputDeviceObject.getDataType()
+
+            if ((inputDataType === outputDataType) || inputDataType == "typeless") {
+                this.serverContext.activeLinks.set(this.name, this)
+                let output_device_IO_Name  = this.outputDeviceObject.name
+                let input_device_IO_Name   = this.inputDeviceObject.name
+                let output_device_name     = this.outputDevice.name
+                let input_device_name      = this.inputDevice.name
+    
+                this.outputDevice.addConnectedDevice(output_device_IO_Name, input_device_name)
+                this.inputDevice.addConnectedDevice(input_device_IO_Name, output_device_name)
+            } else {
+                this.serverContext.addLog("Server",`Link Activation Failure: Incompatible Data Types.  ${outputDataType} => ${inputDataType} |  Link Name: ${this.name}`, "error")
+                return false
+            }
+
+
 
         } else {
             this.serverContext.addLog("Server",`Link Activation Failure: Link Exists. Name: ${this.name}`, "error")
@@ -940,13 +998,20 @@ class DEVICE {
     constructor(ws, serverContext, name, inputNames, outputNames, deviceInfo, widgets, isnode, supportedEncryptionStandards) {
         this.deviceInfo = deviceInfo;
         this.supportedEncryptionStandards = supportedEncryptionStandards
-        this.inputNames  = inputNames ? new Map(inputNames.map(value => [value, value])) : [];
-        this.outputNames = outputNames ? new Map(outputNames.map(value => [value, value])) : [];
+
         this.connectedTo = {}
         this.widgets     = new Map()
         if (widgets) {this.widgets     = widgets}
+        this.validDataTypes = ['str', "int", "float", "boolean",  "array", "typeless"];
         this.inputs  = this.create_IO_objects(inputNames, true);
         this.outputs = this.create_IO_objects(outputNames, false);
+
+        this.inputNames = new Map()
+        this.outputNames = new Map()
+
+        this.inputs.forEach((value, key) => {this.inputNames.set(value.name, value.name);});
+        this.outputs.forEach((value, key) => {this.outputNames.set(value.name, value.name);});
+
         this.validStatuses = ["offline", "online", "alert", "fault", "criticalFault"];
         this.statusState = "online";
         this.pingInterval;
@@ -1014,15 +1079,25 @@ class DEVICE {
 
     create_IO_objects(ioArray, isInput) {
 
-        if (ioArray === null || !Array.isArray(ioArray)) {
+        let ioMap = new Map(); 
+        if (ioArray !== null && Array.isArray(ioArray)) {
+            ioArray.forEach(ioName => {
+                let ioObject = new IO(ioName, this, isInput);
+                ioMap.set(ioName, ioObject)
+            });
+        } else if (isDict(ioArray)) {
+            for (const [ioName, dataType] of Object.entries(ioArray)) {
+                if (this.validDataTypes.includes(dataType.toLowerCase())) {
+                    let ioObject = new IO(ioName, this, isInput, dataType);
+                    ioMap.set(ioName, ioObject)
+                } else {
+                    console.log("invalid data type: " + dataType)
+                }
+            }
+        } else {
             ioArray = []
         }
         
-        let ioMap = new Map(); 
-        ioArray.forEach(ioName => {
-            let ioObject = new IO(ioName, this, isInput);
-            ioMap.set(ioName, ioObject)
-        });
         return ioMap
     }
 
@@ -1056,10 +1131,19 @@ class DEVICE {
             switch (msg.type) {
                 case "registerIO": // To add/remove new inputs outputs after registration.
                     if (msg.inputs && msg.outputs) {
-                        this.inputs      = this.create_IO_objects(msg.inputs, true)
-                        this.inputNames  = new Map(msg.inputs.map(value => [value, value]))
-                        this.outputs     = this.create_IO_objects(msg.outputs, false)
-                        this.outputNames = new Map(msg.outputs.map(value => [value, value]))
+                        // this.inputs      = this.create_IO_objects(msg.inputs, true)
+                        // this.inputNames  = new Map(msg.inputs.map(value => [value, value]))
+                        // this.outputs     = this.create_IO_objects(msg.outputs, false)
+                        // this.outputNames = new Map(msg.outputs.map(value => [value, value]))
+
+                        this.inputs  = this.create_IO_objects(msg.inputs, true);
+                        this.outputs = this.create_IO_objects(msg.outputs, false);
+                        this.inputNames = new Map()
+                        this.outputNames = new Map()
+                        this.inputs.forEach((value, key) => {this.inputNames.set(value.name, value.name);});
+                        this.outputs.forEach((value, key) => {this.outputNames.set(value.name, value.name);});
+                
+                        
                         // this.inputNames  = msg.inputs
                         this.server.checkForPersistentLink()
                     }
@@ -1244,8 +1328,8 @@ class DEVICE {
 
     getAvailableIO() {
         let availableIO = {
-            inputs:        [],
-            outputs:       [],
+            inputs:        {},
+            outputs:       {},
             all_inputs:    [],
             all_outputs:   [],
             widgets:       [],
@@ -1259,18 +1343,17 @@ class DEVICE {
 
         this.inputs.forEach((input, inputName) => {
             availableIO.all_inputs.push(inputName)
-            if (input.isAvailable) {
-                availableIO.inputs.push(inputName)
-            }
+            // if (input.isAvailable) {
+                availableIO.inputs[inputName] = input.dataType
+            // }
         })
-
+    
         this.outputs.forEach((output, outputName) => {
             availableIO.all_outputs.push(outputName)
-            if (output.isAvailable) {
-                availableIO.outputs.push(outputName)
-            }
+            // if (output.isAvailable) {
+                availableIO.outputs[outputName] = output.dataType
+            // }
         })
-        
         this.widgets.forEach((widget, widgetName) => {
             availableIO.widgets[widgetName] = widget
         })
@@ -1445,16 +1528,21 @@ class VIRTUALDEVICE {
 }
 
 class IO {
-    constructor(name, device, isInput) {
+    constructor(name, device, isInput, dataType = "typeless") {
         this.name = name;
         this.device = device;
         this.deviceName = device.name
         this.isInput = isInput;
         this.isAvailable = true;
+        this.dataType = dataType; // typeless, integer, Float, array
         this.outputEventListeners = {}; // This is sent out of this device. to other devices. Output ->
         if (this.isInput) {
             this.sendInputToDevice()
         }
+    }
+
+    getDataType() {
+        return this.dataType;
     }
 
     setAvailability(isAvailable) {

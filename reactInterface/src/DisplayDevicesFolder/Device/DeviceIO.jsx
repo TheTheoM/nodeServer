@@ -119,34 +119,39 @@ const DeviceIO = ({deviceName, inputs, outputs, widgets, sendMapToLinkFactory, a
                   </React.Fragment>
 
                   :
-                  inputs.map((word, index) => (
+                  all_inputs.map((word, index) => (
                     <Label Icon={Plug} key = {index} text = {word} onClick={inputClicked}/>
                   ))
                   }
               </div>
               <div className={isOutputClicked ? "IOContainer Selected" : "IOContainer"}>
                   {isOutputClicked
-                  ?
-                  <React.Fragment>
-                    <Label Icon={Socket} text = {clickedOutput}  onClick={outputClicked} iconStyleClass = {"outputsActive"}/>
-                    <Label Icon={Add}  text = {"Add Link"}       onClick={addOutputToMap}/>
-                    {(doesWidgetExist(clickedOutput)) ? <Label Icon={Edit} text = {"Edit"}  onClick={editOutput}/> : null}
-                    <Label Icon={Info} text = {"Info"}           onClick={getIOInfo}/>
-                  
-                  </React.Fragment>
-                  :
-                  all_outputs.map((word, index) => {
-                    if (outputs.includes(word)) {
-                      return <Label Icon={Socket}  key = {index} text = {word} onClick={outputClicked}/>
-                    } else {
-                      return (
-                        <div style={{'filter': 'brightness(0.5)', 'cursor' : '!important not-allowed'}}>
-                          <Label Icon={Socket}  key = {index} text = {word} style={{'cursor' : '!important not-allowed'}}/>
-                        </div>
-                      )
-                    }
-                  })
+                    ?
+                    <React.Fragment>
+                      <Label Icon={Socket} text = {clickedOutput}  onClick={outputClicked} iconStyleClass = {"outputsActive"}/>
+                      <Label Icon={Add}  text = {"Add Link"}       onClick={addOutputToMap}/>
+                      {(doesWidgetExist(clickedOutput)) ? <Label Icon={Edit} text = {"Edit"}  onClick={editOutput}/> : null}
+                      <Label Icon={Info} text = {"Info"}           onClick={getIOInfo}/>
+                    
+                    </React.Fragment>
+                    :
+                  // all_outputs.map((word, index) => {
+                  //   if (outputs.hasOwnProperty(word)) {
+                  //     return <Label Icon={Socket}  key = {index} text = {word} onClick={outputClicked}/>
+                  //   } else {
+                  //     return (
+                  //       <div style={{'filter': 'brightness(0.5)', 'cursor' : '!important not-allowed'}}>
+                  //         <Label Icon={Socket}  key = {index} text = {word} style={{'cursor' : '!important not-allowed'}}/>
+                  //       </div>
+                  //     )
+                  //   }
+                  // })
+                  // }
+                    all_outputs.map((word, index) => (
+                      <Label Icon={Socket}  key = {index} text = {word}/>
+                    ))
                   }
+
               </div>
               </React.Fragment>
           }

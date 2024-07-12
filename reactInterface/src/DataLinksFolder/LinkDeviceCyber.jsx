@@ -28,6 +28,15 @@ const LinkDevice = (props) => {
       clearInterval(inspectInterval)
     }
   };
+
+  useEffect(() => {
+    return () => {
+      // Cleanup the interval on component unmount
+      clearInterval(inspectInterval);
+    };
+  }, [inspectInterval]);
+
+
   const handleDiscHover = () => {
     setIsDiscMenuVisible(true);
   };

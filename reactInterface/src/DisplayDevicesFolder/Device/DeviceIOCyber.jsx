@@ -158,17 +158,20 @@ const DeviceIO = (props) => {
                     </React.Fragment>
 
                     :
-                    props.all_inputs.map((word, index) => {
-                      if (props.inputs.includes(word)) {
-                        return <Label Icon={Plug}  key = {index} text = {word} onClick={inputClicked}/>
-                      } else {
-                        return (
-                          <div style={{'filter': 'brightness(0.5)', 'cursor' : 'not-allowed'}}>
-                            <Label Icon={Plug}  key = {index} text = {word} style={{'cursor' : 'not-allowed'}}/>
-                          </div>
-                        )
-                      }
-                    })
+                    // props.all_inputs.map((word, index) => {
+                    //   if (props.inputs.includes(word)) {
+                    //     return <Label Icon={Plug}  key = {index} text = {word} onClick={inputClicked}/>
+                    //   } else {
+                    //     return (
+                    //       <div style={{'filter': 'brightness(0.5)', 'cursor' : 'not-allowed'}}>
+                    //         <Label Icon={Plug}  key = {index} text = {word} style={{'cursor' : 'not-allowed'}}/>
+                    //       </div>
+                    //     )
+                    //   }
+                    // })
+                    props.all_inputs.map((word, index) => (
+                      <Label Icon={Plug} key = {index} text = {word} onClick={inputClicked}/>
+                    ))
                   }
                 </div>
                 <div className={isOutputClicked ? "IOContainer Selected" : "IOContainer"}>
@@ -182,17 +185,20 @@ const DeviceIO = (props) => {
                     
                     </React.Fragment>
                     :
-                    props.all_outputs.map((word, index) => {
-                        if (props.outputs.includes(word)) {
-                          return <Label Icon={Socket}  key = {index} text = {word} onClick={outputClicked}/>
-                        } else {
-                          return (
-                            <div style={{'filter': 'brightness(0.5)', 'cursor' : '!important not-allowed'}}>
-                              <Label Icon={Socket}  key = {index} text = {word} style={{'cursor' : '!important not-allowed'}}/>
-                            </div>
-                          )
-                        }
-                      })
+                    // props.all_outputs.map((word, index) => {
+                    //     if (props.outputs.includes(word)) {
+                    //       return <Label Icon={Socket}  key = {index} text = {word} onClick={outputClicked}/>
+                    //     } else {
+                    //       return (
+                    //         <div style={{'filter': 'brightness(0.5)', 'cursor' : '!important not-allowed'}}>
+                    //           <Label Icon={Socket}  key = {index} text = {word} style={{'cursor' : '!important not-allowed'}}/>
+                    //         </div>
+                    //       )
+                    //     }
+                    //   })
+                    props.all_outputs.map((word, index) => (
+                      <Label Icon={Socket} key = {index} text = {word} onClick={inputClicked}/>
+                    ))
                     }
                 </div>
                 </React.Fragment>

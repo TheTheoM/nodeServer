@@ -234,8 +234,12 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    height: 50px;
+    min-height: 40px;
+    max-width: 200px;
     font-size: 13px;
+    font-weight: 600;
+    overflow: hidden;
+    /* overflow-x: auto; */
 }
 
 .DeviceIOCyber .ioLabel:hover {
@@ -262,13 +266,41 @@
     box-shadow:  0px 0px 0px 1.5px var(--cyberRed);
     color: var(--cyberRed);
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(40px, max-content));
-    grid-gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(70px, max-content));
+    grid-gap: 1.3rem;
     padding: 10px;
     margin: 5px;
     justify-content: center;
     align-items: center;
+    text-align: center;
+    overflow-x: hidden;
+    overflow-y: auto;
+    min-height: 50px;
 }
+
+
+.DeviceIOCyber .IOContainer::-webkit-scrollbar {
+    top: 20px;
+    width: 5px;
+}
+
+.DeviceIOCyber .IOContainer::-webkit-scrollbar-track {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    background-color: transparent;
+}
+
+.DeviceIOCyber .IOContainer::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.664);
+    height: 20px;
+    border-radius: 5px;
+}
+
+.DeviceIOCyber .IOContainer::-webkit-scrollbar-thumb:hover {
+    background: rgb(253, 253, 253); 
+    cursor: pointer;
+}
+
 
 .DeviceIOCyber .deactivateIconHover:hover {
     color: white;
