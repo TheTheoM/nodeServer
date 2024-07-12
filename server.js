@@ -73,13 +73,14 @@ class ObservableMap {
 
     getMapFunctions() {
         return {
-            "set":        this.set,
-            "get":        this.get,
-            "deleteItem": this.deleteItem,
-            "has":        this.has,
-            "forEach":    this.forEach,
-            "map":        this.map,
-            "getMap":     this.getMap,
+            "set":         this.set,
+            "get":         this.get,
+            "deleteItem":  this.deleteItem,
+            "has":         this.has,
+            "forEach":     this.forEach,
+            "map":         this.map,
+            "getMap":      this.getMap,
+            "runOnUpdate": this.runOnUpdate,
           };
     }
 
@@ -932,6 +933,7 @@ class LINK {
                 this.inputDevice.addConnectedDevice(input_device_IO_Name, output_device_name)
             } else {
                 this.serverContext.addLog("Server",`Link Activation Failure: Incompatible Data Types.  ${outputDataType} => ${inputDataType} |  Link Name: ${this.name}`, "error")
+                this.serverContext.activeLinks.runOnUpdate()
                 return false
             }
 
