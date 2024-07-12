@@ -103,7 +103,6 @@ export default function NodeFactory(props) {
     }
     
     function deleteEdge(edges) {
-      console.log(edges)
       for (const index in edges) {
         let edge = edges[index]
         props.breakPersistentLink(edge.source, edge.sourceHandle, edge.target, edge.targetHandle)

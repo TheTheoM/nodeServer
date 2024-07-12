@@ -127,7 +127,6 @@ const WebSocketClient = () => {
 
 
           case 'persistentLinksUpdate':
-            console.log(data)
             setContextValue((context) => {
               return {...context, persistentLinks: data.persistentLinks}
             })
