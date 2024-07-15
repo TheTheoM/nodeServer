@@ -105,27 +105,24 @@ function Node({ data, isConnectable }) {
 
   }, [data.inputs, data.outputs, widgetList])
 
-
-
-
-
   return (
     <div className="nodeContainer" style={{'height': nodeHeight}}>
       <div className="inputNodes">
 
-       {Object.entries(data.inputs).map(([value, dataType]) => {
-          return (
-            <HandleWrapper 
-              type="target" 
-              key={value.toString()} 
-              id={value.toString()} 
-              style={{
-                position: 'relative',
-              }} 
-              isConnectable={isConnectable} 
-              className = {dataType}
-            />
-);          })}
+        {Object.entries(data.inputs).map(([value, dataType]) => {
+            return (
+              <HandleWrapper 
+                type="target" 
+                key={value.toString()} 
+                id={value.toString()} 
+                style={{
+                  position: 'relative',
+                }} 
+                isConnectable={isConnectable} 
+                className = {dataType}
+              />
+            );
+        })}
       </div>
 
       <div className="outputNodes">

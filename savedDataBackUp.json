@@ -1,0 +1,3331 @@
+{
+  "links": [
+    {
+      "linkName": "rcvr-Volume=>ICUE Core-volume",
+      "outputDeviceName": "rcvr",
+      "outputName": "Volume",
+      "inputDeviceName": "ICUE Core",
+      "inputName": "volume",
+      "encrypt_algorithm": null,
+      "key_size": null,
+      "highest_compatible": null,
+      "isHybrid": null
+    },
+    {
+      "linkName": "rcvr-muteStatus=>ICUE Core-displayMute",
+      "outputDeviceName": "rcvr",
+      "outputName": "muteStatus",
+      "inputDeviceName": "ICUE Core",
+      "inputName": "displayMute",
+      "encrypt_algorithm": null,
+      "key_size": null,
+      "highest_compatible": null,
+      "isHybrid": null
+    },
+    {
+      "linkName": "VU Meter-rgbOutput=>ICUE Core-K95LightBar",
+      "outputDeviceName": "VU Meter",
+      "outputName": "rgbOutput",
+      "inputDeviceName": "ICUE Core",
+      "inputName": "K95LightBar",
+      "encrypt_algorithm": null,
+      "key_size": null,
+      "highest_compatible": null,
+      "isHybrid": null
+    },
+    {
+      "linkName": "VU Meter-rgbOutput=>Bed RGB-toRGBArray",
+      "outputDeviceName": "VU Meter",
+      "outputName": "rgbOutput",
+      "inputDeviceName": "Bed RGB",
+      "inputName": "toRGBArray",
+      "encrypt_algorithm": null,
+      "key_size": null,
+      "highest_compatible": null,
+      "isHybrid": null
+    },
+    {
+      "linkName": "VU Meter-rgbOutput=>ICUE Core-H100i PLATINUM SE",
+      "outputDeviceName": "VU Meter",
+      "outputName": "rgbOutput",
+      "inputDeviceName": "ICUE Core",
+      "inputName": "H100i PLATINUM SE",
+      "encrypt_algorithm": null,
+      "key_size": null,
+      "highest_compatible": null,
+      "isHybrid": null
+    },
+    {
+      "linkName": "KeyWatcher-Ctrl-F9=>Beat-playKick",
+      "outputDeviceName": "KeyWatcher",
+      "outputName": "Ctrl-F9",
+      "inputDeviceName": "Beat",
+      "inputName": "playKick",
+      "encrypt_algorithm": null,
+      "key_size": null,
+      "highest_compatible": null,
+      "isHybrid": null
+    },
+    {
+      "linkName": "G-Keys-G1=>rcvr-Vol+",
+      "outputDeviceName": "G-Keys",
+      "outputName": "G1",
+      "inputDeviceName": "rcvr",
+      "inputName": "Vol+",
+      "encrypt_algorithm": null,
+      "key_size": null,
+      "highest_compatible": null,
+      "isHybrid": null
+    },
+    {
+      "linkName": "G-Keys-G3=>rcvr-mute",
+      "outputDeviceName": "G-Keys",
+      "outputName": "G3",
+      "inputDeviceName": "rcvr",
+      "inputName": "mute",
+      "encrypt_algorithm": null,
+      "key_size": null,
+      "highest_compatible": null,
+      "isHybrid": null
+    },
+    {
+      "linkName": "RGB Array Generator-rgbOutput1=>Bed RGB-toRGBArray",
+      "outputDeviceName": "RGB Array Generator",
+      "outputName": "rgbOutput1",
+      "inputDeviceName": "Bed RGB",
+      "inputName": "toRGBArray",
+      "encrypt_algorithm": null,
+      "key_size": null,
+      "highest_compatible": null,
+      "isHybrid": null
+    },
+    {
+      "linkName": "Especially-ultraSonDist=>changeEq-chairDistance",
+      "outputDeviceName": "Especially",
+      "outputName": "ultraSonDist",
+      "inputDeviceName": "changeEq",
+      "inputName": "chairDistance",
+      "encrypt_algorithm": null,
+      "key_size": null,
+      "highest_compatible": null,
+      "isHybrid": null
+    },
+    {
+      "linkName": "icueClient2-rgbOutput=>Bed RGB-toRGBArray",
+      "outputDeviceName": "icueClient2",
+      "outputName": "rgbOutput",
+      "inputDeviceName": "Bed RGB",
+      "inputName": "toRGBArray",
+      "encrypt_algorithm": null,
+      "key_size": null,
+      "highest_compatible": null,
+      "isHybrid": null
+    },
+    {
+      "linkName": "icueClient2-brightness=>Bed RGB-brightness",
+      "outputDeviceName": "icueClient2",
+      "outputName": "brightness",
+      "inputDeviceName": "Bed RGB",
+      "inputName": "brightness",
+      "encrypt_algorithm": null,
+      "key_size": null,
+      "highest_compatible": null,
+      "isHybrid": null
+    },
+    {
+      "linkName": "icueClient-brightness=>Especially-brightness",
+      "outputDeviceName": "icueClient",
+      "outputName": "brightness",
+      "inputDeviceName": "Especially",
+      "inputName": "brightness",
+      "encrypt_algorithm": null,
+      "key_size": null,
+      "highest_compatible": null,
+      "isHybrid": null
+    },
+    {
+      "linkName": "icueClient-rgbOutput=>Especially-toRGBArray",
+      "outputDeviceName": "icueClient",
+      "outputName": "rgbOutput",
+      "inputDeviceName": "Especially",
+      "inputName": "toRGBArray",
+      "encrypt_algorithm": null,
+      "key_size": null,
+      "highest_compatible": null,
+      "isHybrid": null
+    },
+    {
+      "linkName": "G-Keys-G2=>rcvr-Vol-",
+      "outputDeviceName": "G-Keys",
+      "outputName": "G2",
+      "inputDeviceName": "rcvr",
+      "inputName": "Vol-",
+      "encrypt_algorithm": null,
+      "key_size": null,
+      "highest_compatible": null,
+      "isHybrid": null
+    }
+  ],
+  "deviceData": {
+    "Especially": {
+      "logs": [
+        {
+          "name": "Especially",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-14T09:16:19.424Z",
+          "logType": "error"
+        },
+        {
+          "name": "Especially",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-14T09:19:51.173Z",
+          "logType": "error"
+        },
+        {
+          "name": "Especially",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-14T09:28:57.425Z",
+          "logType": "error"
+        },
+        {
+          "name": "Especially",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-14T09:30:33.099Z",
+          "logType": "error"
+        },
+        {
+          "name": "Especially",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-14T11:16:00.376Z",
+          "logType": "error"
+        },
+        {
+          "name": "Especially",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-14T12:39:31.446Z",
+          "logType": "error"
+        },
+        {
+          "name": "Especially",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-14T12:40:11.954Z",
+          "logType": "error"
+        },
+        {
+          "name": "Especially",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-15T02:32:19.907Z",
+          "logType": "error"
+        },
+        {
+          "name": "Especially",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-15T02:32:57.364Z",
+          "logType": "error"
+        },
+        {
+          "name": "Especially",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-15T03:04:38.962Z",
+          "logType": "error"
+        },
+        {
+          "name": "Especially",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-15T03:07:40.296Z",
+          "logType": "error"
+        },
+        {
+          "name": "Especially",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-15T03:16:41.928Z",
+          "logType": "error"
+        },
+        {
+          "name": "Especially",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-15T03:17:45.415Z",
+          "logType": "error"
+        },
+        {
+          "name": "Especially",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-15T03:25:37.857Z",
+          "logType": "error"
+        },
+        {
+          "name": "Especially",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-15T03:33:47.105Z",
+          "logType": "error"
+        },
+        {
+          "name": "Especially",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-15T03:34:45.190Z",
+          "logType": "error"
+        },
+        {
+          "name": "Especially",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-15T03:43:55.794Z",
+          "logType": "error"
+        },
+        {
+          "name": "Especially",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-15T03:46:25.093Z",
+          "logType": "error"
+        },
+        {
+          "name": "Especially",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-15T03:46:47.959Z",
+          "logType": "error"
+        },
+        {
+          "name": "Especially",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-15T04:58:15.327Z",
+          "logType": "error"
+        },
+        {
+          "name": "Especially",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-15T04:59:11.122Z",
+          "logType": "error"
+        },
+        {
+          "name": "Especially",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-15T05:05:17.128Z",
+          "logType": "error"
+        },
+        {
+          "name": "Especially",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-15T05:05:34.978Z",
+          "logType": "error"
+        },
+        {
+          "name": "Especially",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-15T05:10:48.296Z",
+          "logType": "error"
+        },
+        {
+          "name": "Especially",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-15T05:11:58.584Z",
+          "logType": "error"
+        },
+        {
+          "name": "Especially",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-15T05:14:43.535Z",
+          "logType": "error"
+        },
+        {
+          "name": "Especially",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-15T05:15:48.908Z",
+          "logType": "error"
+        },
+        {
+          "name": "Especially",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-15T05:16:33.888Z",
+          "logType": "error"
+        },
+        {
+          "name": "Especially",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-15T05:18:37.665Z",
+          "logType": "error"
+        },
+        {
+          "name": "Especially",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-15T06:40:28.180Z",
+          "logType": "error"
+        },
+        {
+          "name": "Especially",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-15T06:40:41.393Z",
+          "logType": "error"
+        },
+        {
+          "name": "Especially",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-15T06:42:36.698Z",
+          "logType": "error"
+        },
+        {
+          "name": "Especially",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-15T06:54:20.248Z",
+          "logType": "error"
+        },
+        {
+          "name": "Especially",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-15T07:22:31.091Z",
+          "logType": "error"
+        },
+        {
+          "name": "Especially",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-15T07:25:35.987Z",
+          "logType": "error"
+        },
+        {
+          "name": "Especially",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-15T07:27:14.328Z",
+          "logType": "error"
+        },
+        {
+          "name": "Especially",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-15T07:27:49.340Z",
+          "logType": "error"
+        },
+        {
+          "name": "Especially",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-15T07:54:50.539Z",
+          "logType": "error"
+        },
+        {
+          "name": "Especially",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-15T07:57:16.375Z",
+          "logType": "error"
+        },
+        {
+          "name": "Especially",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-15T09:07:27.339Z",
+          "logType": "error"
+        },
+        {
+          "name": "Especially",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-15T09:09:17.031Z",
+          "logType": "error"
+        },
+        {
+          "name": "Especially",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-15T09:21:18.569Z",
+          "logType": "error"
+        },
+        {
+          "name": "Especially",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-15T09:28:42.688Z",
+          "logType": "error"
+        },
+        {
+          "name": "Especially",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-15T09:30:41.607Z",
+          "logType": "error"
+        },
+        {
+          "name": "Especially",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-15T09:33:22.931Z",
+          "logType": "error"
+        },
+        {
+          "name": "Especially",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-15T09:34:19.549Z",
+          "logType": "error"
+        },
+        {
+          "name": "Especially",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-15T09:36:39.442Z",
+          "logType": "error"
+        },
+        {
+          "name": "Especially",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-15T09:36:47.021Z",
+          "logType": "error"
+        },
+        {
+          "name": "Especially",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-15T09:38:48.597Z",
+          "logType": "error"
+        },
+        {
+          "name": "Especially",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-15T09:39:38.188Z",
+          "logType": "error"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -68 dBm",
+          "time": "2024-07-15T09:39:08.568Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -69 dBm",
+          "time": "2024-07-15T09:39:11.568Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -68 dBm",
+          "time": "2024-07-15T09:39:14.576Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -68 dBm",
+          "time": "2024-07-15T09:39:17.568Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -70 dBm",
+          "time": "2024-07-15T09:39:20.571Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -68 dBm",
+          "time": "2024-07-15T09:39:23.571Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -68 dBm",
+          "time": "2024-07-15T09:39:26.568Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -68 dBm",
+          "time": "2024-07-15T09:39:29.567Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -68 dBm",
+          "time": "2024-07-15T09:39:32.571Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33608\r\nSignal Strength (RSSI): -68 dBm",
+          "time": "2024-07-15T09:39:38.616Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33608\r\nSignal Strength (RSSI): -68 dBm",
+          "time": "2024-07-15T09:39:41.615Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33608\r\nSignal Strength (RSSI): -69 dBm",
+          "time": "2024-07-15T09:39:44.617Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -68 dBm",
+          "time": "2024-07-15T09:39:47.615Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -69 dBm",
+          "time": "2024-07-15T09:39:50.617Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -68 dBm",
+          "time": "2024-07-15T09:39:53.621Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -69 dBm",
+          "time": "2024-07-15T09:39:56.614Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -68 dBm",
+          "time": "2024-07-15T09:39:59.615Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -69 dBm",
+          "time": "2024-07-15T09:40:02.614Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -68 dBm",
+          "time": "2024-07-15T09:40:05.614Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -69 dBm",
+          "time": "2024-07-15T09:40:08.614Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -67 dBm",
+          "time": "2024-07-15T09:40:11.614Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -68 dBm",
+          "time": "2024-07-15T09:40:14.614Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -68 dBm",
+          "time": "2024-07-15T09:40:17.614Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -68 dBm",
+          "time": "2024-07-15T09:40:20.614Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -67 dBm",
+          "time": "2024-07-15T09:40:23.617Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -68 dBm",
+          "time": "2024-07-15T09:40:26.613Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -68 dBm",
+          "time": "2024-07-15T09:40:29.614Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -68 dBm",
+          "time": "2024-07-15T09:40:32.617Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -68 dBm",
+          "time": "2024-07-15T09:40:35.613Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -68 dBm",
+          "time": "2024-07-15T09:40:38.614Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -68 dBm",
+          "time": "2024-07-15T09:40:41.615Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -69 dBm",
+          "time": "2024-07-15T09:40:44.613Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -69 dBm",
+          "time": "2024-07-15T09:40:47.613Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -69 dBm",
+          "time": "2024-07-15T09:40:50.620Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -69 dBm",
+          "time": "2024-07-15T09:40:53.613Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -68 dBm",
+          "time": "2024-07-15T09:40:56.613Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -69 dBm",
+          "time": "2024-07-15T09:40:59.613Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -68 dBm",
+          "time": "2024-07-15T09:41:02.615Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -67 dBm",
+          "time": "2024-07-15T09:41:05.612Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -69 dBm",
+          "time": "2024-07-15T09:41:08.613Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -68 dBm",
+          "time": "2024-07-15T09:41:11.613Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -68 dBm",
+          "time": "2024-07-15T09:41:14.612Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -67 dBm",
+          "time": "2024-07-15T09:41:17.612Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -68 dBm",
+          "time": "2024-07-15T09:41:20.617Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -68 dBm",
+          "time": "2024-07-15T09:41:23.612Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -67 dBm",
+          "time": "2024-07-15T09:41:26.612Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 32864\r\nSignal Strength (RSSI): -68 dBm",
+          "time": "2024-07-15T09:41:29.622Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -67 dBm",
+          "time": "2024-07-15T09:41:32.614Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -68 dBm",
+          "time": "2024-07-15T09:41:35.614Z",
+          "logType": "info"
+        },
+        {
+          "name": "Especially",
+          "log": "Free Heap: 33104\r\nSignal Strength (RSSI): -68 dBm",
+          "time": "2024-07-15T09:41:38.614Z",
+          "logType": "info"
+        }
+      ],
+      "position": {
+        "x": 163.61241267600275,
+        "y": -20.720119868067187
+      }
+    },
+    "Server": {
+      "logs": [
+        {
+          "name": "Server",
+          "log": "Unknown message type received: 1. RCVD Msg: {\"type\":\"1\"}",
+          "time": "2024-07-15T03:38:09.787Z",
+          "logType": "error"
+        },
+        {
+          "name": "Server",
+          "log": "Unknown message type received: 2. RCVD Msg: {\"type\":\"2\"}",
+          "time": "2024-07-15T03:38:09.793Z",
+          "logType": "error"
+        },
+        {
+          "name": "Server",
+          "log": "Unknown message type received: 0. RCVD Msg: {\"type\":\"0\"}",
+          "time": "2024-07-15T03:38:10.590Z",
+          "logType": "error"
+        },
+        {
+          "name": "Server",
+          "log": "Unknown message type received: 1. RCVD Msg: {\"type\":\"1\"}",
+          "time": "2024-07-15T03:38:10.596Z",
+          "logType": "error"
+        },
+        {
+          "name": "Server",
+          "log": "Unknown message type received: 0. RCVD Msg: {\"type\":\"0\"}",
+          "time": "2024-07-15T03:38:10.791Z",
+          "logType": "error"
+        },
+        {
+          "name": "Server",
+          "log": "Unknown message type received: 1. RCVD Msg: {\"type\":\"1\"}",
+          "time": "2024-07-15T03:38:10.797Z",
+          "logType": "error"
+        },
+        {
+          "name": "Server",
+          "log": "Unknown message type received: 2. RCVD Msg: {\"type\":\"2\"}",
+          "time": "2024-07-15T03:38:10.803Z",
+          "logType": "error"
+        },
+        {
+          "name": "Server",
+          "log": "Unknown message type received: 0. RCVD Msg: {\"type\":\"0\"}",
+          "time": "2024-07-15T03:38:11.600Z",
+          "logType": "error"
+        },
+        {
+          "name": "Server",
+          "log": "Unknown message type received: 1. RCVD Msg: {\"type\":\"1\"}",
+          "time": "2024-07-15T03:38:11.606Z",
+          "logType": "error"
+        },
+        {
+          "name": "Server",
+          "log": "Unknown message type received: 0. RCVD Msg: {\"type\":\"0\"}",
+          "time": "2024-07-15T03:38:11.803Z",
+          "logType": "error"
+        },
+        {
+          "name": "Server",
+          "log": "Unknown message type received: 1. RCVD Msg: {\"type\":\"1\"}",
+          "time": "2024-07-15T03:38:11.809Z",
+          "logType": "error"
+        },
+        {
+          "name": "Server",
+          "log": "Unknown message type received: 2. RCVD Msg: {\"type\":\"2\"}",
+          "time": "2024-07-15T03:38:11.815Z",
+          "logType": "error"
+        },
+        {
+          "name": "Server",
+          "log": "Unknown message type received: 0. RCVD Msg: {\"type\":\"0\"}",
+          "time": "2024-07-15T03:38:12.612Z",
+          "logType": "error"
+        },
+        {
+          "name": "Server",
+          "log": "Unknown message type received: 1. RCVD Msg: {\"type\":\"1\"}",
+          "time": "2024-07-15T03:38:12.619Z",
+          "logType": "error"
+        },
+        {
+          "name": "Server",
+          "log": "Unknown message type received: 0. RCVD Msg: {\"type\":\"0\"}",
+          "time": "2024-07-15T03:38:12.814Z",
+          "logType": "error"
+        },
+        {
+          "name": "Server",
+          "log": "Unknown message type received: 1. RCVD Msg: {\"type\":\"1\"}",
+          "time": "2024-07-15T03:38:12.819Z",
+          "logType": "error"
+        },
+        {
+          "name": "Server",
+          "log": "Unknown message type received: 2. RCVD Msg: {\"type\":\"2\"}",
+          "time": "2024-07-15T03:38:12.824Z",
+          "logType": "error"
+        },
+        {
+          "name": "Server",
+          "log": "Failure to register/change Device: DeviceC's IO, due to missing 'inputNames' and 'outputNames' fields. RCVD Msg:  {\"type\":\"registerIO\"}",
+          "time": "2024-07-15T03:39:02.278Z",
+          "logType": "error"
+        },
+        {
+          "name": "Server",
+          "log": "sendLogs message received with missing fields for device DeviceC. RCVD Msg: {\"type\":\"sendLogs\"}",
+          "time": "2024-07-15T03:39:02.284Z",
+          "logType": "error"
+        },
+        {
+          "name": "Server",
+          "log": "modifyLogFilters message received without 'filters' field for device DeviceC. RCVD Msg: {\"type\":\"modifyLogFilters\"}",
+          "time": "2024-07-15T03:39:02.289Z",
+          "logType": "error"
+        },
+        {
+          "name": "Server",
+          "log": "Failure to register/change Device: DeviceC's IO, due to missing 'inputNames' and 'outputNames' fields. RCVD Msg:  {\"type\":\"registerIO\"}",
+          "time": "2024-07-15T03:39:03.085Z",
+          "logType": "error"
+        },
+        {
+          "name": "Server",
+          "log": "sendLogs message received with missing fields for device DeviceC. RCVD Msg: {\"type\":\"sendLogs\"}",
+          "time": "2024-07-15T03:39:03.090Z",
+          "logType": "error"
+        },
+        {
+          "name": "Server",
+          "log": "Failure to register/change Device: DeviceC's IO, due to missing 'inputNames' and 'outputNames' fields. RCVD Msg:  {\"type\":\"registerIO\"}",
+          "time": "2024-07-15T03:39:03.286Z",
+          "logType": "error"
+        },
+        {
+          "name": "Server",
+          "log": "sendLogs message received with missing fields for device DeviceC. RCVD Msg: {\"type\":\"sendLogs\"}",
+          "time": "2024-07-15T03:39:03.293Z",
+          "logType": "error"
+        },
+        {
+          "name": "Server",
+          "log": "modifyLogFilters message received without 'filters' field for device DeviceC. RCVD Msg: {\"type\":\"modifyLogFilters\"}",
+          "time": "2024-07-15T03:39:03.299Z",
+          "logType": "error"
+        },
+        {
+          "name": "Server",
+          "log": "Failure to register/change Device: DeviceC's IO, due to missing 'inputNames' and 'outputNames' fields. RCVD Msg:  {\"type\":\"registerIO\"}",
+          "time": "2024-07-15T03:39:04.092Z",
+          "logType": "error"
+        },
+        {
+          "name": "Server",
+          "log": "sendLogs message received with missing fields for device DeviceC. RCVD Msg: {\"type\":\"sendLogs\"}",
+          "time": "2024-07-15T03:39:04.098Z",
+          "logType": "error"
+        },
+        {
+          "name": "Server",
+          "log": "Failure to register/change Device: DeviceC's IO, due to missing 'inputNames' and 'outputNames' fields. RCVD Msg:  {\"type\":\"registerIO\"}",
+          "time": "2024-07-15T03:39:04.294Z",
+          "logType": "error"
+        },
+        {
+          "name": "Server",
+          "log": "sendLogs message received with missing fields for device DeviceC. RCVD Msg: {\"type\":\"sendLogs\"}",
+          "time": "2024-07-15T03:39:04.299Z",
+          "logType": "error"
+        },
+        {
+          "name": "Server",
+          "log": "modifyLogFilters message received without 'filters' field for device DeviceC. RCVD Msg: {\"type\":\"modifyLogFilters\"}",
+          "time": "2024-07-15T03:39:04.304Z",
+          "logType": "error"
+        },
+        {
+          "name": "Server",
+          "log": "Failure to register/change Device: DeviceC's IO, due to missing 'inputNames' and 'outputNames' fields. RCVD Msg:  {\"type\":\"registerIO\"}",
+          "time": "2024-07-15T03:39:05.107Z",
+          "logType": "error"
+        },
+        {
+          "name": "Server",
+          "log": "sendLogs message received with missing fields for device DeviceC. RCVD Msg: {\"type\":\"sendLogs\"}",
+          "time": "2024-07-15T03:39:05.113Z",
+          "logType": "error"
+        },
+        {
+          "name": "Server",
+          "log": "Failure to register/change Device: DeviceC's IO, due to missing 'inputNames' and 'outputNames' fields. RCVD Msg:  {\"type\":\"registerIO\"}",
+          "time": "2024-07-15T03:39:05.306Z",
+          "logType": "error"
+        },
+        {
+          "name": "Server",
+          "log": "sendLogs message received with missing fields for device DeviceC. RCVD Msg: {\"type\":\"sendLogs\"}",
+          "time": "2024-07-15T03:39:05.312Z",
+          "logType": "error"
+        },
+        {
+          "name": "Server",
+          "log": "modifyLogFilters message received without 'filters' field for device DeviceC. RCVD Msg: {\"type\":\"modifyLogFilters\"}",
+          "time": "2024-07-15T03:39:05.317Z",
+          "logType": "error"
+        },
+        {
+          "name": "Server",
+          "log": "Failure to register/change Device: DeviceC's IO, due to missing 'inputNames' and 'outputNames' fields. RCVD Msg:  {\"type\":\"registerIO\"}",
+          "time": "2024-07-15T03:39:06.113Z",
+          "logType": "error"
+        },
+        {
+          "name": "Server",
+          "log": "sendLogs message received with missing fields for device DeviceC. RCVD Msg: {\"type\":\"sendLogs\"}",
+          "time": "2024-07-15T03:39:06.119Z",
+          "logType": "error"
+        },
+        {
+          "name": "Server",
+          "log": "Failure to register/change Device: DeviceC's IO, due to missing 'inputNames' and 'outputNames' fields. RCVD Msg:  {\"type\":\"registerIO\"}",
+          "time": "2024-07-15T03:39:06.314Z",
+          "logType": "error"
+        },
+        {
+          "name": "Server",
+          "log": "sendLogs message received with missing fields for device DeviceC. RCVD Msg: {\"type\":\"sendLogs\"}",
+          "time": "2024-07-15T03:39:06.319Z",
+          "logType": "error"
+        },
+        {
+          "name": "Server",
+          "log": "modifyLogFilters message received without 'filters' field for device DeviceC. RCVD Msg: {\"type\":\"modifyLogFilters\"}",
+          "time": "2024-07-15T03:39:06.325Z",
+          "logType": "error"
+        },
+        {
+          "name": "Server",
+          "log": "Failure to register/change Device: DeviceC's IO, due to missing 'inputNames' and 'outputNames' fields. RCVD Msg:  {\"type\":\"registerIO\"}",
+          "time": "2024-07-15T03:39:07.121Z",
+          "logType": "error"
+        },
+        {
+          "name": "Server",
+          "log": "sendLogs message received with missing fields for device DeviceC. RCVD Msg: {\"type\":\"sendLogs\"}",
+          "time": "2024-07-15T03:39:07.127Z",
+          "logType": "error"
+        },
+        {
+          "name": "Server",
+          "log": "Failure to register/change Device: DeviceC's IO, due to missing 'inputNames' and 'outputNames' fields. RCVD Msg:  {\"type\":\"registerIO\"}",
+          "time": "2024-07-15T03:39:07.324Z",
+          "logType": "error"
+        },
+        {
+          "name": "Server",
+          "log": "sendLogs message received with missing fields for device DeviceC. RCVD Msg: {\"type\":\"sendLogs\"}",
+          "time": "2024-07-15T03:39:07.329Z",
+          "logType": "error"
+        },
+        {
+          "name": "Server",
+          "log": "modifyLogFilters message received without 'filters' field for device DeviceC. RCVD Msg: {\"type\":\"modifyLogFilters\"}",
+          "time": "2024-07-15T03:39:07.335Z",
+          "logType": "error"
+        },
+        {
+          "name": "Server",
+          "log": "Failure to register/change Device: DeviceC's IO, due to missing 'inputNames' and 'outputNames' fields. RCVD Msg:  {\"type\":\"registerIO\"}",
+          "time": "2024-07-15T03:39:18.831Z",
+          "logType": "error"
+        },
+        {
+          "name": "Server",
+          "log": "sendLogs message received with missing fields for device DeviceC. RCVD Msg: {\"type\":\"sendLogs\"}",
+          "time": "2024-07-15T03:39:18.837Z",
+          "logType": "error"
+        },
+        {
+          "name": "Server",
+          "log": "modifyLogFilters message received without 'filters' field for device DeviceC. RCVD Msg: {\"type\":\"modifyLogFilters\"}",
+          "time": "2024-07-15T03:39:18.843Z",
+          "logType": "error"
+        },
+        {
+          "name": "Server",
+          "log": "getDeviceLogs message received without 'filters' field for device DeviceC. RCVD Msg: {\"type\":\"getDeviceLogs\"}",
+          "time": "2024-07-15T03:39:18.848Z",
+          "logType": "error"
+        },
+        {
+          "name": "Server",
+          "log": "sendNodePositions message received without 'nodePositions' field. RCVD Msg: {\"type\":\"sendNodePositions\"}",
+          "time": "2024-07-15T03:39:18.854Z",
+          "logType": "error"
+        },
+        {
+          "name": "Server",
+          "log": "Device: webClient registered. Ip: ::1",
+          "time": "2024-07-15T09:33:27.577Z",
+          "logType": "info"
+        },
+        {
+          "name": "Server",
+          "log": "Device: Device connected.",
+          "time": "2024-07-15T09:34:18.516Z",
+          "logType": "info"
+        },
+        {
+          "name": "Server",
+          "log": "Attempts to disconnect Especially",
+          "time": "2024-07-15T09:34:18.779Z",
+          "logType": "info"
+        },
+        {
+          "name": "Server",
+          "log": "Link deactivated due to disconnected device, device Name: Especially",
+          "time": "2024-07-15T09:34:18.787Z",
+          "logType": "info"
+        },
+        {
+          "name": "Server",
+          "log": "Link: Especially-ultraSonDist=>changeEq-chairDistance: Deactivated",
+          "time": "2024-07-15T09:34:18.796Z",
+          "logType": "info"
+        },
+        {
+          "name": "Server",
+          "log": "Link deactivated due to disconnected device, device Name: Especially",
+          "time": "2024-07-15T09:34:18.804Z",
+          "logType": "info"
+        },
+        {
+          "name": "Server",
+          "log": "Device: Especially registered. Ip: ::ffff:192.168.1.92",
+          "time": "2024-07-15T09:34:19.528Z",
+          "logType": "info"
+        },
+        {
+          "name": "Server",
+          "log": "Device: Device connected.",
+          "time": "2024-07-15T09:36:38.395Z",
+          "logType": "info"
+        },
+        {
+          "name": "Server",
+          "log": "Attempts to disconnect Especially",
+          "time": "2024-07-15T09:36:38.457Z",
+          "logType": "info"
+        },
+        {
+          "name": "Server",
+          "log": "Link deactivated due to disconnected device, device Name: Especially",
+          "time": "2024-07-15T09:36:38.463Z",
+          "logType": "info"
+        },
+        {
+          "name": "Server",
+          "log": "Link: Especially-ultraSonDist=>changeEq-chairDistance: Deactivated",
+          "time": "2024-07-15T09:36:38.470Z",
+          "logType": "info"
+        },
+        {
+          "name": "Server",
+          "log": "Link deactivated due to disconnected device, device Name: Especially",
+          "time": "2024-07-15T09:36:38.477Z",
+          "logType": "info"
+        },
+        {
+          "name": "Server",
+          "log": "Device: Especially registered. Ip: ::ffff:192.168.1.92",
+          "time": "2024-07-15T09:36:39.407Z",
+          "logType": "info"
+        },
+        {
+          "name": "Server",
+          "log": "Attempts to disconnect ICUE Core",
+          "time": "2024-07-15T09:36:39.789Z",
+          "logType": "info"
+        },
+        {
+          "name": "Server",
+          "log": "Link deactivated due to disconnected device, device Name: ICUE Core",
+          "time": "2024-07-15T09:36:39.796Z",
+          "logType": "info"
+        },
+        {
+          "name": "Server",
+          "log": "Link: rcvr-Volume=>ICUE Core-volume: Deactivated",
+          "time": "2024-07-15T09:36:39.804Z",
+          "logType": "info"
+        },
+        {
+          "name": "Server",
+          "log": "Link deactivated due to disconnected device, device Name: ICUE Core",
+          "time": "2024-07-15T09:36:39.812Z",
+          "logType": "info"
+        },
+        {
+          "name": "Server",
+          "log": "Device: Device connected.",
+          "time": "2024-07-15T09:36:45.992Z",
+          "logType": "info"
+        },
+        {
+          "name": "Server",
+          "log": "Device: Device connected.",
+          "time": "2024-07-15T09:36:45.997Z",
+          "logType": "info"
+        },
+        {
+          "name": "Server",
+          "log": "Device: Device connected.",
+          "time": "2024-07-15T09:36:46.287Z",
+          "logType": "info"
+        },
+        {
+          "name": "Server",
+          "log": "Device: Device connected.",
+          "time": "2024-07-15T09:36:46.299Z",
+          "logType": "info"
+        },
+        {
+          "name": "Server",
+          "log": "Device: Device connected.",
+          "time": "2024-07-15T09:36:46.325Z",
+          "logType": "info"
+        },
+        {
+          "name": "Server",
+          "log": "Device: Especially registered. Ip: ::ffff:192.168.1.92",
+          "time": "2024-07-15T09:36:47.004Z",
+          "logType": "info"
+        },
+        {
+          "name": "Server",
+          "log": "Link: Especially-ultraSonDist=>changeEq-chairDistance: Activated",
+          "time": "2024-07-15T09:36:47.009Z",
+          "logType": "info"
+        },
+        {
+          "name": "Server",
+          "log": "Device: Device connected.",
+          "time": "2024-07-15T09:36:52.740Z",
+          "logType": "info"
+        },
+        {
+          "name": "Server",
+          "log": "Device: webClient registered. Ip: ::1",
+          "time": "2024-07-15T09:36:52.756Z",
+          "logType": "info"
+        },
+        {
+          "name": "Server",
+          "log": "Attempts to disconnect ICUE Core",
+          "time": "2024-07-15T09:38:38.364Z",
+          "logType": "info"
+        },
+        {
+          "name": "Server",
+          "log": "Link deactivated due to disconnected device, device Name: ICUE Core",
+          "time": "2024-07-15T09:38:38.371Z",
+          "logType": "info"
+        },
+        {
+          "name": "Server",
+          "log": "Link: rcvr-Volume=>ICUE Core-volume: Deactivated",
+          "time": "2024-07-15T09:38:38.380Z",
+          "logType": "info"
+        },
+        {
+          "name": "Server",
+          "log": "Link deactivated due to disconnected device, device Name: ICUE Core",
+          "time": "2024-07-15T09:38:38.389Z",
+          "logType": "info"
+        },
+        {
+          "name": "Server",
+          "log": "Device: Device connected.",
+          "time": "2024-07-15T09:38:47.436Z",
+          "logType": "info"
+        },
+        {
+          "name": "Server",
+          "log": "Device: Device connected.",
+          "time": "2024-07-15T09:38:47.565Z",
+          "logType": "info"
+        },
+        {
+          "name": "Server",
+          "log": "Device: Device connected.",
+          "time": "2024-07-15T09:38:48.335Z",
+          "logType": "info"
+        },
+        {
+          "name": "Server",
+          "log": "Device: Device connected.",
+          "time": "2024-07-15T09:38:48.348Z",
+          "logType": "info"
+        },
+        {
+          "name": "Server",
+          "log": "Device: Device connected.",
+          "time": "2024-07-15T09:38:48.398Z",
+          "logType": "info"
+        },
+        {
+          "name": "Server",
+          "log": "Device: Bed RGB registered. Ip: ::ffff:192.168.1.97",
+          "time": "2024-07-15T09:38:48.446Z",
+          "logType": "info"
+        },
+        {
+          "name": "Server",
+          "log": "Device: Especially registered. Ip: ::ffff:192.168.1.92",
+          "time": "2024-07-15T09:38:48.588Z",
+          "logType": "info"
+        },
+        {
+          "name": "Server",
+          "log": "Device: Device connected.",
+          "time": "2024-07-15T09:38:54.081Z",
+          "logType": "info"
+        },
+        {
+          "name": "Server",
+          "log": "Device: webClient registered. Ip: ::1",
+          "time": "2024-07-15T09:38:54.100Z",
+          "logType": "info"
+        },
+        {
+          "name": "Server",
+          "log": "Device: Device connected.",
+          "time": "2024-07-15T09:39:37.134Z",
+          "logType": "info"
+        },
+        {
+          "name": "Server",
+          "log": "Attempts to disconnect Especially",
+          "time": "2024-07-15T09:39:37.378Z",
+          "logType": "info"
+        },
+        {
+          "name": "Server",
+          "log": "Link deactivated due to disconnected device, device Name: Especially",
+          "time": "2024-07-15T09:39:37.386Z",
+          "logType": "info"
+        },
+        {
+          "name": "Server",
+          "log": "Link: icueClient-brightness=>Especially-brightness: Deactivated",
+          "time": "2024-07-15T09:39:37.399Z",
+          "logType": "info"
+        },
+        {
+          "name": "Server",
+          "log": "Link deactivated due to disconnected device, device Name: Especially",
+          "time": "2024-07-15T09:39:37.408Z",
+          "logType": "info"
+        },
+        {
+          "name": "Server",
+          "log": "Device: Especially registered. Ip: ::ffff:192.168.1.92",
+          "time": "2024-07-15T09:39:38.161Z",
+          "logType": "info"
+        },
+        {
+          "name": "Server",
+          "log": "Attempts to disconnect ICUE Core",
+          "time": "2024-07-15T09:41:40.345Z",
+          "logType": "info"
+        },
+        {
+          "name": "Server",
+          "log": "Link deactivated due to disconnected device, device Name: ICUE Core",
+          "time": "2024-07-15T09:41:40.353Z",
+          "logType": "info"
+        },
+        {
+          "name": "Server",
+          "log": "Link: rcvr-Volume=>ICUE Core-volume: Deactivated",
+          "time": "2024-07-15T09:41:40.360Z",
+          "logType": "info"
+        },
+        {
+          "name": "Server",
+          "log": "Link deactivated due to disconnected device, device Name: ICUE Core",
+          "time": "2024-07-15T09:41:40.367Z",
+          "logType": "info"
+        },
+        {
+          "name": "Server",
+          "log": "Link: rcvr-muteStatus=>ICUE Core-displayMute: Deactivated",
+          "time": "2024-07-15T09:41:40.375Z",
+          "logType": "info"
+        }
+      ],
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "ICUE Core": {
+      "logs": [
+        {
+          "name": "ICUE Core",
+          "log": "Attempting to Reconnect to ICUE.",
+          "time": "2024-07-11T11:19:30.600Z",
+          "logType": "info"
+        },
+        {
+          "name": "ICUE Core",
+          "log": "Attempting to Reconnect to ICUE.",
+          "time": "2024-07-11T11:20:11.573Z",
+          "logType": "info"
+        },
+        {
+          "name": "ICUE Core",
+          "log": "Attempting to Reconnect to ICUE.",
+          "time": "2024-07-11T11:20:36.448Z",
+          "logType": "info"
+        },
+        {
+          "name": "ICUE Core",
+          "log": "Attempting to Reconnect to ICUE.",
+          "time": "2024-07-11T11:21:49.459Z",
+          "logType": "info"
+        },
+        {
+          "name": "ICUE Core",
+          "log": "Attempting to Reconnect to ICUE.",
+          "time": "2024-07-11T11:24:01.639Z",
+          "logType": "info"
+        },
+        {
+          "name": "ICUE Core",
+          "log": "Attempting to Reconnect to ICUE.",
+          "time": "2024-07-11T11:25:22.287Z",
+          "logType": "info"
+        },
+        {
+          "name": "ICUE Core",
+          "log": "Attempting to Reconnect to ICUE.",
+          "time": "2024-07-11T11:26:14.598Z",
+          "logType": "info"
+        },
+        {
+          "name": "ICUE Core",
+          "log": "Attempting to Reconnect to ICUE.",
+          "time": "2024-07-11T11:31:31.458Z",
+          "logType": "info"
+        },
+        {
+          "name": "ICUE Core",
+          "log": "Attempting to Reconnect to ICUE.",
+          "time": "2024-07-11T15:57:02.573Z",
+          "logType": "info"
+        },
+        {
+          "name": "ICUE Core",
+          "log": "Attempting to Reconnect to ICUE.",
+          "time": "2024-07-12T00:31:31.261Z",
+          "logType": "info"
+        },
+        {
+          "name": "ICUE Core",
+          "log": "Attempting to Reconnect to ICUE.",
+          "time": "2024-07-13T02:13:51.025Z",
+          "logType": "info"
+        },
+        {
+          "name": "ICUE Core",
+          "log": "Attempting to Reconnect to ICUE.",
+          "time": "2024-07-14T03:10:44.359Z",
+          "logType": "info"
+        },
+        {
+          "name": "ICUE Core",
+          "log": "Attempting to Reconnect to ICUE.",
+          "time": "2024-07-15T02:32:20.373Z",
+          "logType": "info"
+        },
+        {
+          "name": "ICUE Core",
+          "log": "Attempting to Reconnect to ICUE.",
+          "time": "2024-07-15T03:33:48.556Z",
+          "logType": "info"
+        },
+        {
+          "name": "ICUE Core",
+          "log": "Attempting to Reconnect to ICUE.",
+          "time": "2024-07-15T03:46:49.495Z",
+          "logType": "info"
+        },
+        {
+          "name": "ICUE Core",
+          "log": "Attempting to Reconnect to ICUE.",
+          "time": "2024-07-15T09:33:22.586Z",
+          "logType": "info"
+        },
+        {
+          "name": "ICUE Core",
+          "log": "Attempting to Reconnect to ICUE.",
+          "time": "2024-07-15T09:36:47.546Z",
+          "logType": "info"
+        },
+        {
+          "name": "ICUE Core",
+          "log": "Attempting to Reconnect to ICUE.",
+          "time": "2024-07-15T09:38:49.589Z",
+          "logType": "info"
+        }
+      ],
+      "position": {
+        "x": 411.1116334429548,
+        "y": -240.7412136197372
+      }
+    },
+    "Bed RGB": {
+      "logs": [
+        {
+          "name": "Bed RGB",
+          "log": "Exceeded the number of LEDs. Numleds: 300Size: 450",
+          "time": "2024-07-14T03:10:46.566Z",
+          "logType": "error"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Exceeded the number of LEDs. Numleds: 300Size: 450",
+          "time": "2024-07-14T03:10:46.665Z",
+          "logType": "error"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Exceeded the number of LEDs. Numleds: 300Size: 450",
+          "time": "2024-07-14T03:10:46.707Z",
+          "logType": "error"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Exceeded the number of LEDs. Numleds: 300Size: 450",
+          "time": "2024-07-14T03:10:46.847Z",
+          "logType": "error"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Exceeded the number of LEDs. Numleds: 300Size: 450",
+          "time": "2024-07-14T03:10:46.855Z",
+          "logType": "error"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Exceeded the number of LEDs. Numleds: 300Size: 450",
+          "time": "2024-07-14T03:10:47.616Z",
+          "logType": "error"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Exceeded the number of LEDs. Numleds: 300Size: 450",
+          "time": "2024-07-14T03:10:47.699Z",
+          "logType": "error"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Exceeded the number of LEDs. Numleds: 300Size: 450",
+          "time": "2024-07-14T03:10:47.738Z",
+          "logType": "error"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Exceeded the number of LEDs. Numleds: 300Size: 450",
+          "time": "2024-07-14T03:10:47.849Z",
+          "logType": "error"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Exceeded the number of LEDs. Numleds: 300Size: 450",
+          "time": "2024-07-14T03:10:48.025Z",
+          "logType": "error"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Exceeded the number of LEDs. Numleds: 300Size: 450",
+          "time": "2024-07-14T03:10:50.143Z",
+          "logType": "error"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Exceeded the number of LEDs. Numleds: 300Size: 450",
+          "time": "2024-07-14T03:10:50.152Z",
+          "logType": "error"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Exceeded the number of LEDs. Numleds: 300Size: 450",
+          "time": "2024-07-14T03:10:50.157Z",
+          "logType": "error"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Exceeded the number of LEDs. Numleds: 300Size: 450",
+          "time": "2024-07-14T03:10:50.200Z",
+          "logType": "error"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Exceeded the number of LEDs. Numleds: 300Size: 450",
+          "time": "2024-07-14T03:10:51.175Z",
+          "logType": "error"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Exceeded the number of LEDs. Numleds: 300Size: 450",
+          "time": "2024-07-14T03:10:51.223Z",
+          "logType": "error"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Exceeded the number of LEDs. Numleds: 300Size: 450",
+          "time": "2024-07-14T03:10:51.257Z",
+          "logType": "error"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Exceeded the number of LEDs. Numleds: 300Size: 450",
+          "time": "2024-07-14T03:10:51.305Z",
+          "logType": "error"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Exceeded the number of LEDs. Numleds: 300Size: 450",
+          "time": "2024-07-14T03:10:51.357Z",
+          "logType": "error"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Exceeded the number of LEDs. Numleds: 300Size: 450",
+          "time": "2024-07-14T03:10:52.203Z",
+          "logType": "error"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Exceeded the number of LEDs. Numleds: 300Size: 450",
+          "time": "2024-07-14T03:10:52.261Z",
+          "logType": "error"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Exceeded the number of LEDs. Numleds: 300Size: 450",
+          "time": "2024-07-14T03:10:52.308Z",
+          "logType": "error"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Exceeded the number of LEDs. Numleds: 300Size: 450",
+          "time": "2024-07-14T03:10:52.380Z",
+          "logType": "error"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Exceeded the number of LEDs. Numleds: 300Size: 450",
+          "time": "2024-07-14T03:10:52.436Z",
+          "logType": "error"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Exceeded the number of LEDs. Numleds: 300Size: 450",
+          "time": "2024-07-14T03:10:53.223Z",
+          "logType": "error"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Exceeded the number of LEDs. Numleds: 300Size: 450",
+          "time": "2024-07-14T03:10:53.271Z",
+          "logType": "error"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Exceeded the number of LEDs. Numleds: 300Size: 450",
+          "time": "2024-07-14T03:10:53.328Z",
+          "logType": "error"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Exceeded the number of LEDs. Numleds: 300Size: 450",
+          "time": "2024-07-14T03:10:53.388Z",
+          "logType": "error"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Exceeded the number of LEDs. Numleds: 300Size: 450",
+          "time": "2024-07-14T03:10:53.471Z",
+          "logType": "error"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Exceeded the number of LEDs. Numleds: 300Size: 450",
+          "time": "2024-07-14T03:10:54.255Z",
+          "logType": "error"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Exceeded the number of LEDs. Numleds: 300Size: 450",
+          "time": "2024-07-14T03:10:54.300Z",
+          "logType": "error"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Exceeded the number of LEDs. Numleds: 300Size: 450",
+          "time": "2024-07-14T03:10:54.357Z",
+          "logType": "error"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Exceeded the number of LEDs. Numleds: 300Size: 450",
+          "time": "2024-07-14T03:10:54.388Z",
+          "logType": "error"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Exceeded the number of LEDs. Numleds: 300Size: 450",
+          "time": "2024-07-14T03:10:54.479Z",
+          "logType": "error"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Exceeded the number of LEDs. Numleds: 300Size: 450",
+          "time": "2024-07-14T03:10:55.293Z",
+          "logType": "error"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Exceeded the number of LEDs. Numleds: 300Size: 450",
+          "time": "2024-07-14T03:10:55.338Z",
+          "logType": "error"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Exceeded the number of LEDs. Numleds: 300Size: 450",
+          "time": "2024-07-14T03:10:55.379Z",
+          "logType": "error"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Exceeded the number of LEDs. Numleds: 300Size: 450",
+          "time": "2024-07-14T03:10:55.430Z",
+          "logType": "error"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Exceeded the number of LEDs. Numleds: 300Size: 450",
+          "time": "2024-07-14T03:10:55.548Z",
+          "logType": "error"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-14T05:23:39.165Z",
+          "logType": "error"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-14T09:31:04.779Z",
+          "logType": "error"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-15T02:32:19.924Z",
+          "logType": "error"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-15T03:33:47.130Z",
+          "logType": "error"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-15T03:46:47.884Z",
+          "logType": "error"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-15T07:22:31.271Z",
+          "logType": "error"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-15T07:27:49.113Z",
+          "logType": "error"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-15T08:06:50.941Z",
+          "logType": "error"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-15T09:33:20.269Z",
+          "logType": "error"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-15T09:36:47.034Z",
+          "logType": "error"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Invalid JSON type: rcvd: connected",
+          "time": "2024-07-15T09:38:48.472Z",
+          "logType": "error"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Free Heap: 32568\r\nSignal Strength (RSSI): -72 dBm",
+          "time": "2024-07-15T09:39:11.556Z",
+          "logType": "info"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Free Heap: 32328\r\nSignal Strength (RSSI): -73 dBm",
+          "time": "2024-07-15T09:39:14.593Z",
+          "logType": "info"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Free Heap: 32328\r\nSignal Strength (RSSI): -72 dBm",
+          "time": "2024-07-15T09:39:17.618Z",
+          "logType": "info"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Free Heap: 32328\r\nSignal Strength (RSSI): -73 dBm",
+          "time": "2024-07-15T09:39:20.651Z",
+          "logType": "info"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Free Heap: 32328\r\nSignal Strength (RSSI): -71 dBm",
+          "time": "2024-07-15T09:39:23.679Z",
+          "logType": "info"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Free Heap: 32328\r\nSignal Strength (RSSI): -71 dBm",
+          "time": "2024-07-15T09:39:26.709Z",
+          "logType": "info"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Free Heap: 32328\r\nSignal Strength (RSSI): -70 dBm",
+          "time": "2024-07-15T09:39:29.733Z",
+          "logType": "info"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Free Heap: 32568\r\nSignal Strength (RSSI): -72 dBm",
+          "time": "2024-07-15T09:39:32.732Z",
+          "logType": "info"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Free Heap: 32328\r\nSignal Strength (RSSI): -73 dBm",
+          "time": "2024-07-15T09:39:35.761Z",
+          "logType": "info"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Free Heap: 32328\r\nSignal Strength (RSSI): -72 dBm",
+          "time": "2024-07-15T09:39:38.780Z",
+          "logType": "info"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Free Heap: 32328\r\nSignal Strength (RSSI): -72 dBm",
+          "time": "2024-07-15T09:39:41.812Z",
+          "logType": "info"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Free Heap: 32328\r\nSignal Strength (RSSI): -73 dBm",
+          "time": "2024-07-15T09:39:44.829Z",
+          "logType": "info"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Free Heap: 32568\r\nSignal Strength (RSSI): -73 dBm",
+          "time": "2024-07-15T09:39:47.827Z",
+          "logType": "info"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Free Heap: 32328\r\nSignal Strength (RSSI): -72 dBm",
+          "time": "2024-07-15T09:39:50.838Z",
+          "logType": "info"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Free Heap: 32216\r\nSignal Strength (RSSI): -71 dBm",
+          "time": "2024-07-15T09:39:53.864Z",
+          "logType": "info"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Free Heap: 32328\r\nSignal Strength (RSSI): -72 dBm",
+          "time": "2024-07-15T09:39:56.891Z",
+          "logType": "info"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Free Heap: 32328\r\nSignal Strength (RSSI): -72 dBm",
+          "time": "2024-07-15T09:39:59.919Z",
+          "logType": "info"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Free Heap: 30456\r\nSignal Strength (RSSI): -72 dBm",
+          "time": "2024-07-15T09:40:02.971Z",
+          "logType": "info"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Free Heap: 30608\r\nSignal Strength (RSSI): -71 dBm",
+          "time": "2024-07-15T09:40:06.009Z",
+          "logType": "info"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Free Heap: 31168\r\nSignal Strength (RSSI): -72 dBm",
+          "time": "2024-07-15T09:40:09.071Z",
+          "logType": "info"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Free Heap: 32328\r\nSignal Strength (RSSI): -72 dBm",
+          "time": "2024-07-15T09:40:12.024Z",
+          "logType": "info"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Free Heap: 32328\r\nSignal Strength (RSSI): -72 dBm",
+          "time": "2024-07-15T09:40:15.058Z",
+          "logType": "info"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Free Heap: 32328\r\nSignal Strength (RSSI): -71 dBm",
+          "time": "2024-07-15T09:40:18.087Z",
+          "logType": "info"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Free Heap: 31224\r\nSignal Strength (RSSI): -70 dBm",
+          "time": "2024-07-15T09:40:21.099Z",
+          "logType": "info"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Free Heap: 32568\r\nSignal Strength (RSSI): -71 dBm",
+          "time": "2024-07-15T09:40:24.096Z",
+          "logType": "info"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Free Heap: 32328\r\nSignal Strength (RSSI): -72 dBm",
+          "time": "2024-07-15T09:40:27.120Z",
+          "logType": "info"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Free Heap: 31000\r\nSignal Strength (RSSI): -73 dBm",
+          "time": "2024-07-15T09:40:30.230Z",
+          "logType": "info"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Free Heap: 32440\r\nSignal Strength (RSSI): -71 dBm",
+          "time": "2024-07-15T09:40:33.176Z",
+          "logType": "info"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Free Heap: 32440\r\nSignal Strength (RSSI): -72 dBm",
+          "time": "2024-07-15T09:40:36.207Z",
+          "logType": "info"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Free Heap: 32216\r\nSignal Strength (RSSI): -70 dBm",
+          "time": "2024-07-15T09:40:39.238Z",
+          "logType": "info"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Free Heap: 32328\r\nSignal Strength (RSSI): -72 dBm",
+          "time": "2024-07-15T09:40:42.268Z",
+          "logType": "info"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Free Heap: 32328\r\nSignal Strength (RSSI): -70 dBm",
+          "time": "2024-07-15T09:40:45.315Z",
+          "logType": "info"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Free Heap: 32328\r\nSignal Strength (RSSI): -71 dBm",
+          "time": "2024-07-15T09:40:48.326Z",
+          "logType": "info"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Free Heap: 31336\r\nSignal Strength (RSSI): -72 dBm",
+          "time": "2024-07-15T09:40:51.386Z",
+          "logType": "info"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Free Heap: 32328\r\nSignal Strength (RSSI): -73 dBm",
+          "time": "2024-07-15T09:40:54.383Z",
+          "logType": "info"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Free Heap: 32328\r\nSignal Strength (RSSI): -72 dBm",
+          "time": "2024-07-15T09:40:57.410Z",
+          "logType": "info"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Free Heap: 32440\r\nSignal Strength (RSSI): -72 dBm",
+          "time": "2024-07-15T09:41:00.436Z",
+          "logType": "info"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Free Heap: 32328\r\nSignal Strength (RSSI): -70 dBm",
+          "time": "2024-07-15T09:41:03.478Z",
+          "logType": "info"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Free Heap: 32328\r\nSignal Strength (RSSI): -71 dBm",
+          "time": "2024-07-15T09:41:06.486Z",
+          "logType": "info"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Free Heap: 32568\r\nSignal Strength (RSSI): -70 dBm",
+          "time": "2024-07-15T09:41:09.485Z",
+          "logType": "info"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Free Heap: 32328\r\nSignal Strength (RSSI): -74 dBm",
+          "time": "2024-07-15T09:41:12.496Z",
+          "logType": "info"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Free Heap: 32328\r\nSignal Strength (RSSI): -73 dBm",
+          "time": "2024-07-15T09:41:15.531Z",
+          "logType": "info"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Free Heap: 32328\r\nSignal Strength (RSSI): -73 dBm",
+          "time": "2024-07-15T09:41:18.559Z",
+          "logType": "info"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Free Heap: 32328\r\nSignal Strength (RSSI): -71 dBm",
+          "time": "2024-07-15T09:41:21.602Z",
+          "logType": "info"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Free Heap: 32328\r\nSignal Strength (RSSI): -72 dBm",
+          "time": "2024-07-15T09:41:24.629Z",
+          "logType": "info"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Free Heap: 32328\r\nSignal Strength (RSSI): -72 dBm",
+          "time": "2024-07-15T09:41:27.652Z",
+          "logType": "info"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Free Heap: 32328\r\nSignal Strength (RSSI): -72 dBm",
+          "time": "2024-07-15T09:41:30.682Z",
+          "logType": "info"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Free Heap: 32440\r\nSignal Strength (RSSI): -72 dBm",
+          "time": "2024-07-15T09:41:33.708Z",
+          "logType": "info"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Free Heap: 32440\r\nSignal Strength (RSSI): -71 dBm",
+          "time": "2024-07-15T09:41:36.748Z",
+          "logType": "info"
+        },
+        {
+          "name": "Bed RGB",
+          "log": "Free Heap: 32328\r\nSignal Strength (RSSI): -73 dBm",
+          "time": "2024-07-15T09:41:39.761Z",
+          "logType": "info"
+        }
+      ],
+      "position": {
+        "x": 158.9920618868302,
+        "y": 204.32667738056153
+      }
+    },
+    "G-Keys": {
+      "logs": [],
+      "position": {
+        "x": -84.60134960750968,
+        "y": -237.17051338914598
+      }
+    },
+    "rcvr": {
+      "logs": [
+        {
+          "name": "rcvr",
+          "log": "Error at receiverThread(). Command volume=query Error: timed out .",
+          "time": "2024-07-11T12:01:17.381Z",
+          "logType": "error"
+        },
+        {
+          "name": "rcvr",
+          "log": "Disconnecting from RCVR.",
+          "time": "2024-07-11T12:01:19.382Z",
+          "logType": "error"
+        },
+        {
+          "name": "rcvr",
+          "log": "Attempting to Reconnect to RCVR.",
+          "time": "2024-07-11T12:01:19.388Z",
+          "logType": "error"
+        },
+        {
+          "name": "rcvr",
+          "log": "Error at receiverThread(). Command volume=query Error: timed out .",
+          "time": "2024-07-11T12:01:24.384Z",
+          "logType": "error"
+        },
+        {
+          "name": "rcvr",
+          "log": "Disconnecting from RCVR.",
+          "time": "2024-07-11T12:01:26.385Z",
+          "logType": "error"
+        },
+        {
+          "name": "rcvr",
+          "log": "Attempting to Reconnect to RCVR.",
+          "time": "2024-07-11T12:01:26.391Z",
+          "logType": "error"
+        },
+        {
+          "name": "rcvr",
+          "log": "ValueError Timeout at receiverThread(). Command volume=query Error: Timeout waiting for response. .",
+          "time": "2024-07-11T12:01:36.399Z",
+          "logType": "error"
+        },
+        {
+          "name": "rcvr",
+          "log": "Disconnecting from RCVR.",
+          "time": "2024-07-11T12:01:38.400Z",
+          "logType": "error"
+        },
+        {
+          "name": "rcvr",
+          "log": "Attempting to Reconnect to RCVR.",
+          "time": "2024-07-11T12:01:38.406Z",
+          "logType": "error"
+        },
+        {
+          "name": "rcvr",
+          "log": "ValueError Timeout at receiverThread(). Command volume=query Error: Timeout waiting for response. .",
+          "time": "2024-07-11T12:01:43.446Z",
+          "logType": "error"
+        },
+        {
+          "name": "rcvr",
+          "log": "Disconnecting from RCVR.",
+          "time": "2024-07-11T12:01:45.446Z",
+          "logType": "error"
+        },
+        {
+          "name": "rcvr",
+          "log": "Attempting to Reconnect to RCVR.",
+          "time": "2024-07-11T12:01:45.452Z",
+          "logType": "error"
+        },
+        {
+          "name": "rcvr",
+          "log": "ValueError Timeout at receiverThread(). Command volume=query Error: Timeout waiting for response. .",
+          "time": "2024-07-11T12:01:50.463Z",
+          "logType": "error"
+        },
+        {
+          "name": "rcvr",
+          "log": "Disconnecting from RCVR.",
+          "time": "2024-07-11T12:01:52.464Z",
+          "logType": "error"
+        },
+        {
+          "name": "rcvr",
+          "log": "Attempting to Reconnect to RCVR.",
+          "time": "2024-07-11T12:01:52.470Z",
+          "logType": "error"
+        },
+        {
+          "name": "rcvr",
+          "log": "ValueError Timeout at receiverThread(). Command volume=query Error: Timeout waiting for response. .",
+          "time": "2024-07-11T12:01:57.477Z",
+          "logType": "error"
+        },
+        {
+          "name": "rcvr",
+          "log": "Disconnecting from RCVR.",
+          "time": "2024-07-11T12:01:59.478Z",
+          "logType": "error"
+        },
+        {
+          "name": "rcvr",
+          "log": "Attempting to Reconnect to RCVR.",
+          "time": "2024-07-11T12:01:59.483Z",
+          "logType": "error"
+        },
+        {
+          "name": "rcvr",
+          "log": "ValueError Timeout at receiverThread(). Command volume=query Error: Timeout waiting for response. .",
+          "time": "2024-07-11T12:02:04.566Z",
+          "logType": "error"
+        },
+        {
+          "name": "rcvr",
+          "log": "Disconnecting from RCVR.",
+          "time": "2024-07-11T12:02:06.567Z",
+          "logType": "error"
+        },
+        {
+          "name": "rcvr",
+          "log": "Attempting to Reconnect to RCVR.",
+          "time": "2024-07-11T12:02:06.572Z",
+          "logType": "error"
+        },
+        {
+          "name": "rcvr",
+          "log": "ValueError Timeout at receiverThread(). Command volume=query Error: Timeout waiting for response. .",
+          "time": "2024-07-11T12:02:11.616Z",
+          "logType": "error"
+        },
+        {
+          "name": "rcvr",
+          "log": "Disconnecting from RCVR.",
+          "time": "2024-07-11T12:02:13.616Z",
+          "logType": "error"
+        },
+        {
+          "name": "rcvr",
+          "log": "Attempting to Reconnect to RCVR.",
+          "time": "2024-07-11T12:02:13.622Z",
+          "logType": "error"
+        },
+        {
+          "name": "rcvr",
+          "log": "ValueError Timeout at receiverThread(). Command volume=query Error: Timeout waiting for response. .",
+          "time": "2024-07-11T12:02:18.673Z",
+          "logType": "error"
+        },
+        {
+          "name": "rcvr",
+          "log": "Disconnecting from RCVR.",
+          "time": "2024-07-11T12:02:20.673Z",
+          "logType": "error"
+        },
+        {
+          "name": "rcvr",
+          "log": "Attempting to Reconnect to RCVR.",
+          "time": "2024-07-11T12:02:20.680Z",
+          "logType": "error"
+        },
+        {
+          "name": "rcvr",
+          "log": "ValueError Timeout at receiverThread(). Command volume=query Error: Timeout waiting for response. .",
+          "time": "2024-07-11T12:02:25.725Z",
+          "logType": "error"
+        },
+        {
+          "name": "rcvr",
+          "log": "Disconnecting from RCVR.",
+          "time": "2024-07-11T12:02:27.726Z",
+          "logType": "error"
+        },
+        {
+          "name": "rcvr",
+          "log": "Attempting to Reconnect to RCVR.",
+          "time": "2024-07-11T12:02:27.732Z",
+          "logType": "error"
+        },
+        {
+          "name": "rcvr",
+          "log": "ValueError Timeout at receiverThread(). Command volume=query Error: Timeout waiting for response. .",
+          "time": "2024-07-11T12:02:32.785Z",
+          "logType": "error"
+        },
+        {
+          "name": "rcvr",
+          "log": "Disconnecting from RCVR.",
+          "time": "2024-07-11T12:02:34.785Z",
+          "logType": "error"
+        },
+        {
+          "name": "rcvr",
+          "log": "Attempting to Reconnect to RCVR.",
+          "time": "2024-07-11T12:02:34.791Z",
+          "logType": "error"
+        },
+        {
+          "name": "rcvr",
+          "log": "ValueError Timeout at receiverThread(). Command audio-muting=query Error: Timeout waiting for response. .",
+          "time": "2024-07-11T12:31:18.775Z",
+          "logType": "error"
+        },
+        {
+          "name": "rcvr",
+          "log": "Disconnecting from RCVR.",
+          "time": "2024-07-11T12:31:20.775Z",
+          "logType": "error"
+        },
+        {
+          "name": "rcvr",
+          "log": "Attempting to Reconnect to RCVR.",
+          "time": "2024-07-11T12:31:20.780Z",
+          "logType": "error"
+        },
+        {
+          "name": "rcvr",
+          "log": "Disconnecting from receiver.",
+          "time": "2024-07-11T12:31:24.114Z",
+          "logType": "error"
+        },
+        {
+          "name": "rcvr",
+          "log": "Disconnecting from RCVR.",
+          "time": "2024-07-11T12:31:29.115Z",
+          "logType": "error"
+        },
+        {
+          "name": "rcvr",
+          "log": "Attempting to Reconnect to RCVR.",
+          "time": "2024-07-11T12:31:29.120Z",
+          "logType": "error"
+        },
+        {
+          "name": "rcvr",
+          "log": "IOName not deleted from connectedTo: Volume",
+          "time": "2024-07-11T15:56:46.869Z",
+          "logType": "error"
+        },
+        {
+          "name": "rcvr",
+          "log": "ValueError Timeout at receiverThread(). Command volume=query Error: Timeout waiting for response. .",
+          "time": "2024-07-12T00:41:58.771Z",
+          "logType": "error"
+        },
+        {
+          "name": "rcvr",
+          "log": "Disconnecting from RCVR.",
+          "time": "2024-07-12T00:42:00.771Z",
+          "logType": "error"
+        },
+        {
+          "name": "rcvr",
+          "log": "Attempting to Reconnect to RCVR.",
+          "time": "2024-07-12T00:42:00.777Z",
+          "logType": "error"
+        },
+        {
+          "name": "rcvr",
+          "log": "ValueError Timeout at receiverThread(). Command volume=query Error: Timeout waiting for response. .",
+          "time": "2024-07-12T01:03:51.952Z",
+          "logType": "error"
+        },
+        {
+          "name": "rcvr",
+          "log": "Disconnecting from RCVR.",
+          "time": "2024-07-12T01:03:53.952Z",
+          "logType": "error"
+        },
+        {
+          "name": "rcvr",
+          "log": "Attempting to Reconnect to RCVR.",
+          "time": "2024-07-12T01:03:53.958Z",
+          "logType": "error"
+        },
+        {
+          "name": "rcvr",
+          "log": "Error at receiverThread(). Command volume=query Error: timed out .",
+          "time": "2024-07-12T01:03:58.963Z",
+          "logType": "error"
+        },
+        {
+          "name": "rcvr",
+          "log": "Disconnecting from RCVR.",
+          "time": "2024-07-12T01:04:00.965Z",
+          "logType": "error"
+        },
+        {
+          "name": "rcvr",
+          "log": "Attempting to Reconnect to RCVR.",
+          "time": "2024-07-12T01:04:00.970Z",
+          "logType": "error"
+        },
+        {
+          "name": "rcvr",
+          "log": "IOName not deleted from connectedTo: Vol+",
+          "time": "2024-07-15T09:33:10.097Z",
+          "logType": "error"
+        },
+        {
+          "name": "rcvr",
+          "log": "Volume Changed to 132 / -148.0",
+          "time": "2024-07-15T03:43:24.460Z",
+          "logType": "info"
+        },
+        {
+          "name": "rcvr",
+          "log": "Volume Changed to 138 / -151.0",
+          "time": "2024-07-15T03:43:25.182Z",
+          "logType": "info"
+        },
+        {
+          "name": "rcvr",
+          "log": "Volume Changed to 144 / -154.0",
+          "time": "2024-07-15T03:43:31.720Z",
+          "logType": "info"
+        },
+        {
+          "name": "rcvr",
+          "log": "Volume Changed to 150 / -157.0",
+          "time": "2024-07-15T03:43:37.095Z",
+          "logType": "info"
+        },
+        {
+          "name": "rcvr",
+          "log": "Volume Changed to 117 / -140.5",
+          "time": "2024-07-15T05:06:54.349Z",
+          "logType": "info"
+        },
+        {
+          "name": "rcvr",
+          "log": "Volume Changed to 123 / -143.5",
+          "time": "2024-07-15T05:06:54.686Z",
+          "logType": "info"
+        },
+        {
+          "name": "rcvr",
+          "log": "Volume Changed to 129 / -146.5",
+          "time": "2024-07-15T05:06:54.965Z",
+          "logType": "info"
+        },
+        {
+          "name": "rcvr",
+          "log": "Receiver muted",
+          "time": "2024-07-15T05:11:53.616Z",
+          "logType": "info"
+        },
+        {
+          "name": "rcvr",
+          "log": "Receiver un-Muted",
+          "time": "2024-07-15T05:11:53.947Z",
+          "logType": "info"
+        },
+        {
+          "name": "rcvr",
+          "log": "Volume Changed to 140 / -152.0",
+          "time": "2024-07-15T08:08:24.955Z",
+          "logType": "info"
+        },
+        {
+          "name": "rcvr",
+          "log": "Volume Changed to 146 / -155.0",
+          "time": "2024-07-15T08:08:26.211Z",
+          "logType": "info"
+        },
+        {
+          "name": "rcvr",
+          "log": "Volume Changed to 152 / -158.0",
+          "time": "2024-07-15T08:33:01.147Z",
+          "logType": "info"
+        },
+        {
+          "name": "rcvr",
+          "log": "Volume Changed to 158 / -161.0",
+          "time": "2024-07-15T08:33:01.730Z",
+          "logType": "info"
+        },
+        {
+          "name": "rcvr",
+          "log": "Volume Changed to 164 / -164.0",
+          "time": "2024-07-15T08:34:05.667Z",
+          "logType": "info"
+        },
+        {
+          "name": "rcvr",
+          "log": "Receiver muted",
+          "time": "2024-07-15T08:35:14.147Z",
+          "logType": "info"
+        },
+        {
+          "name": "rcvr",
+          "log": "Receiver un-Muted",
+          "time": "2024-07-15T08:35:14.955Z",
+          "logType": "info"
+        },
+        {
+          "name": "rcvr",
+          "log": "Volume Changed to 170 / -167.0",
+          "time": "2024-07-15T08:35:16.833Z",
+          "logType": "info"
+        },
+        {
+          "name": "rcvr",
+          "log": "Volume Changed to 174 / -169.0",
+          "time": "2024-07-15T08:35:24.025Z",
+          "logType": "info"
+        },
+        {
+          "name": "rcvr",
+          "log": "Volume Changed to 174 / -169.0",
+          "time": "2024-07-15T08:35:24.230Z",
+          "logType": "info"
+        },
+        {
+          "name": "rcvr",
+          "log": "Volume Changed to 174 / -169.0",
+          "time": "2024-07-15T08:35:24.531Z",
+          "logType": "info"
+        },
+        {
+          "name": "rcvr",
+          "log": "Volume Changed to 174 / -169.0",
+          "time": "2024-07-15T08:35:24.725Z",
+          "logType": "info"
+        },
+        {
+          "name": "rcvr",
+          "log": "Volume Changed to 174 / -169.0",
+          "time": "2024-07-15T08:35:24.923Z",
+          "logType": "info"
+        },
+        {
+          "name": "rcvr",
+          "log": "Volume Changed to 168 / -166.0",
+          "time": "2024-07-15T08:35:29.639Z",
+          "logType": "info"
+        },
+        {
+          "name": "rcvr",
+          "log": "Volume Changed to 162 / -163.0",
+          "time": "2024-07-15T08:35:29.862Z",
+          "logType": "info"
+        },
+        {
+          "name": "rcvr",
+          "log": "Volume Changed to 156 / -160.0",
+          "time": "2024-07-15T08:35:30.213Z",
+          "logType": "info"
+        },
+        {
+          "name": "rcvr",
+          "log": "Volume Changed to 150 / -157.0",
+          "time": "2024-07-15T08:35:30.435Z",
+          "logType": "info"
+        },
+        {
+          "name": "rcvr",
+          "log": "Volume Changed to 144 / -154.0",
+          "time": "2024-07-15T08:35:30.604Z",
+          "logType": "info"
+        },
+        {
+          "name": "rcvr",
+          "log": "Volume Changed to 138 / -151.0",
+          "time": "2024-07-15T08:35:30.856Z",
+          "logType": "info"
+        },
+        {
+          "name": "rcvr",
+          "log": "Volume Changed to 132 / -148.0",
+          "time": "2024-07-15T08:35:30.997Z",
+          "logType": "info"
+        },
+        {
+          "name": "rcvr",
+          "log": "Volume Changed to 126 / -145.0",
+          "time": "2024-07-15T08:35:31.238Z",
+          "logType": "info"
+        },
+        {
+          "name": "rcvr",
+          "log": "Volume Changed to 114 / -139.0",
+          "time": "2024-07-15T08:35:31.690Z",
+          "logType": "info"
+        },
+        {
+          "name": "rcvr",
+          "log": "Volume Changed to 108 / -136.0",
+          "time": "2024-07-15T08:35:31.872Z",
+          "logType": "info"
+        },
+        {
+          "name": "rcvr",
+          "log": "Receiver muted",
+          "time": "2024-07-15T08:35:32.208Z",
+          "logType": "info"
+        },
+        {
+          "name": "rcvr",
+          "log": "Receiver un-Muted",
+          "time": "2024-07-15T09:01:05.939Z",
+          "logType": "info"
+        },
+        {
+          "name": "rcvr",
+          "log": "Volume Changed to 114 / -139.0",
+          "time": "2024-07-15T09:01:07.459Z",
+          "logType": "info"
+        },
+        {
+          "name": "rcvr",
+          "log": "Volume Changed to 120 / -142.0",
+          "time": "2024-07-15T09:01:07.697Z",
+          "logType": "info"
+        },
+        {
+          "name": "rcvr",
+          "log": "Volume Changed to 126 / -145.0",
+          "time": "2024-07-15T09:01:07.935Z",
+          "logType": "info"
+        },
+        {
+          "name": "rcvr",
+          "log": "Volume Changed to 132 / -148.0",
+          "time": "2024-07-15T09:01:08.170Z",
+          "logType": "info"
+        },
+        {
+          "name": "rcvr",
+          "log": "Volume Changed to 138 / -151.0",
+          "time": "2024-07-15T09:01:08.602Z",
+          "logType": "info"
+        },
+        {
+          "name": "rcvr",
+          "log": "Volume Changed to 144 / -154.0",
+          "time": "2024-07-15T09:01:08.840Z",
+          "logType": "info"
+        },
+        {
+          "name": "rcvr",
+          "log": "Volume Changed to 138 / -151.0",
+          "time": "2024-07-15T09:29:08.898Z",
+          "logType": "info"
+        },
+        {
+          "name": "rcvr",
+          "log": "Volume Changed to 132 / -148.0",
+          "time": "2024-07-15T09:29:09.123Z",
+          "logType": "info"
+        },
+        {
+          "name": "rcvr",
+          "log": "Volume Changed to 138 / -151.0",
+          "time": "2024-07-15T09:33:43.917Z",
+          "logType": "info"
+        },
+        {
+          "name": "rcvr",
+          "log": "Volume Changed to 144 / -154.0",
+          "time": "2024-07-15T09:33:45.473Z",
+          "logType": "info"
+        },
+        {
+          "name": "rcvr",
+          "log": "Volume Changed to 138 / -151.0",
+          "time": "2024-07-15T09:33:51.709Z",
+          "logType": "info"
+        },
+        {
+          "name": "rcvr",
+          "log": "Volume Changed to 132 / -148.0",
+          "time": "2024-07-15T09:33:52.248Z",
+          "logType": "info"
+        },
+        {
+          "name": "rcvr",
+          "log": "Volume Changed to 138 / -151.0",
+          "time": "2024-07-15T09:37:34.798Z",
+          "logType": "info"
+        },
+        {
+          "name": "rcvr",
+          "log": "Volume Changed to 132 / -148.0",
+          "time": "2024-07-15T09:37:35.026Z",
+          "logType": "info"
+        },
+        {
+          "name": "rcvr",
+          "log": "Volume Changed to 138 / -151.0",
+          "time": "2024-07-15T09:37:36.676Z",
+          "logType": "info"
+        },
+        {
+          "name": "rcvr",
+          "log": "Volume Changed to 132 / -148.0",
+          "time": "2024-07-15T09:37:36.904Z",
+          "logType": "info"
+        }
+      ],
+      "position": {
+        "x": 161.5832413839917,
+        "y": -240.49621883043548
+      }
+    },
+    "icueClient": {
+      "logs": [],
+      "position": {
+        "x": -88.56584209485794,
+        "y": -19.7639252075366
+      }
+    },
+    "icueClient2": {
+      "logs": [],
+      "position": {
+        "x": -87.27071726177729,
+        "y": 205.04403283791115
+      }
+    },
+    "changeEq": {
+      "logs": [
+        {
+          "name": "changeEq",
+          "log": "IOName not deleted from connectedTo: chairDistance",
+          "time": "2024-07-11T14:06:47.919Z",
+          "logType": "error"
+        },
+        {
+          "name": "changeEq",
+          "log": "Distance 10.17 < 40. Desk Eq-Filters Activated. ",
+          "time": "2024-07-15T09:03:41.496Z",
+          "logType": "info"
+        },
+        {
+          "name": "changeEq",
+          "log": "Distance 66.56 > 40. Filters removed. ",
+          "time": "2024-07-15T09:03:43.742Z",
+          "logType": "info"
+        },
+        {
+          "name": "changeEq",
+          "log": "Distance 9.57 < 40. Desk Eq-Filters Activated. ",
+          "time": "2024-07-15T09:03:49.239Z",
+          "logType": "info"
+        },
+        {
+          "name": "changeEq",
+          "log": "Distance 66.52 > 40. Filters removed. ",
+          "time": "2024-07-15T09:03:51.498Z",
+          "logType": "info"
+        },
+        {
+          "name": "changeEq",
+          "log": "Distance 8.39 < 40. Desk Eq-Filters Activated. ",
+          "time": "2024-07-15T09:03:55.744Z",
+          "logType": "info"
+        },
+        {
+          "name": "changeEq",
+          "log": "Distance 66.54 > 40. Filters removed. ",
+          "time": "2024-07-15T09:03:58.493Z",
+          "logType": "info"
+        },
+        {
+          "name": "changeEq",
+          "log": "Distance 14.58 < 40. Desk Eq-Filters Activated. ",
+          "time": "2024-07-15T09:04:19.742Z",
+          "logType": "info"
+        },
+        {
+          "name": "changeEq",
+          "log": "Distance 66.95 > 40. Filters removed. ",
+          "time": "2024-07-15T09:04:22.995Z",
+          "logType": "info"
+        },
+        {
+          "name": "changeEq",
+          "log": "Distance 9.57 < 40. Desk Eq-Filters Activated. ",
+          "time": "2024-07-15T09:04:26.991Z",
+          "logType": "info"
+        },
+        {
+          "name": "changeEq",
+          "log": "Distance 79.82 > 40. Filters removed. ",
+          "time": "2024-07-15T09:04:30.248Z",
+          "logType": "info"
+        },
+        {
+          "name": "changeEq",
+          "log": "Distance 0.0 < 40. Desk Eq-Filters Activated. ",
+          "time": "2024-07-15T09:05:30.520Z",
+          "logType": "info"
+        },
+        {
+          "name": "changeEq",
+          "log": "Distance 79.64 > 40. Filters removed. ",
+          "time": "2024-07-15T09:06:00.002Z",
+          "logType": "info"
+        },
+        {
+          "name": "changeEq",
+          "log": "Distance 0.0 < 40. Desk Eq-Filters Activated. ",
+          "time": "2024-07-15T09:06:04.015Z",
+          "logType": "info"
+        },
+        {
+          "name": "changeEq",
+          "log": "Distance 110.74 > 40. Filters removed. ",
+          "time": "2024-07-15T09:09:11.267Z",
+          "logType": "info"
+        },
+        {
+          "name": "changeEq",
+          "log": "Distance 0.0 < 40. Desk Eq-Filters Activated. ",
+          "time": "2024-07-15T09:09:18.528Z",
+          "logType": "info"
+        },
+        {
+          "name": "changeEq",
+          "log": "Distance 112.01 > 40. Filters removed. ",
+          "time": "2024-07-15T09:10:16.023Z",
+          "logType": "info"
+        },
+        {
+          "name": "changeEq",
+          "log": "Distance 7.79 < 40. Desk Eq-Filters Activated. ",
+          "time": "2024-07-15T09:10:21.277Z",
+          "logType": "info"
+        },
+        {
+          "name": "changeEq",
+          "log": "Distance 71.5 > 40. Filters removed. ",
+          "time": "2024-07-15T09:14:48.288Z",
+          "logType": "info"
+        },
+        {
+          "name": "changeEq",
+          "log": "Distance 7.2 < 40. Desk Eq-Filters Activated. ",
+          "time": "2024-07-15T09:16:43.293Z",
+          "logType": "info"
+        },
+        {
+          "name": "changeEq",
+          "log": "Distance 71.05 > 40. Filters removed. ",
+          "time": "2024-07-15T09:17:00.298Z",
+          "logType": "info"
+        },
+        {
+          "name": "changeEq",
+          "log": "Distance 11.06 < 40. Desk Eq-Filters Activated. ",
+          "time": "2024-07-15T09:17:20.796Z",
+          "logType": "info"
+        },
+        {
+          "name": "changeEq",
+          "log": "Distance 64.38 > 40. Filters removed. ",
+          "time": "2024-07-15T09:17:26.801Z",
+          "logType": "info"
+        },
+        {
+          "name": "changeEq",
+          "log": "Distance 6.31 < 40. Desk Eq-Filters Activated. ",
+          "time": "2024-07-15T09:17:29.797Z",
+          "logType": "info"
+        },
+        {
+          "name": "changeEq",
+          "log": "Distance 70.16 > 40. Filters removed. ",
+          "time": "2024-07-15T09:17:32.300Z",
+          "logType": "info"
+        },
+        {
+          "name": "changeEq",
+          "log": "Distance 11.95 < 40. Desk Eq-Filters Activated. ",
+          "time": "2024-07-15T09:19:51.809Z",
+          "logType": "info"
+        },
+        {
+          "name": "changeEq",
+          "log": "Distance 72.49 > 40. Filters removed. ",
+          "time": "2024-07-15T09:20:04.060Z",
+          "logType": "info"
+        },
+        {
+          "name": "changeEq",
+          "log": "Distance 16.53 < 40. Desk Eq-Filters Activated. ",
+          "time": "2024-07-15T09:22:54.327Z",
+          "logType": "info"
+        },
+        {
+          "name": "changeEq",
+          "log": "Distance 78.19 > 40. Filters removed. ",
+          "time": "2024-07-15T09:23:02.323Z",
+          "logType": "info"
+        },
+        {
+          "name": "changeEq",
+          "log": "Distance 15.56 < 40. Desk Eq-Filters Activated. ",
+          "time": "2024-07-15T09:23:28.322Z",
+          "logType": "info"
+        },
+        {
+          "name": "changeEq",
+          "log": "Distance 116.57 > 40. Filters removed. ",
+          "time": "2024-07-15T09:24:05.580Z",
+          "logType": "info"
+        },
+        {
+          "name": "changeEq",
+          "log": "Distance 18.13 < 40. Desk Eq-Filters Activated. ",
+          "time": "2024-07-15T09:24:17.830Z",
+          "logType": "info"
+        },
+        {
+          "name": "changeEq",
+          "log": "Distance 78.91 > 40. Filters removed. ",
+          "time": "2024-07-15T09:24:25.329Z",
+          "logType": "info"
+        },
+        {
+          "name": "changeEq",
+          "log": "Distance 18.14 < 40. Desk Eq-Filters Activated. ",
+          "time": "2024-07-15T09:24:30.077Z",
+          "logType": "info"
+        },
+        {
+          "name": "changeEq",
+          "log": "Distance 116.12 > 40. Filters removed. ",
+          "time": "2024-07-15T09:24:32.331Z",
+          "logType": "info"
+        },
+        {
+          "name": "changeEq",
+          "log": "Distance 71.28 > 40. Filters removed. ",
+          "time": "2024-07-15T09:33:23.368Z",
+          "logType": "info"
+        },
+        {
+          "name": "changeEq",
+          "log": "Distance 21.04 < 40. Desk Eq-Filters Activated. ",
+          "time": "2024-07-15T09:33:58.615Z",
+          "logType": "info"
+        },
+        {
+          "name": "changeEq",
+          "log": "Distance 62.25 > 40. Filters removed. ",
+          "time": "2024-07-15T09:34:02.624Z",
+          "logType": "info"
+        },
+        {
+          "name": "changeEq",
+          "log": "Distance 0.0 < 40. Desk Eq-Filters Activated. ",
+          "time": "2024-07-15T09:35:02.387Z",
+          "logType": "info"
+        },
+        {
+          "name": "changeEq",
+          "log": "Distance 55.62 > 40. Filters removed. ",
+          "time": "2024-07-15T09:35:05.372Z",
+          "logType": "info"
+        },
+        {
+          "name": "changeEq",
+          "log": "Distance 18.47 < 40. Desk Eq-Filters Activated. ",
+          "time": "2024-07-15T09:35:16.623Z",
+          "logType": "info"
+        },
+        {
+          "name": "changeEq",
+          "log": "Distance 70.45 > 40. Filters removed. ",
+          "time": "2024-07-15T09:35:21.126Z",
+          "logType": "info"
+        },
+        {
+          "name": "changeEq",
+          "log": "Distance 67.57 > 40. Filters removed. ",
+          "time": "2024-07-15T09:36:47.388Z",
+          "logType": "info"
+        },
+        {
+          "name": "changeEq",
+          "log": "Distance 21.63 < 40. Desk Eq-Filters Activated. ",
+          "time": "2024-07-15T09:37:38.887Z",
+          "logType": "info"
+        },
+        {
+          "name": "changeEq",
+          "log": "Distance 57.02 > 40. Filters removed. ",
+          "time": "2024-07-15T09:37:41.631Z",
+          "logType": "info"
+        },
+        {
+          "name": "changeEq",
+          "log": "Distance 17.18 < 40. Desk Eq-Filters Activated. ",
+          "time": "2024-07-15T09:38:50.386Z",
+          "logType": "info"
+        },
+        {
+          "name": "changeEq",
+          "log": "Distance 73.01 > 40. Filters removed. ",
+          "time": "2024-07-15T09:39:00.390Z",
+          "logType": "info"
+        },
+        {
+          "name": "changeEq",
+          "log": "Distance 17.18 < 40. Desk Eq-Filters Activated. ",
+          "time": "2024-07-15T09:39:05.386Z",
+          "logType": "info"
+        },
+        {
+          "name": "changeEq",
+          "log": "Distance 73.45 > 40. Filters removed. ",
+          "time": "2024-07-15T09:39:08.390Z",
+          "logType": "info"
+        },
+        {
+          "name": "changeEq",
+          "log": "Distance 21.33 < 40. Desk Eq-Filters Activated. ",
+          "time": "2024-07-15T09:40:22.140Z",
+          "logType": "info"
+        },
+        {
+          "name": "changeEq",
+          "log": "Distance 72.17 > 40. Filters removed. ",
+          "time": "2024-07-15T09:40:24.395Z",
+          "logType": "info"
+        }
+      ],
+      "position": {
+        "x": 405.1411585243235,
+        "y": -13.878736666499293
+      }
+    },
+    "webClient": {
+      "logs": [],
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "RGB Array Generator": {
+      "position": {
+        "x": -109.13116827717572,
+        "y": 482.60542022363074
+      },
+      "logs": []
+    },
+    "webClient-0": {
+      "logs": [],
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "webClient-1": {
+      "logs": [],
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "webClient-0-0": {
+      "logs": [],
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "webClient-1-0": {
+      "logs": [],
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "webClient-1-0-0": {
+      "logs": [],
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "webClient-0-0-0": {
+      "logs": [],
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "webClient-1-0-0-0": {
+      "logs": [],
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "webClient-1-0-0-0-0": {
+      "logs": [],
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "webClient-1-0-0-0-0-0": {
+      "logs": [],
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "ChangingIO": {
+      "position": {
+        "x": -84.66270702195592,
+        "y": -19.375208170166417
+      },
+      "logs": []
+    },
+    "Device A": {
+      "position": {
+        "x": -307.3089976535999,
+        "y": 32.143822383488214
+      },
+      "logs": [
+        {
+          "name": "Device A",
+          "log": "IOName not deleted from connectedTo: wordInput",
+          "time": "2024-07-12T13:36:15.063Z",
+          "logType": "error"
+        },
+        {
+          "name": "Device A",
+          "log": "IOName not deleted from connectedTo: wordInput",
+          "time": "2024-07-12T13:43:03.294Z",
+          "logType": "error"
+        }
+      ]
+    },
+    "DeviceC": {
+      "position": {
+        "x": null,
+        "y": null
+      },
+      "logs": []
+    }
+  },
+  "DeviceB": {
+    "logs": [],
+    "position": {
+      "x": -741.6581790410438,
+      "y": -386.5577257105871
+    }
+  },
+  "DeviceA": {
+    "logs": [],
+    "position": {
+      "x": -1126.5094806860466,
+      "y": -385.7064240655841
+    }
+  },
+  "VU Meter": {
+    "position": {
+      "x": 159.57389559411678,
+      "y": 225.68837310306512
+    },
+    "logs": [
+      {
+        "name": "VU Meter",
+        "log": "IOName not deleted from connectedTo: rgbOutput",
+        "time": "2024-07-03T10:39:19.363Z",
+        "logType": "error"
+      },
+      {
+        "name": "VU Meter",
+        "log": "IOName not deleted from connectedTo: rgbOutput",
+        "time": "2024-07-03T10:39:23.189Z",
+        "logType": "error"
+      },
+      {
+        "name": "VU Meter",
+        "log": "IOName not deleted from connectedTo: rgbOutput",
+        "time": "2024-07-03T10:39:24.913Z",
+        "logType": "error"
+      },
+      {
+        "name": "VU Meter",
+        "log": "IOName not deleted from connectedTo: rgbOutput",
+        "time": "2024-07-03T11:10:57.725Z",
+        "logType": "error"
+      },
+      {
+        "name": "VU Meter",
+        "log": "IOName not deleted from connectedTo: rgbOutput",
+        "time": "2024-07-05T06:32:56.763Z",
+        "logType": "error"
+      },
+      {
+        "name": "VU Meter",
+        "log": "IOName not deleted from connectedTo: rgbOutput",
+        "time": "2024-07-05T06:32:57.934Z",
+        "logType": "error"
+      },
+      {
+        "name": "VU Meter",
+        "log": "IOName not deleted from connectedTo: rgbOutput",
+        "time": "2024-07-05T06:32:59.094Z",
+        "logType": "error"
+      },
+      {
+        "name": "VU Meter",
+        "log": "IOName not deleted from connectedTo: rgbOutput",
+        "time": "2024-07-05T06:53:34.059Z",
+        "logType": "error"
+      },
+      {
+        "name": "VU Meter",
+        "log": "IOName not deleted from connectedTo: rgbOutput",
+        "time": "2024-07-05T06:53:34.405Z",
+        "logType": "error"
+      },
+      {
+        "name": "VU Meter",
+        "log": "IOName not deleted from connectedTo: rgbOutput",
+        "time": "2024-07-05T06:53:34.735Z",
+        "logType": "error"
+      },
+      {
+        "name": "VU Meter",
+        "log": "IOName not deleted from connectedTo: rgbOutput",
+        "time": "2024-07-09T09:33:25.293Z",
+        "logType": "error"
+      },
+      {
+        "name": "VU Meter",
+        "log": "IOName not deleted from connectedTo: rgbOutput",
+        "time": "2024-07-09T09:33:31.269Z",
+        "logType": "error"
+      },
+      {
+        "name": "VU Meter",
+        "log": "IOName not deleted from connectedTo: rgbOutput",
+        "time": "2024-07-09T09:33:33.990Z",
+        "logType": "error"
+      },
+      {
+        "name": "VU Meter",
+        "log": "IOName not deleted from connectedTo: rgbOutput",
+        "time": "2024-07-09T10:46:30.075Z",
+        "logType": "error"
+      },
+      {
+        "name": "VU Meter",
+        "log": "IOName not deleted from connectedTo: rgbOutput",
+        "time": "2024-07-09T10:46:30.644Z",
+        "logType": "error"
+      }
+    ]
+  },
+  "Key Presser": {
+    "position": {
+      "x": 1106.9237635548998,
+      "y": -112.76919305019729
+    },
+    "logs": [
+      {
+        "name": "Key Presser",
+        "log": "IOName not deleted from connectedTo: moveMotor",
+        "time": "2024-07-09T09:47:30.721Z",
+        "logType": "error"
+      },
+      {
+        "name": "Key Presser",
+        "log": "IOName not deleted from connectedTo: moveMotor",
+        "time": "2024-07-09T09:48:40.853Z",
+        "logType": "error"
+      }
+    ]
+  },
+  "Keith": {
+    "position": {
+      "x": -134.7597192441049,
+      "y": 245.13434643451467
+    },
+    "logs": []
+  },
+  "Beat": {
+    "position": {
+      "x": -334.89720721884544,
+      "y": 280.1582086521185
+    },
+    "logs": [
+      {
+        "name": "Beat",
+        "log": "IOName not deleted from connectedTo: playKick",
+        "time": "2024-07-09T10:53:29.851Z",
+        "logType": "error"
+      },
+      {
+        "name": "Beat",
+        "log": "IOName not deleted from connectedTo: playKick",
+        "time": "2024-07-09T11:00:15.829Z",
+        "logType": "error"
+      }
+    ]
+  },
+  "KeyWatcher": {
+    "position": {
+      "x": -103.82073287863328,
+      "y": 220.6017606978926
+    },
+    "logs": []
+  }
+}

@@ -197,7 +197,7 @@ const DeviceIO = (props) => {
                     //     }
                     //   })
                     props.all_outputs.map((word, index) => (
-                      <Label Icon={Socket} key = {index} text = {word} onClick={inputClicked}/>
+                      <Label Icon={Socket} key = {index} text = {word} onClick={outputClicked}/>
                     ))
                     }
                 </div>

@@ -148,7 +148,7 @@ const DeviceIO = ({deviceName, inputs, outputs, widgets, sendMapToLinkFactory, a
                   // })
                   // }
                     all_outputs.map((word, index) => (
-                      <Label Icon={Socket}  key = {index} text = {word}/>
+                      <Label Icon={Socket}  key = {index} text = {word} onClick={outputClicked}/>
                     ))
                   }
 

@@ -26,16 +26,13 @@ function HandleWrapper({type, id,  style, isConnectable, className}) {
 
   return (
     <div className="HandleContainer"  onMouseEnter={handleHover} onMouseLeave={handleLeave}>
-      <div className="shadowContainer">
-        <Handle  className={`${ioClassName} `  + className} type={type} id = {id}  style = {style} isConnectable={isConnectable}>
-        </Handle>
-      </div>
-          {(isMenuVisible) ? 
-            <div className={`handleHoverMenu  ${type === "source" ? " output" : " input"} `}>
-                <p>{id}</p>
-            </div>
-            :    
-            null
+        <Handle  className={`${ioClassName} `  + className} type={type} id = {id}  style = {style} isConnectable={isConnectable}/>
+        {(isMenuVisible) ? 
+          <div className={`handleHoverMenu  ${type === "source" ? " output" : " input"} `}>
+              <p>{id}</p>
+          </div>
+          :    
+          null
         }
     </div>
   );

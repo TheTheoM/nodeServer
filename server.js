@@ -87,11 +87,11 @@ class ObservableMap {
 }
 
 class SERVER {
-    constructor(port, reactClientName, savedLinkFiles) {
+    constructor(port, reactClientName, savedLinkFile) {
         this.server      = new WebSocket.Server({ port: port, pingInterval: 5000,   pingTimeout: 1000 });
         this.activeLinks = new ObservableMap(this.on_activeLinks_Change.bind(this)).getMapFunctions()
         this.reactClientName  = reactClientName;
-        this.savedLinkFiles   = savedLinkFiles;
+        this.savedLinkFile   = savedLinkFile;
         this.connectedDevices = new Map();
         this.persistentLinks  = new ObservableMap(this.on_PersistentLinks_Update.bind(this)).getMapFunctions();
         this.sendReactUpdate  = true;
@@ -110,6 +110,9 @@ class SERVER {
         this.pingTimeout   = 1500;
         this.messagesPerSecond = 5; 
         this.rateLimits = {};
+        this.backupFileName = "savedDataBackUp.json"
+        this.savedLinkFile = "savedData.json"
+        this.createLinkBackupFile()
         this.loadLinks()
         this.main()
 
@@ -264,7 +267,7 @@ class SERVER {
         };
 
         try {
-            let parsedData = this.validateDataStructure(this.savedLinkFiles, true);
+            let parsedData = this.validateDataStructure(this.savedLinkFile, true);
             if (!parsedData.deviceData[deviceName]) {
                 parsedData.deviceData[deviceName] = {
                     logs: [],
@@ -283,7 +286,7 @@ class SERVER {
             let deviceLogsToAdd = [...logs_not_logType, ...logs_ARE_logType_RESIZED];
 
             parsedData.deviceData[deviceName].logs = deviceLogsToAdd;
-            fs.writeFileSync(this.savedLinkFiles, JSON.stringify(parsedData, null, 2), 'utf-8');
+            fs.writeFileSync(this.savedLinkFile, JSON.stringify(parsedData, null, 2), 'utf-8');
         } catch (error) {
             console.log('Error parsing existing file content:' + error.stack);
         }
@@ -318,7 +321,7 @@ class SERVER {
 
         try {
             const excludedLogTypes  = [""] 
-            let fileData = fs.readFileSync(this.savedLinkFiles, 'utf-8');
+            let fileData = fs.readFileSync(this.savedLinkFile, 'utf-8');
             let parsedData = JSON.parse(fileData);
             if (!parsedData.hasOwnProperty('deviceData')) {
                 parsedData["deviceData"] = {}
@@ -332,7 +335,7 @@ class SERVER {
                 }
             })
 
-            fs.writeFileSync(this.savedLinkFiles, JSON.stringify(parsedData, null, 2), 'utf-8');
+            fs.writeFileSync(this.savedLinkFile, JSON.stringify(parsedData, null, 2), 'utf-8');
         } catch (error) {
             console.log('Error parsing existing file content:' + error );
             throw error
@@ -343,49 +346,60 @@ class SERVER {
     }
 
     validateDataStructure(fileName, saveChanges) {
-        if (!fs.existsSync(fileName)) { 
+        if (!fs.existsSync(fileName)) {
             fs.writeFileSync(fileName, '', 'utf-8');
         }
-
+    
         let fileData = fs.readFileSync(fileName, 'utf-8');
-
-        if (fileData.trim() === '') { 
+    
+        if (fileData.trim() === '') {
             return {
-                "links": [], 
+                "links": [],
                 "deviceData": {},
-            }; 
+            };
         } else {
-            let parsedData = JSON.parse(fileData)
-            if (!parsedData.hasOwnProperty('links')) {
-                parsedData['links'] = []
+            try {
+                let parsedData = JSON.parse(fileData);
+    
+                if (!parsedData.hasOwnProperty('links')) {
+                    parsedData['links'] = [];
+                }
+    
+                if (!parsedData.hasOwnProperty('deviceData')) {
+                    parsedData['deviceData'] = {};
+                }
+    
+                let deviceData = parsedData['deviceData'];
+    
+                if (Object.keys(deviceData).length > 0) {
+                    Object.keys(deviceData).forEach((deviceName) => {
+                        let device = deviceData[deviceName];
+                        if (!device.hasOwnProperty('logs')) {
+                            device['logs'] = [];
+                        }
+    
+                        if (!device.hasOwnProperty('position')) {
+                            device['position'] = { x: 0, y: 0 };
+                        }
+                    });
+                }
+    
+                if (saveChanges) {
+                    fs.writeFileSync(fileName, JSON.stringify(parsedData, null, 2), 'utf-8');
+                }
+    
+                return parsedData;
+            } catch (error) {
+                console.error(`Error parsing JSON from file '${fileName}': ${error}`);
+    
+                // Replace main file with the backup
+                const backupData = fs.readFileSync(this.backupFileName, 'utf-8');
+                fs.writeFileSync(fileName, backupData, 'utf-8');
+    
+                // Optionally return null or handle the error case
+                return null;
             }
-
-            if (!parsedData.hasOwnProperty('deviceData')) {
-                parsedData['deviceData'] = {}
-            }  
-
-
-            let deviceData = parsedData['deviceData']
-
-            if (Object.keys(deviceData).length > 0) { 
-                Object.keys(deviceData).forEach((deviceName) => {
-                    let device = deviceData[deviceName]
-                    if (!device.hasOwnProperty('logs')) {
-                        device['logs'] = []
-                    }
-
-                    if (!device.hasOwnProperty('position')) {
-                        device['position'] = {x: 0, y: 0}
-                    }
-                })
-            }
-
-            if (saveChanges) {fs.writeFileSync(fileName, JSON.stringify(parsedData, null, 2), 'utf-8');}
-
-            return parsedData
         }
-
-
     }
     
     modifyFilters(filters) {
@@ -400,8 +414,8 @@ class SERVER {
 
     saveNodePositions(nodePositions) {
         try {
-            let fileData = fs.readFileSync(this.savedLinkFiles, 'utf-8');
-            let parsedData =  this.validateDataStructure(this.savedLinkFiles, true);
+            let fileData = fs.readFileSync(this.savedLinkFile, 'utf-8');
+            let parsedData =  this.validateDataStructure(this.savedLinkFile, true);
             
             if (typeof parsedData.deviceData === 'undefined') {
                 parsedData["deviceData"] = {}
@@ -416,7 +430,7 @@ class SERVER {
                     device.setPosition(nodeData.position)
                 }
             })
-            fs.writeFileSync(this.savedLinkFiles, JSON.stringify(parsedData, null, 2), 'utf-8');
+            fs.writeFileSync(this.savedLinkFile, JSON.stringify(parsedData, null, 2), 'utf-8');
         } catch (error) {
             this.addLog("Server",  'Error parsing existing file content:'  + error, "error");
         }
@@ -425,7 +439,7 @@ class SERVER {
 
     checkDeviceSavedData() {
         try {
-            const fileData = fs.readFileSync(this.savedLinkFiles, 'utf-8');
+            const fileData = fs.readFileSync(this.savedLinkFile, 'utf-8');
             let parsedData;
             if (fileData.trim() === '') {
                 parsedData = {
@@ -433,7 +447,7 @@ class SERVER {
                     "deviceData": {},
                 }; 
                 
-                fs.writeFileSync(this.savedLinkFiles, JSON.stringify(parsedData, null, 2), 'utf-8');
+                fs.writeFileSync(this.savedLinkFile, JSON.stringify(parsedData, null, 2), 'utf-8');
             } else {
                 parsedData = JSON.parse(fileData)
             }
@@ -453,7 +467,7 @@ class SERVER {
 
     loadLinks() {
         try {
-            const fileData = fs.readFileSync(this.savedLinkFiles, 'utf-8');
+            const fileData = fs.readFileSync(this.savedLinkFile, 'utf-8');
             const parsedData = JSON.parse(fileData);
             if (parsedData["links"]) {
                 parsedData["links"].forEach((link) => {
@@ -465,6 +479,37 @@ class SERVER {
             console.error('Error reading JSON file:', error.message);
           }
     }
+
+    createLinkBackupFile() {
+        // Creates a back up of the json file named 'this.savedLinkFile'.backup.json
+
+        if (!fs.existsSync(this.savedLinkFile)) {
+            console.error(`Error: File '${this.savedLinkFile}' not found.`);
+            return;
+        }
+    
+        fs.readFile(this.savedLinkFile, 'utf8', (err, data) => {
+            if (err) {
+                console.error(`Error reading file '${this.savedLinkFile}': ${err}`);
+                return;
+            }
+    
+            try {
+                const jsonData = JSON.parse(data);
+                fs.writeFile(this.backupFileName, JSON.stringify(jsonData, null, 2), (err) => {
+                    if (err) {
+                        console.error(`Error writing backup file '${this.backupFileName}': ${err}`);
+                        return;
+                    }
+                    console.log(`Backup file '${this.backupFileName}' created successfully.`);
+                });
+            } catch (err) {
+                console.error(`Error parsing JSON from file '${this.savedLinkFile}': ${err}`);
+            }
+        });
+    }
+    
+
 
     createVirtualDevice(name,inputs, outputs, isNode) {
         return new VIRTUALDEVICE(this.serverContext, name, inputs, outputs, "VirtualDevice", isNode)
@@ -580,7 +625,7 @@ class SERVER {
         
 
         try {
-            const fileData   = fs.readFileSync(this.savedLinkFiles, 'utf-8');
+            const fileData   = fs.readFileSync(this.savedLinkFile, 'utf-8');
             const parsedData = JSON.parse(fileData);
             if (parsedData.hasOwnProperty("deviceData")) {
                 Object.keys(parsedData["deviceData"]).forEach((name) => {
@@ -718,7 +763,7 @@ class SERVER {
                 let link = new LINK(this.serverContext, outputIOObject, inputIOObject, outputDevice, inputDevice, isPersistent);
                 link.activate();
                 if (isPersistent) {
-                    let existingFileContent = fs.readFileSync(this.savedLinkFiles, 'utf-8');
+                    let existingFileContent = fs.readFileSync(this.savedLinkFile, 'utf-8');
 
                     try {
                         let fileData = JSON.parse(existingFileContent);
@@ -736,7 +781,7 @@ class SERVER {
                                 "isHybrid":             isHybrid,
                             };
                             linkData.push(newLink);
-                            fs.writeFileSync(this.savedLinkFiles, JSON.stringify(fileData, null, 2), 'utf-8');
+                            fs.writeFileSync(this.savedLinkFile, JSON.stringify(fileData, null, 2), 'utf-8');
                         }
                     } catch (error) {
                         console.error('Error parsing existing file content:', error);
@@ -780,13 +825,13 @@ class SERVER {
         if (this.persistentLinks.deleteItem(linkName)) {
             this.addLog("Server", `Persistent Link: ${linkName}:  Broken and Deactivating: `, "info")
             this.breakLinkWithIONames(outputDeviceName, outputName, inputDeviceName, inputName)
-            let fileData = fs.readFileSync(this.savedLinkFiles, 'utf-8');
+            let fileData = fs.readFileSync(this.savedLinkFile, 'utf-8');
             try {
-                let parsedData =  this.validateDataStructure(this.savedLinkFiles, true);
+                let parsedData =  this.validateDataStructure(this.savedLinkFile, true);
                 let linksToSave = parsedData.links.filter(link => link.linkName !== linkName);
                 parsedData.links = linksToSave
                 
-                fs.writeFileSync(this.savedLinkFiles, JSON.stringify(parsedData, null, 2), 'utf-8');
+                fs.writeFileSync(this.savedLinkFile, JSON.stringify(parsedData, null, 2), 'utf-8');
             } catch (error) {
                 console.error('Error parsing existing file content:', error);
             }
@@ -1130,24 +1175,19 @@ class DEVICE {
     main() {
         this.ws.on('message', (msg) => {
             msg = JSON.parse(msg);
+          try {
             switch (msg.type) {
                 case "registerIO": // To add/remove new inputs outputs after registration.
-                    if (msg.inputs && msg.outputs) {
-                        // this.inputs      = this.create_IO_objects(msg.inputs, true)
-                        // this.inputNames  = new Map(msg.inputs.map(value => [value, value]))
-                        // this.outputs     = this.create_IO_objects(msg.outputs, false)
-                        // this.outputNames = new Map(msg.outputs.map(value => [value, value]))
-
-                        this.inputs  = this.create_IO_objects(msg.inputs, true);
-                        this.outputs = this.create_IO_objects(msg.outputs, false);
+                    if (msg.inputNames && msg.outputNames) {
+                        this.inputs  = this.create_IO_objects(msg.inputNames, true);
+                        this.outputs = this.create_IO_objects(msg.outputNames, false);
                         this.inputNames = new Map()
                         this.outputNames = new Map()
                         this.inputs.forEach((value, key) => {this.inputNames.set(value.name, value.name);});
                         this.outputs.forEach((value, key) => {this.outputNames.set(value.name, value.name);});
-                
-                        
-                        // this.inputNames  = msg.inputs
                         this.server.checkForPersistentLink()
+                    } else {
+                        this.server.addLog("Server", `Failure to register/change Device: ${this.name}'s IO, due to missing 'inputNames' and 'outputNames' fields. RCVD Msg:  ${JSON.stringify(msg)}`, "error");
                     }
                     break
 
@@ -1168,140 +1208,209 @@ class DEVICE {
                 case "sendLogs":
                     if ((this.name && msg.logs && msg.logType)) {
                         this.server.addLog(this.name, msg.logs, msg.logType);
+                    } else {
+                        this.server.addLog("Server", `sendLogs message received with missing fields for device ${this.name}. RCVD Msg: ${JSON.stringify(msg)}`, "error");
                     }
                     break;
                     
                 case "modifyLogFilters":
-                    this.server.modifyFilters(msg.filters)
+                    if (msg.filters) {
+                        this.server.modifyFilters(msg.filters);
+                    } else {
+                        this.server.addLog("Server", `modifyLogFilters message received without 'filters' field for device ${this.name}. RCVD Msg: ${JSON.stringify(msg)}`, "error");
+                    }
                     break;
 
                     
                 case "getDeviceLogs":
-                    this.sendMessage(JSON.stringify({
-                        'type': "getLogs",
-                        'deviceLogs': this.server.getDeviceLogs(msg.filters),
-                        }
-                    ))
+                    if (msg.filters) {
+                        this.sendMessage(JSON.stringify({
+                            'type': "getLogs",
+                            'deviceLogs': this.server.getDeviceLogs(msg.filters),
+                        }));
+                    } else {
+                        this.server.addLog("Server", `getDeviceLogs message received without 'filters' field for device ${this.name}. RCVD Msg: ${JSON.stringify(msg)}`, "error");
+                    }
                     break
-
                 case "sendNodePositions":
-                    if ((msg.nodePositions)) {
-                        this.server.saveNodePositions(msg.nodePositions)
+                    if (msg.nodePositions) {
+                        this.server.saveNodePositions(msg.nodePositions);
+                    } else {
+                        this.server.addLog("Server", `sendNodePositions message received without 'nodePositions' field. RCVD Msg: ${JSON.stringify(msg)}`, "error");
                     }
                     break;
-
+                
                 case "createVirtualDevice":
-                    if ((msg.name && msg.inputs && msg.outputs)) {
-                        this.server.createVirtualDevice(msg.name,msg.inputs, msg.outputs, true)
+                    if (msg.name && msg.inputs && msg.outputs) {
+                        this.server.createVirtualDevice(msg.name, msg.inputs, msg.outputs, true);
+                    } else {
+                        this.server.addLog("Server", `createVirtualDevice message received with missing fields. Required: 'name', 'inputs', 'outputs'. RCVD Msg: ${JSON.stringify(msg)}`, "error");
                     }
-                  break;
-                    
+                    break;
+                
                 case "requestIO":
-                    this.sendMessage(JSON.stringify(
-                        this.server.getDeviceIO()
-                    ))
+                    try {
+                        this.sendMessage(JSON.stringify(this.server.getDeviceIO()));
+                    } catch (error) {
+                        this.server.addLog("Server", `Error in requestIO: ${error.message}`, "error");
+                    }
                     break;
-
+                
                 case "requestLink":
-                    if ((msg.outputDeviceName && msg.outputName && msg.inputDeviceName && msg.inputName)) {
+                    if (msg.outputDeviceName && msg.outputName && msg.inputDeviceName && msg.inputName) {
                         this.server.requestLink(msg.outputDeviceName, msg.outputName, msg.inputDeviceName, msg.inputName, false);
+                    } else {
+                        this.server.addLog("Server", `requestLink message received with missing fields. Required: 'outputDeviceName', 'outputName', 'inputDeviceName', 'inputName'. RCVD Msg: ${JSON.stringify(msg)}`, "error");
                     }
                     break;
-
+                
                 case "breakLink":
-                    if ((msg.outputDeviceName && msg.outputName && msg.inputDeviceName && msg.inputName)) {
+                    if (msg.outputDeviceName && msg.outputName && msg.inputDeviceName && msg.inputName) {
                         let linkName = `${msg.outputDeviceName}-${msg.outputName}=>${msg.inputDeviceName}-${msg.inputName}`;
-                        this.server.breakLinkByName(msg.linkName)
+                        this.server.breakLinkByName(linkName);
+                    } else {
+                        this.server.addLog("Server", `breakLink message received with missing fields. Required: 'outputDeviceName', 'outputName', 'inputDeviceName', 'inputName'. RCVD Msg: ${JSON.stringify(msg)}`, "error");
                     }
                     break;
+                    
 
                 case "requestPersistentLink":
-                    if ((msg.outputDeviceName && msg.outputName && msg.inputDeviceName && msg.inputName)) {
-                        this.server.addPersistentLink(msg.outputDeviceName, msg.outputName, msg.inputDeviceName, msg.inputName, msg.encrypt_algorithm, msg.key_size, msg.highest_compatible, msg.isHybrid)
-                        break;
+                    if (msg.outputDeviceName && msg.outputName && msg.inputDeviceName && msg.inputName) {
+                        this.server.addPersistentLink(
+                            msg.outputDeviceName, 
+                            msg.outputName, 
+                            msg.inputDeviceName, 
+                            msg.inputName, 
+                            msg.encrypt_algorithm, 
+                            msg.key_size, 
+                            msg.highest_compatible, 
+                            msg.isHybrid
+                        );
+                    } else {
+                        this.server.addLog("Server", `requestPersistentLink message received with missing fields. Required: 'outputDeviceName', 'outputName', 'inputDeviceName', 'inputName'. RCVD Msg: ${JSON.stringify(msg)}`, "error");
                     }
-
+                    break;
+                
                 case "breakPersistentLink":
-                    if ((msg.outputDeviceName && msg.outputName && msg.inputDeviceName && msg.inputName)) {
-                        this.server.breakPersistentLink(msg.outputDeviceName, msg.outputName, msg.inputDeviceName, msg.inputName)
+                    if (msg.outputDeviceName && msg.outputName && msg.inputDeviceName && msg.inputName) {
+                        this.server.breakPersistentLink(
+                            msg.outputDeviceName, 
+                            msg.outputName, 
+                            msg.inputDeviceName, 
+                            msg.inputName
+                        );
+                    } else {
+                        this.server.addLog("Server", `breakPersistentLink message received with missing fields. Required: 'outputDeviceName', 'outputName', 'inputDeviceName', 'inputName'. RCVD Msg: ${JSON.stringify(msg)}`, "error");
                     }
                     break;
-
-
+                
                 case "updatePersistentLink":
-                    if ((msg.outputDeviceName && msg.outputName && msg.inputDeviceName && msg.inputName)) {
-                        this.server.updatePersistentLink(msg.linkName, msg.outputDeviceName, msg.outputName, msg.inputDeviceName, msg.inputName, 
-                                    msg.encrypt_algorithm, msg.key_Length, msg.prefer_Highest_Key, msg.isHybrid)
+                    if (msg.outputDeviceName && msg.outputName && msg.inputDeviceName && msg.inputName) {
+                        this.server.updatePersistentLink(
+                            msg.linkName, 
+                            msg.outputDeviceName, 
+                            msg.outputName, 
+                            msg.inputDeviceName, 
+                            msg.inputName, 
+                            msg.encrypt_algorithm, 
+                            msg.key_Length, 
+                            msg.prefer_Highest_Key, 
+                            msg.isHybrid
+                        );
+                    } else {
+                        this.server.addLog("Server", `updatePersistentLink message received with missing fields. Required: 'outputDeviceName', 'outputName', 'inputDeviceName', 'inputName'. RCVD Msg: ${JSON.stringify(msg)}`, "error");
                     }
                     break;
-
+                
                 case "removeDeviceByName":
                     if (msg.deviceName) {
-                        this.server.removeDeviceByName(msg.deviceName)
+                        this.server.removeDeviceByName(msg.deviceName);
+                    } else {
+                        this.server.addLog("Server", `removeDeviceByName message received without 'deviceName' field. RCVD Msg: ${JSON.stringify(msg)}`, "error");
                     }
                     break;
-
+                
                 case "requestLinkDataInspect":
-                    let lastMessage = this.server.requestLinkDataInspection(msg.linkName);
-                    if (lastMessage) {
-                        this.sendMessage(JSON.stringify({
-                            type:     "linkInspectData",
-                            linkName: msg.linkName,
-                            data:     lastMessage
-                        }))
+                    if (msg.linkName) {
+                        let lastMessage = this.server.requestLinkDataInspection(msg.linkName);
+                        if (lastMessage) {
+                            this.sendMessage(JSON.stringify({
+                                type: "linkInspectData",
+                                linkName: msg.linkName,
+                                data: lastMessage
+                            }));
+                        } else {
+                            this.server.addLog("Server", `No data found for link inspection on 'linkName': ${msg.linkName}.`, "error");
+                        }
+                    } else {
+                        this.server.addLog("Server", `requestLinkDataInspect message received without 'linkName' field. RCVD Msg: ${JSON.stringify(msg)}`, "error");
                     }
                     break;
 
                 case "breakLink_By_LinkName":
                     if (msg.linkName) {
-                        this.server.breakLinkByName(msg.linkName)
+                        this.server.breakLinkByName(msg.linkName);
+                    } else {
+                        this.server.addLog("Server", `breakLink_By_LinkName message received without 'linkName' field. RCVD Msg: ${JSON.stringify(msg)}`, "error");
                     }
                     break;
-
+                
                 case "requestAvailableIO":
-                    let availableIO = this.server.getAvailableIO()
-                    this.sendMessage(JSON.stringify({
-                        type: "availableIO",
-                        availableIO: availableIO
-                    }))
+                    try {
+                        let availableIO = this.server.getAvailableIO();
+                        this.sendMessage(JSON.stringify({
+                            type: "availableIO",
+                            availableIO: availableIO
+                        }));
+                    } catch (error) {
+                        this.server.addLog("Server", `Error in requestAvailableIO: ${error.message}`, "error");
+                    }
                     break;
-
+                
                 case "changeStatus":
                     if (this.validStatuses.includes(msg.statusState)) {
                         this.statusState = msg.statusState;
                     } else {
-                        this.server.addLog("Server",`Invalid Status ${msg.statusState}} from Device ${this.name}`, "error")
+                        this.server.addLog("Server", `Invalid Status ${msg.statusState} from Device ${this.name}`, "error");
                     }
                     break;
-
+                
                 case "requestEditIO":
                     if (msg.device && msg.ioName && msg.editIOData) {
                         this.server.sendMessageToDevice(msg.device, JSON.stringify({
                             type: "updateIO",
                             ioName: msg.ioName,
-                            editIOData: msg.editIOData,
-                        }))
+                            editIOData: msg.editIOData
+                        }));
+                    } else {
+                        this.server.addLog("Server", `requestEditIO message received with missing fields. Required: 'device', 'ioName', 'editIOData'. RCVD Msg: ${JSON.stringify(msg)}`, "error");
                     }
                     break;
-
+                
                 case "updateWidgets":
                     if (msg.widgetName && msg.widget) {
                         this.modify_widget(msg.widgetName, msg.widget);
+                    } else {
+                        this.server.addLog("Server", `updateWidgets message received with missing fields. Required: 'widgetName', 'widget'. RCVD Msg: ${JSON.stringify(msg)}`, "error");
                     }
                     break;
-
+                
                 case "updateWidgetsKeyPair":
                     if (msg.widgetName && msg.keyPair) {
-                        this.modify_widget_key_pair(msg.widgetName, msg.keyPair) 
+                        this.modify_widget_key_pair(msg.widgetName, msg.keyPair);
+                    } else {
+                        this.server.addLog("Server", `updateWidgetsKeyPair message received with missing fields. Required: 'widgetName', 'keyPair'. RCVD Msg: ${JSON.stringify(msg)}`, "error");
                     }
                     break;
+                
+                default:
+                    this.server.addLog("Server", `Unknown message type received: ${msg.type}. RCVD Msg: ${JSON.stringify(msg)}`, "error");
+                    break;
             }
+          } catch (error) {
+            this.server.addLog("Server", `Main Loop Crashed RCVD Msg:  ${JSON.stringify(msg)}`, "error");
+          }
         })
-        this.pingInterval = setInterval(() => {
-            if (this.ws.readyState === 1) {
-                this.ws.ping('.', false);
-            } 
-        }, 1000);
     }
     
     deactivate() {
@@ -1600,4 +1709,4 @@ class IO {
     }
 }
 
-const server = new SERVER(8080, "webClient", "savedData.json")  
+const server = new SERVER(8080, "webClient")  

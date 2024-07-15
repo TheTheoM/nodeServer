@@ -28,7 +28,6 @@ export default function NodeFactory(props) {
     };
     const debouncedSendNodePositions = debounce(sendNodePositions, 200); 
 
-
     useEffect(() => {
       if (JSON.stringify(props.availableIO) !== JSON.stringify(last)) {
           let initialNodes = []
