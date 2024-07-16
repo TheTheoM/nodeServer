@@ -48,7 +48,7 @@ npm run start
 ```
 
 ## High Level Overview:
-- There are fully functional example clients in /exampleClients.
+- There are many fully functional example clients in /exampleClients, both in Python and JS.
 
 ### To Connect:
   1. Connect to the Server (server.js, port 8080) as a websocket client. You handle this. 
@@ -108,7 +108,7 @@ setInterval(() => { // Device A outputting
 }, 200);
 ```
 
-Over examples are in /examples.
+Other examples are in /exampleClients.
 
 # API Reference:
 
