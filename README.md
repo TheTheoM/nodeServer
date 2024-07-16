@@ -9,6 +9,7 @@ Supports:
 * Live Updating Widgets (Int/Text Inputs, sliders, checkboxes, toggles, stylable icons, text displaying)
 * Link Data Inspection
 * Persistent Links (Will reconnect after disconnection or server restart)
+* Optional Static Link Data Typing 
 * Experimental Key exchange for RSA (Beta)
 * Device Logging
 * Optional Cyberpunk Styling
@@ -97,11 +98,21 @@ All messages sent to and from the server are in the same basic JSON encoded stru
     "isNode": true,                              // [required] [boolean] [to be depracated],
     "inputNames": ["input_1", "input_N"],        // [required] [array of str len >= 0]  [For no inputs, leave as empty array "[]"]
     "outputNames": ["output_1", "output_N"],     // [required] [array of str len >= 0]  [For no outputs, leave as empty array "[]"]
-    "deviceInfo": "Device B",                    // [required] [string] 
+    "deviceInfo": "Any infomation you want",     // [required] [string] 
     "widgets": [{..}, {}],                       // [optional] [array of dicts len > 0] [For syntax see "Widgets" below]
-    "supportedEncryptionStandards": [{..}, {}],  // [optional] [array of dicts len > 0] [for syntax see "Encryption" below]
   }
 ```
+#### Static Typing
+By default, IO's are typeless, meaning any data type (int, float, string, boolean, typeless) can connect to them.
+```
+  "inputNames": ["input_1", "input_2", "input_3", "input_4", "input_5"],        
+```
+By converting the ioName array into a dictionary where each key represents a name and its corresponding value denotes the data type, connections can only be established between two elements of the same type or with a typeless destination. 
+
+```
+  "inputNames": {"input_1": "int", "input_2": "string", "input_3": "float", "input_4": "array", "input_5": "typeless"},        
+```
+
 
 #### Upon sending this to the server, you will *receive* one of two messages:
   1. "nameTaken" [failure]
