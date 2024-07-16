@@ -77,6 +77,46 @@ npm run start
 ### Additional Capabilities:
   5.  Send logs, status, widgets etc.
 
+## Example JS Client
+```
+const WebSocket = require("ws")
+
+const deviceASocket = new WebSocket('ws://localhost:8080');
+//Registration Message
+deviceASocket.addEventListener('open', () => {   
+    console.log('DeviceA Connected To Server');
+    deviceASocket.send(JSON.stringify({
+        type:        "registerDevice",
+        name:        "DeviceA",
+        isNode:      true,
+        inputNames:  ["wordInput"],
+        outputNames: ["wordOutput"],
+        deviceInfo:  "Example Device",
+    }))
+})
+
+deviceASocket.addEventListener("message", (msg) => {
+    let data = JSON.parse(msg.data)
+    if (data.type === "sendInputs") { // The inputs send from the server to your device
+        if (data.inputs.hasOwnProperty("wordInput")) {
+            console.log(`DeviceA received input from input: "wordInput": ${data.inputs.wordInput}`)
+        }
+    } 
+})
+
+// Device A outputting
+setInterval(() => {
+    deviceASocket.send(JSON.stringify({
+        type: "sendOutputs",
+        outputs: {
+            "wordOutput": "Hello, World? Maybe Device B is my world?",
+        },    
+    }))
+}, 200);
+```
+
+Over examples are in /examples.
+
 # API Reference:
 
 All messages sent to and from the server are in the same basic JSON encoded structure, a "type" key which indicated what command and arguments for said command for example:
