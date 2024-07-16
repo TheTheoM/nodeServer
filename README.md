@@ -143,7 +143,7 @@ By default, IO's are typeless, meaning any data type (int, float, string, boolea
 By converting the ioName array into a dictionary where each key represents a name and its corresponding value denotes the data type, connections can only be established between two elements of the same type or with a typeless destination. 
 
 ```
-  "inputNames": {"input_1": "int", "input_2": "string", "input_3": "float", "input_4": "array", "input_5": "typeless"},        
+  "inputNames": {"input_1": "int", "input_2": "str", "input_3": "float", "input_4": "array", "input_5": "typeless"},        
 ```
 
 
