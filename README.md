@@ -22,37 +22,30 @@ git clone https://github.com/TheTheoM/nodeServer.git
 ```
 cd nodeServer
 ```
-
 #### 2. Installing packages for server.js:
 ```
 npm install
 ```    
-
 #### 3. Run the server:
 ```
 node server.js
 ```
-
 #### 4. In a new terminal, move into the reactInterface folder:
 ```
 cd reactInterface
 ```
-
 #### 5. [OPTIONAL] Replace "localhost" with your PC's IP address in the .env file if desired:
 ```
 REACT_APP_WEBSOCKET_SERVER_IP=localhost:8080``` => ```REACT_APP_WEBSOCKET_SERVER_IP=192.168.255.255:8080
 ```
-
 #### 6. Install dependencies for React Interface:
 ```
 npm install
 ```
-
 #### 7. Run React Interface:
 ```
 npm run start
 ```
-
 
 ## High Level Overview:
 - There are fully functional example clients in /exampleClients.
@@ -82,8 +75,8 @@ npm run start
 const WebSocket = require("ws")
 
 const deviceASocket = new WebSocket('ws://localhost:8080');
-//Registration Message
-deviceASocket.addEventListener('open', () => {   
+
+deviceASocket.addEventListener('open', () => {  //Registration Message
     console.log('DeviceA Connected To Server');
     deviceASocket.send(JSON.stringify({
         type:        "registerDevice",
@@ -104,8 +97,8 @@ deviceASocket.addEventListener("message", (msg) => {
     } 
 })
 
-// Device A outputting
-setInterval(() => {
+
+setInterval(() => { // Device A outputting
     deviceASocket.send(JSON.stringify({
         type: "sendOutputs",
         outputs: {
