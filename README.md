@@ -9,34 +9,55 @@ Supports:
 * Live Updating Widgets (Int/Text Inputs, sliders, checkboxes, toggles, stylable icons, text displaying)
 * Link Data Inspection
 * Persistent Links (Will reconnect after disconnection or server restart)
+* Optional Static Link Data Typing 
 * Experimental Key exchange for RSA (Beta)
 * Device Logging
 * Optional Cyberpunk Styling
   
-### Installation [One-Time]
-#### 1. ``` cd <repository_name>```
-#### 2. ``` npm install ```    // Installing packages for server.js
-#### 3. ``` cd reactInterface ```
-#### 4. [Optional] Change "localhost" to your PC's IP if you wish in .env
-```REACT_APP_WEBSOCKET_SERVER_IP=localhost:8080``` => ```REACT_APP_WEBSOCKET_SERVER_IP=192.168.255.255:8080```
-#### 5. ``` npm install```    // Installing packages for react GUI
-
-### Running React GUI:
-``` npm run start ```  // from inside '/reactInterface'
-
-### Running nodeServer:
-``` node server.js ``` // From root directory of the repo
+### Installation 
+#### 1. Clone this repository:
+```
+git clone https://github.com/TheTheoM/nodeServer.git
+```
+```
+cd nodeServer
+```
+#### 2. Installing packages for server.js:
+```
+npm install
+```    
+#### 3. Run the server:
+```
+node server.js
+```
+#### 4. In a new terminal, move into the reactInterface folder:
+```
+cd reactInterface
+```
+#### 5. [OPTIONAL] Replace "localhost" with your PC's IP address in the .env file if desired:
+```
+REACT_APP_WEBSOCKET_SERVER_IP=localhost:8080``` => ```REACT_APP_WEBSOCKET_SERVER_IP=192.168.255.255:8080
+```
+#### 6. Install dependencies for React Interface:
+```
+npm install
+```
+#### 7. Run React Interface:
+```
+npm run start
+```
 
 ## High Level Overview:
-- There are fully functional example clients in /exampleClients.
+- There are many fully functional example clients in /exampleClients, both in Python and JS.
 
 ### To Connect:
   1. Connect to the Server (server.js, port 8080) as a websocket client. You handle this. 
-  2. You send a registration message to the Server with your device info. See **Registering a device**
+  2. You send a registration message to the Server with your device info. See [How to Register a Device](#registering-a-device)
+
 
 ### To send/receive Data:
-  - If your device has outputs, it will send data to the server as needed. See **Device Send Outputs**
-  - If your device has inputs, it will receive data from the server via incoming messages. See **Device Receiving Inputs**
+  - If your device has outputs, it will send data to the server as needed. See [How to send Outputs](#Device-Outputting)
+  - If your device has inputs, it will receive data from the server via incoming messages. See [How to receive Inputs?](#Device-Receiving-Inputs)
 
 ### Creating / managing Links:
   - A link routes data from an output to input. Can be created through the React GUI by 'drawing' connections between nodes or by using API calls.
@@ -44,10 +65,50 @@ Supports:
     - Temporary Links 'break' or stop routing data after a device reconnection or server restart.
     - Persistent Links automatically reestablishes a data link, even after device disconnection or server restart.
   
-  - See **Creating a Link** for information on API calls to create, modify or destroy both links.
+  - See [How to Create a Link via API](#creating-link) for information on API calls to create, modify or destroy both links.
 
 ### Additional Capabilities:
   5.  Send logs, status, widgets etc.
+
+## Example JS Client
+```
+const WebSocket = require("ws")
+
+const deviceASocket = new WebSocket('ws://localhost:8080');
+
+deviceASocket.addEventListener('open', () => {  //Registration Message
+    console.log('DeviceA Connected To Server');
+    deviceASocket.send(JSON.stringify({
+        type:        "registerDevice",
+        name:        "DeviceA",
+        isNode:      true,
+        inputNames:  ["wordInput"],
+        outputNames: ["wordOutput"],
+        deviceInfo:  "Example Device",
+    }))
+})
+
+deviceASocket.addEventListener("message", (msg) => {
+    let data = JSON.parse(msg.data)
+    if (data.type === "sendInputs") { // The inputs send from the server to your device
+        if (data.inputs.hasOwnProperty("wordInput")) {
+            console.log(`DeviceA received input from input: "wordInput": ${data.inputs.wordInput}`)
+        }
+    } 
+})
+
+
+setInterval(() => { // Device A outputting
+    deviceASocket.send(JSON.stringify({
+        type: "sendOutputs",
+        outputs: {
+            "wordOutput": "Hello, World? Maybe Device B is my world?",
+        },    
+    }))
+}, 200);
+```
+
+Other examples are in /exampleClients.
 
 # API Reference:
 
@@ -61,6 +122,7 @@ All messages sent to and from the server are in the same basic JSON encoded stru
 ```
 
 ## Registering a device:
+<a name="registering-a-device"></a>
 - You *send* this to the server after initial connection, to tell it the device name, inputs outputs etc.
 ```
   {
@@ -69,11 +131,21 @@ All messages sent to and from the server are in the same basic JSON encoded stru
     "isNode": true,                              // [required] [boolean] [to be depracated],
     "inputNames": ["input_1", "input_N"],        // [required] [array of str len >= 0]  [For no inputs, leave as empty array "[]"]
     "outputNames": ["output_1", "output_N"],     // [required] [array of str len >= 0]  [For no outputs, leave as empty array "[]"]
-    "deviceInfo": "Device B",                    // [required] [string] 
+    "deviceInfo": "Any infomation you want",     // [required] [string] 
     "widgets": [{..}, {}],                       // [optional] [array of dicts len > 0] [For syntax see "Widgets" below]
-    "supportedEncryptionStandards": [{..}, {}],  // [optional] [array of dicts len > 0] [for syntax see "Encryption" below]
   }
 ```
+#### Static Typing
+By default, IO's are typeless, meaning any data type (int, float, string, boolean, typeless) can connect to them.
+```
+  "inputNames": ["input_1", "input_2", "input_3", "input_4", "input_5"],        
+```
+By converting the ioName array into a dictionary where each key represents a name and its corresponding value denotes the data type, connections can only be established between two elements of the same type or with a typeless destination. 
+
+```
+  "inputNames": {"input_1": "int", "input_2": "str", "input_3": "float", "input_4": "array", "input_5": "typeless"},        
+```
+
 
 #### Upon sending this to the server, you will *receive* one of two messages:
   1. "nameTaken" [failure]
@@ -140,6 +212,8 @@ For example, see the integer slider and icon on the Node ->.
       ```
 
 ## Creating a Link:
+<a name="creating-link"></a>
+
   - Given Device A's output is connected to Device B's input, Device A sends its output data to the server, which then sends it to Device B.
   - So Data flows like this: Device A -> Server -> Device B
   - There are two types of Data Links:
@@ -173,6 +247,7 @@ For example, see the integer slider and icon on the Node ->.
        ```
 
 ## Device Outputting:
+<a name="Device-Outputting"></a>
   - Every time your device wants to output something to one or more of its output, you send this to the server which then routes it to the input of a connected device.
   - You can send any JSON serializable data: str, int, array, dict, ... etc.
   - ```
@@ -186,6 +261,7 @@ For example, see the integer slider and icon on the Node ->.
     ```
 
 ## Device Receiving Inputs:
+<a name="Device-Receiving-Inputs"></a>
   - When device A outputs a message to Device B, the server will send the outputted messaged to one of Device B's inputs.
   - Received message from server:
     - ```
