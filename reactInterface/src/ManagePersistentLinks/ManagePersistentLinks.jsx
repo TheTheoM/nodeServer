@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import RectangleDiv from "../rectangleDiv"
 import PersistentLinksCyber from './PersistentLinksCyber.jsx';
 import PersistentLinks from './PersistentLinks.jsx';
-import Encrypt from '../IconComponents/Encrypt.jsx';
+import TokenCyber from '../IconComponents/TokenCyber.jsx';
 
 const ManagePersistentLinks = (props) => {
     const [isCyber, setIsCyber] = useState(0)
@@ -11,7 +11,7 @@ const ManagePersistentLinks = (props) => {
     return (
         <RectangleDiv 
           menuName={"Manage Persistent Links"}
-          rightItemList={[<div className='resizeArrowContainer' onClick={() => {setIsCyber(!isCyber)}} ><Encrypt width = {'1.2rem'}/></div>]}
+          rightItemList={[<div className='resizeArrowContainer' onClick={() => {setIsCyber(!isCyber)}} ><TokenCyber width = {'1.2rem'}/></div>]}
 
           MenuItem={
             <div className="PersistentLinksContainer">

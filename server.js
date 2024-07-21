@@ -87,11 +87,10 @@ class ObservableMap {
 }
 
 class SERVER {
-    constructor(port, reactClientName, savedLinkFile) {
+    constructor(port, reactClientName) {
         this.server      = new WebSocket.Server({ port: port, pingInterval: 5000,   pingTimeout: 1000 });
         this.activeLinks = new ObservableMap(this.on_activeLinks_Change.bind(this)).getMapFunctions()
         this.reactClientName  = reactClientName;
-        this.savedLinkFile   = savedLinkFile;
         this.connectedDevices = new Map();
         this.persistentLinks  = new ObservableMap(this.on_PersistentLinks_Update.bind(this)).getMapFunctions();
         this.sendReactUpdate  = true;

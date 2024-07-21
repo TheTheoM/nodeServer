@@ -7,7 +7,7 @@ import RectangleDiv from "../rectangleDiv"
 import AddWithNoOutline from "../IconComponents/AddWithNoOutline"
 import CreateFakeDevice from "./CreateFakeDevice"
 import "./DisplayDevicesStyles.css"
-import Encrypt from '../IconComponents/Encrypt.jsx';
+import TokenCyber from '../IconComponents/TokenCyber.jsx';
 
 const DisplayDeviceIO = (props) => {
   const [potentialLinkSet, setPotentialLinkSet] = useState(new Map());
@@ -54,7 +54,7 @@ const DisplayDeviceIO = (props) => {
     <RectangleDiv
       menuName={"Device IO"}
       rightItemList={[<div className='resizeArrowContainer' onClick={addFakeDevice}><AddWithNoOutline/></div>, 
-                      <div className='resizeArrowContainer' onClick={() => {setIsCyber(!isCyber)}} ><Encrypt width = {'1.2rem'}/></div>]}
+                      <div className='resizeArrowContainer' onClick={() => {setIsCyber(!isCyber)}} ><TokenCyber width = {'1.2rem'}/></div>]}
 
       MenuItem={
           showDeviceCreation ? (

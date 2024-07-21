@@ -101,7 +101,7 @@ export default function Widget(props) {
                     {values[0]}
                     <label className="label">
                         <div className="toggle nodrag">
-                            <input  className="toggle-state"  type="checkbox" name="check" onChange={handleToggle} />
+                            <input  className="toggle-state"  type="checkbox" name="check" onChange={handleToggle} checked={value === values[1] ? true : false}/>
                             <div className="indicator"></div>
                         </div>
                     </label>

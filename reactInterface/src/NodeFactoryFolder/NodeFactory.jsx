@@ -7,7 +7,7 @@ import Widget from "./Widget.jsx";
 import AddWithNoOutline from '../IconComponents/AddWithNoOutline';
 import "./nodeFactoryStyles.css"
 import LinkInfoWindow from "./LinkInfoWindow.jsx"
-import Encrypt from '../IconComponents/Encrypt.jsx';
+import TokenCyber from '../IconComponents/TokenCyber.jsx';
 import { debounce } from 'lodash';
 
 const proOptions = { hideAttribution: true };
@@ -26,7 +26,17 @@ export default function NodeFactory(props) {
       const nodePositions = nodes.map((node) => ({ position: node.position, name: node.key }));
       props.sendNodePositions(nodePositions);
     };
-    const debouncedSendNodePositions = debounce(sendNodePositions, 200); 
+
+    const debouncedSendNodePositions = debounce(sendNodePositions, 1000); 
+
+    useEffect(() => {
+      debouncedSendNodePositions();
+      return () => {
+        debouncedSendNodePositions.cancel();
+      };
+    }, [nodes]);
+
+
 
     useEffect(() => {
       if (JSON.stringify(props.availableIO) !== JSON.stringify(last)) {
@@ -113,25 +123,17 @@ export default function NodeFactory(props) {
       setDisplayLinkData(0)
     }
     
-    function saveNodePositions() {
-      props.sendNodePositions(nodes.map((node) => {return {position: node.position, name: node.key}}))
-    }
+
 
     function toggleCyber() {
       setIsCyber(!isCyber)
     }
 
-    useEffect(() => {
-      debouncedSendNodePositions();
-      return () => {
-        debouncedSendNodePositions.cancel();
-      };
-    }, [nodes]);
 
     return (
       <RectangleDiv
         menuName={"Node Factory"}
-        rightItemList={[<div className='resizeArrowContainer' onClick={toggleCyber} ><Encrypt width = {'1.2rem'}/></div>]
+        rightItemList={[<div className='resizeArrowContainer' onClick={toggleCyber} ><TokenCyber width = {'1.2rem'}/></div>]
         }
         MenuItem={
           <div className="nodeFactory" style={{height: "550px"}}>
