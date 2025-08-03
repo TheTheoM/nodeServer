@@ -446,7 +446,6 @@ class SERVER {
         this.messagesPerSecond = 5;
         this.backupInterval = 1800000;
         this.rateLimits = {};
-        this.credentialsFile  = "users.json";
         this.pollComputerPerformanceInterval = 5000;
         this.computerPerformanceData = {};
         this.JWT_SECRET = this.createEnvFileWithSecret();
@@ -878,14 +877,6 @@ class SERVER {
     }
     
     
-    initializeCredentialsFile() {
-        if (!fs.existsSync(this.credentialsFile)) {
-            fs.writeFileSync(this.credentialsFile, JSON.stringify([])); 
-            console.log(`File created: ${this.credentialsFile}`);
-        } 
-    }
-
-
     async addUser(username, password) {
         const checkStmt = db.prepare(`SELECT COUNT(*) AS count FROM users WHERE username = ?`);
         const { count } = checkStmt.get(username);
