@@ -1,25 +1,12 @@
 {
   "name": "nodeserver",
-  "version": "1.0.0",
-  "description": "Node based WebSocket server. Devices are represented as 'nodes' with inputs and outputs connectable via links to other node IO's.",
-  "main": "server.js",
-  "dependencies": {
-    "webpack-sources": "^3.2.3",
-    "websocket-driver": "^0.7.4",
-    "websocket-extensions": "^0.1.4"
-  },
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "npm --prefix backend start",
+    "client": "npm --prefix frontend start"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/TheTheoM/nodeServer.git"
-  },
-  "author": "Theo Marlow",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/TheTheoM/nodeServer/issues"
-  },
-  "homepage": "https://github.com/TheTheoM/nodeServer#readme"
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  }
 }
