@@ -451,13 +451,11 @@ class SERVER {
         this.JWT_SECRET = this.createEnvFileWithSecret();
         this.getComputerPerformance();
         this.manager = new ProcessManager(this.sendProcesses.bind(this), this.sendProcessesResources.bind(this), this.serverContext);
-        this.initializeCredentialsFile();
         this.loadLinks();
 
         setInterval(() => {
             this.trimDeviceLogs(300)
         }, 100000)
-
 
         if (username && password) {
             this.addUser(username, password);

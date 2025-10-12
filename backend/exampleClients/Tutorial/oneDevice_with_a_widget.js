@@ -33,6 +33,7 @@ deviceASocket.addEventListener('open', () => {
 deviceASocket.addEventListener("message", (msg) => {
     let data = JSON.parse(msg.data)
 
+
     switch (data.type) {
         case ("sendInputs"): {
             if (data.inputs === "Input_1") {

@@ -38,6 +38,7 @@ deviceASocket.addEventListener('open', () => {
     }, 1000)
 })
 
+
 deviceASocket.addEventListener("message", (msg) => {
     let data = JSON.parse(msg.data)
     switch (data.type) {
@@ -49,7 +50,6 @@ deviceASocket.addEventListener("message", (msg) => {
         }
     }
 })
-
 
 
 deviceBSocket.addEventListener('open', () => {

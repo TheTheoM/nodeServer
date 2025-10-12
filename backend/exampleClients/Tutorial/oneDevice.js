@@ -18,13 +18,16 @@ deviceASocket.addEventListener('open', () => {
 
 deviceASocket.addEventListener("message", (msg) => {
     let data = JSON.parse(msg.data)
-    if (data.type === "sendInputs") {
-        if (data.inputs === "Input_1") {
-            console.log(`Input_1 received Data: ${data.inputs.wordInput}`)
+    // console.log(data)
 
-        } else if (data.inputs === "Input_2") {
-            console.log(`Input_2 received Data: ${data.inputs.wordInput}`)
-        }
+    if (data.type === "sendInputs") {
+        Object.keys(data.inputs).forEach((inputName) => {
+            if (inputName === "Input_1") {
+                console.log(`Input_1 received Data: ${data.inputs[inputName]}`)
+            } else if (inputName === "Input_2") {
+                console.log(`Input_2 received Data: ${data.inputs[inputName]}`)
+            }
+        })
     } 
 })
 
