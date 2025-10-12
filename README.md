@@ -19,6 +19,29 @@ npm install --prefix frontend
 npm start
 ```
 
+### Running the Server with CLI Arguments
+
+You can pass username, password, port, and React client name when starting the server (You will need to create a username and password in order to make changes to the server with the GUI):
+
+Example:
+
+- Add a user while running the server on default port 8080:
+
+```bash
+node server.js -u admin -pw 1234
+```
+
+Available arguments:
+
+| Short | Long        | Description                     | Default     |
+|-------|------------|---------------------------------|------------|
+| -u    | --username | Username for authentication     | undefined  |
+| -pw   | --password | Password for authentication     | undefined  |
+| -p    | --port     | Port for the server             | 8080       |
+| -c    | --clientName | React client name             | webClient  |
+
+If username and password are provided, the server will automatically create the user in the database on startup.
+
 
 ## High Level Overview:
 - There are many fully functional example clients in /exampleClients, both in Python and JS.

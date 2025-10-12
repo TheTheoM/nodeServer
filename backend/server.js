@@ -12,7 +12,9 @@ const disk                    = require('diskusage');
 const bcrypt                  = require('bcrypt');
 const jwt                     = require('jsonwebtoken');
 const crypto                  = require("crypto");
-const yargs                   = require('yargs');
+const yargs                   = require("yargs/yargs");
+const { hideBin }             = require("yargs/helpers");
+
 const Database                = require('better-sqlite3');
 const db    =   new Database('nodeDatabase.db');
 
@@ -2584,32 +2586,12 @@ class IO {
 }
 
 
-const argv = require('yargs')()
-    .option('port', {
-        alias: 'p',
-        describe: 'Port for the server',
-        type: 'number',
-        default: 8080
-    })
-    .option('clientName', {
-        alias: 'c',
-        describe: 'React client name',
-        type: 'string',
-        default: 'webClient'
-    })
-    .option('username', {
-        alias: 'u',
-        describe: 'Username for authentication',
-        type: 'string',
-        default: undefined
-    })
-    .option('password', {
-        alias: 'pw',
-        describe: 'Password for authentication',
-        type: 'string',
-        default: undefined
-    })
-    .argv;
+const argv = yargs(hideBin(process.argv))
+  .option('u', { alias: 'username', type: 'string' })
+  .option('pw', { alias: 'password', type: 'string' })
+  .option('p', { alias: 'port', type: 'number', default: 8080 })
+  .option('c', { alias: 'clientName', type: 'string', default: 'webClient' })
+  .parse();
 
 
 new SERVER(argv.port, argv.clientName, argv.username, argv.password);
