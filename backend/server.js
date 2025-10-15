@@ -460,6 +460,7 @@ class SERVER {
         }, 100000)
 
         if (username && password) {
+            console.log("yes we are adding user.")
             this.addUser(username, password);
         }
         this.main();
@@ -2587,11 +2588,10 @@ class IO {
 
 
 const argv = yargs(hideBin(process.argv))
-  .option('u', { alias: 'username', type: 'string' })
-  .option('pw', { alias: 'password', type: 'string' })
-  .option('p', { alias: 'port', type: 'number', default: 8080 })
-  .option('c', { alias: 'clientName', type: 'string', default: 'webClient' })
-  .parse();
-
+  .option('username', { type: 'string', describe: 'Username for authentication' })
+  .option('password', { type: 'string', describe: 'Password for authentication' })
+  .option('port', { type: 'number', default: 8080, describe: 'Port for the server' })
+  .option('clientName', { type: 'string', default: 'webClient', describe: 'React client name' })
+  .parse()
 
 new SERVER(argv.port, argv.clientName, argv.username, argv.password);

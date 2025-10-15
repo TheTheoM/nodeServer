@@ -28,17 +28,17 @@ Example:
 - Add a user while running the server on default port 8080:
 
 ```bash
-node server.js -u admin -pw 1234
+node server.js --username admin --password 1234
 ```
 
 Available arguments:
 
-| Short | Long        | Description                     | Default     |
-|-------|------------|---------------------------------|------------|
-| -u    | --username | Username for authentication     | undefined  |
-| -pw   | --password | Password for authentication     | undefined  |
-| -p    | --port     | Port for the server             | 8080       |
-| -c    | --clientName | React client name             | webClient  |
+| Long         | Description                     | Default    |
+|------------  |---------------------------------|------------|
+| --username   | Username for authentication     | undefined  |
+| --password   | Password for authentication     | undefined  |
+| --port       | Port for the server             | 8080       |
+| --clientName | React client name               | webClient  |
 
 If username and password are provided, the server will automatically create the user in the database on startup.
 
