@@ -7,6 +7,9 @@ Node based WebSocket server. Devices are represented as 'nodes' with inputs and 
 
 ### First Time Installation (From root directory)
 
+Ensure that you have VS Studio installed and 'Development with C++' installed.
+
+
 ```
 npm install           
 npm install --prefix backend
@@ -190,7 +193,7 @@ For example, see the integer slider and icon on the Node ->.
   ```
 - Widget Types:
      - "dropDown"    [Drop down menu]
-     - "toggle"      [togglee switch]
+     - "toggle"      [toggle switch]
      - "slider"      [integer slider]
         - Has an Instant Mode Checkbox: When checked, the device receives continuous updates as the slider moves. When unchecked, the device only receives          the final value once the slider stops moving
      - "number"      [integer text-input box]
