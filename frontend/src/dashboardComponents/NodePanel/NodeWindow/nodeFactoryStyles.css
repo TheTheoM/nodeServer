@@ -1,0 +1,548 @@
+
+.Node {
+    min-width:  190px;
+    min-height: 190px;
+    background-color: rgba(0, 0, 0, 0.686);
+    border-radius: 15px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+
+.nodeGear {
+  position: absolute;
+  top:   9px;
+  right: 1px;
+  color: rgb(102, 100, 100);
+  z-index: 10;
+  transition: 0.3s all ease;
+  cursor: pointer;
+}
+
+.nodeGear:hover {
+  filter: drop-shadow(0px 0px 5px black);
+  transform: scale(1.25) rotate(45deg);
+}
+
+.NodeContent button {
+  border-radius: 10px;
+  width: 90%;
+  padding: 5px;
+  background: linear-gradient(145deg, #202020, #252525);
+  box-shadow: 3px 3px 5px #171717, -3px -3px 5px #2f2f2f;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 11px;
+  font-family: 'Orbitron';
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s all ease;
+}
+
+.NodeContent button:hover {
+  box-shadow: 5px 5px 7px #171717, -5px -5px 7px #2f2f2f;
+  color: rgb(3, 199, 248);
+  color: rgb(0, 204, 255);
+}
+
+.react-flow__node react-flow__node-textUpdater nopan selected selectable {
+    z-index: 0;
+}
+
+.Node:hover > .outputBar,
+.Node:hover > .inputBar {
+  background-color: rgba(255, 255, 255, 0.594);
+  background-blend-mode: lighten;
+}
+
+.inputBar {
+  width:  2500px;
+  height: 2500px;
+  content: '';
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.378);
+  animation-duration: 4s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  transform: rotate(30deg);
+}
+
+
+/* .inputBar {
+    width:  2500px;
+    height: 2500px;
+    content: '';
+    position: absolute;
+    background-image: conic-gradient(transparent 30%, #0cf , transparent 100%);
+    animation-duration: 4s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    transform: rotate(30deg);
+}
+  
+.outputBar {
+    width:  2500px;
+    height: 2500px;
+    content: '';
+    position: absolute;
+    background-image: conic-gradient(transparent 30%, #d000ff , transparent 100%);
+    animation-duration: 4s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-delay: 2s;
+    transform: rotate(210deg);
+} */
+  
+.alertBar {
+    width:  280px;
+    height: 280px;
+    content: '';
+    position: absolute;
+    z-index: 1;
+}
+
+@keyframes pulseAnimation {
+    0%, 100% {
+      background-color: red;
+    }
+  
+    50% {
+      background-color: grey;
+    }
+  }
+
+.nodeContainer .online {
+    background-color: transparent;
+}
+
+
+.nodeContainer .offline {
+    background-color: gray;
+}
+
+.nodeContainer .alert {
+    background-color: rgb(255, 145, 0);
+
+}
+.nodeContainer .fault {
+    background-color: red;
+
+}
+
+.nodeContainer .criticalFault {
+    animation: pulseAnimation 1.5s infinite; 
+}
+
+.nodeContainer {
+    position: relative;
+}
+
+.inputNodes {
+    position: absolute;
+    left: -10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+    z-index: 999;
+}
+
+.outputNodes {
+    position: absolute;
+    right: -2px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+    z-index: 1;
+}
+
+.handleHoverMenu {
+    position: absolute;
+    z-index: 100;
+    background-image: linear-gradient(45deg, rgb(0, 128, 160), #8300a0);
+    box-shadow: inset 0px 0px 3px rgba(0, 0, 0, 0.731), 
+                 0px 0px 8px 0px rgb(17, 17, 17);
+    text-shadow: 0px 0px 5px black;
+    font-weight: 800;
+    min-height: 20px;
+    min-width:  50px;
+    border-radius: 5px;
+    font-size: 13px;
+    padding: 3px;
+    padding-bottom: -5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.handleHoverMenu > *{
+    margin: 0px;
+    padding: 0px;
+}
+
+.HandleContainer {
+    position: relative;
+    z-index: 1000;
+}
+
+.HandleContainer .input {
+    top: -9px;
+    right: 14px;
+}
+
+.HandleContainer .output {
+    top: -10px;
+    left: 14px;
+}
+
+.Node .NodeContent {
+    position: absolute;
+    border-radius: inherit;
+    text-align: center;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+    inset: 2px;
+    background-color: rgb(27, 30, 32);
+    z-index: 1;
+}
+
+.NodeBanner {
+    text-shadow: 0px 0px 5px rgb(171, 167, 167);
+}
+
+.Node .NodeContent p{
+    padding: 0px;
+    margin: 0px;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+
+.widgetContainer {
+    border-radius: 10px;
+    width: 90%;
+    padding: 5px;
+    background: linear-gradient(145deg, #202020, #252525);
+    box-shadow:   3px  3px 5px #171717,
+                 -3px -3px 5px #2f2f2f;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 11px;
+    font-family: 'Orbitron';
+}
+
+.Node .NodeContent .widgetContainer   p {
+    margin-top: -5px;
+    text-align: left;
+}
+
+.widgetContainer input {
+    width: 100%;
+    margin: 0px;
+    border-radius: 5px;
+    border: transparent;
+    background-color: #141313;
+    color: white;
+}
+
+.checkbox-container {
+    position: relative;
+}
+
+.instantMode {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 25px;
+    padding: 5px;
+    top: 25px;
+    right: 0px;
+    background-color: rgb(27, 29, 27);
+    border-radius: 10px;
+}
+
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+@keyframes animate {
+    0% {
+        transform: rotate(0deg);
+    }  
+    100% {
+        transform: rotate(260deg);
+    }  
+}
+
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+      display: flex;
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+      display: none;
+    }
+}
+
+.ExitLinkInfo {
+    cursor: pointer;
+    position: absolute;
+    right: 50px;
+    top:   10px;
+    font-size: 10px;
+}
+
+.visible { 
+    display: flex;
+    animation: fadeIn 0.2s ease-in-out; 
+}
+
+.invisible {
+    animation: fadeOut 0.2s ease-in-out; 
+}
+
+
+@media screen and (max-width: 1000px) {
+    .nodeFactory {
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+    }
+  }
+
+
+.nodeFactory {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+
+.widgetContainer .RGBCreatorHorizontalContainer {
+    display: flex;
+    justify-content: space-around;
+    vertical-align: middle;
+    align-items: center;
+    width: 100%;
+    font-size: 10px;
+    height: 50px;
+    border-radius: 15px;
+    text-shadow: 0px 0px 3px white;
+    background-color: #161616;
+    overflow: hidden;
+ }
+ 
+ .widgetContainer .RGBCreatorHorizontalContainer .toggle {
+    box-shadow: 3px 3px 10px #141313, -3px -3px 7px #302f2f, 4px 4px 4px 0px #222121 inset, -4px -4px 4px 0px #222121 inset;
+
+ }
+
+.shadowContainer {
+    filter: drop-shadow(black 0px 0px 3px )  drop-shadow(rgba(0, 0, 0, 0.579) 0px 0px 3px );
+    transition: 0.3s all cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.shadowContainer:hover {
+    filter: drop-shadow(black 0px 0px 3px )   drop-shadow(black 0px 0px 3px ) drop-shadow(black 0px 0px 3px ) ;
+}
+
+.inputShape {
+    width:  9px;
+    height: 10px;
+    aspect-ratio: cos(30deg);
+    clip-path: polygon(0 0,100% 50%,0 100%);
+    background: #a3ffa3;
+    border-radius: 0 !important;
+    box-shadow: 0px 0px 4px rebeccapurple;
+  }
+  /* Integer */
+  .int {
+    border: 1px solid blue !important;
+  }
+  
+  .inputNodes .int {
+    background-color: blue !important;
+  }
+
+  /* Float */
+  .float {
+    border: 1px solid cyan !important;
+  }
+  
+  .inputNodes .float {
+    background-color: cyan !important;
+  }
+
+  /* String */
+  .str {
+    border: 1px solid green !important;
+  }
+  
+  .inputNodes .str {
+    background-color: lightgreen !important;
+  }
+
+  /* Array */
+  .array {
+    border: 1px solid orange !important;
+  }
+  
+  .inputNodes .array {
+    background-color: orange !important;
+  }
+
+  /* Boolean */
+  .boolean {
+    border: 1px solid rgb(255, 255, 255) !important;
+  }
+  
+  .inputNodes .boolean {
+    background-color: white !important;
+  }
+
+  /* Typeless */
+  .typeless {
+    border: 1px solid rgb(135, 135, 135) !important;
+  }
+  
+  .inputNodes .typeless {
+    background-color: rgb(119, 119, 119) !important;
+  }
+
+  .OutputIO {
+    background-color: transparent;
+  }
+
+ .DataKeyWindow {
+    padding: 10px;
+    border: 1px solid var(--widget-border-color*--);
+    font-size: small;
+    position: absolute;
+    bottom: 0;
+    left:   0;
+    margin: 15px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    vertical-align: middle;
+    z-index: -10;
+}
+  
+  .DataKeyWindow p {
+    display: flex;
+    align-items: center;
+    margin: 2px 0;
+    color: gainsboro;
+  }
+
+  .key-box {
+    width:  10px;
+    height: 10px;
+    margin-right: 10px;
+    margin-top: 2px;
+    display: inline-block;
+  }
+  
+.typelessKey {
+    background-color: grey;
+  }
+  
+.booleanKey {
+    background-color: white;
+    border: 1px solid black; 
+  }
+  
+.arrayKey {
+    background-color: orange;
+  }
+
+.intKey {
+    background-color: blue;
+  }
+
+.floatKey {
+    background-color: turquoise;
+  }
+  
+
+
+
+
+
+.NodeInfoWindow {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 66px;
+  width:  66px;
+  background-color: var(--bg-color);
+  clip-path: polygon(0 0, 100% 100%, 100% 0);
+}
+
+.NodeInfoWindow .infoIcon {
+  height: 1.54em;
+  margin-left: 28px;
+  margin-top:  7px;
+  filter: drop-shadow(0px 0px 1px  rgba(255, 255, 255, 0.411));
+  transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+  cursor: pointer;
+}
+
+.NodeInfoWindow .infoIcon:hover {
+  color: var(--selected-item);
+
+}
+.nodeCanvasSettings {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  text-align: center;
+  /* width: 250px; */
+  height: 80%;
+}
+
+.nodeCanvasSettings input{
+  background-color: rebeccapurple;
+  margin-right: 8px;
+    padding: 10px;
+    border: 1px solid rgb(65, 71, 74);
+    background-color: var(--widget-color);
+    border-radius: 5px;
+    color: white;
+  /* width: 100px; */
+}

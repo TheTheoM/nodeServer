@@ -1,0 +1,165 @@
+
+.LinkInfoWindow {
+    width: 500px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+.LinkDevice .activeLinksContainer {
+    display: grid;
+    grid-gap: 30px;
+    padding: 17px;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 2fr));
+    justify-items: center;
+    transition: 1s all ease;
+}
+
+.LinkDevice {
+    max-height: 250px;
+    width: 400px;
+    overflow: hidden;
+    background-color: grey;
+    background-color: var(--fg-color);
+    border: 1px solid var(--widget-border-color);
+    background-blend-mode: darken;
+    min-height: 200px;
+    font-size: medium;
+    display: flex;
+}
+
+
+.LinkDevice .linkInfoContainer {
+    width: 100%;
+}
+
+.LinkDevice .lastMessageContainer {
+    word-wrap: break-word;
+    overflow: hidden;
+    height: 80%;
+    width: 100%;
+    background-color: #0000006b;
+    background-blend-mode: color-burn;
+    color: white;
+
+}
+.LinkDevice .lastMessage {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 7px;
+    text-align: center;
+}
+
+.LinkDevice .linkLastMsg {
+    width: 100%;
+    height: 20%;
+    display: flex;
+    align-items:     center;
+    justify-content: space-around;
+    vertical-align:  middle;
+    text-align:      center;
+    overflow: hidden;
+    background-color: var(--fg-color);
+}
+
+.LinkDevice .linkLastMsg button {
+    height: 70%;
+    width:  70%;
+    border-radius: 10px;
+    background-color: var(--selected-item);
+    border: none;
+    color: white;
+}
+
+.LinkDevice .linkLastMsg button:hover {
+    background-blend-mode: color-dodge;
+    cursor: pointer;
+}
+
+
+.LinkDevice .linkLastMsg button h3 {
+    margin: 0;
+    cursor: pointer;
+}
+
+.LinkDevice .breakLinkIcon {
+    color: red;
+    height: 1.5em;
+    width:  1.5em;
+    margin: 1px;
+    cursor: pointer;
+}
+.LinkDevice .breakLinkIcon:hover {
+    color: rgb(255, 0, 0);
+
+}
+
+.LinkDevice .disconLinkIcon:hover {
+    color: rgb(255, 0, 0);
+}
+
+.LinkDevice .disconLinkIcon {
+    color: rgb(223, 32, 32);
+    height: 1.8em;
+    width:  1.8em;
+    cursor: pointer;
+    position: relative;
+}
+
+.LinkDevice .componentContainer {
+    min-height: 230px;
+    overflow-y: hidden;
+    overflow-x: scroll;
+    transition: min-height 0.3s ease;
+}
+.LinkDevice .linkInfo {
+    height: 100%;
+    width: 100%;
+    padding: 7px;
+}
+
+.handleHoverMenuLinkDevice {
+    position: absolute;
+    z-index: 1000;
+    background-color: rgb(51, 51, 54);
+    min-width:  50px;
+    border-radius: 5px 0px 0px 5px;
+    border-radius: 5px;
+    font-size: 0.9em;
+}
+
+.handleHoverMenuLinkDevice > *{
+    margin: 0px;
+    padding: 5px;
+}
+
+
+.LinkDevice  .infoGrid {
+    display: grid;
+    overflow: hidden;
+    height: 80%;
+    width: 100%;
+    grid-template-columns: repeat(2, 50%); 
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows:    1fr 1fr;
+    background-color: #0000006b;
+    background-blend-mode: color-burn;
+  }
+
+.infoGrid .cell > * { 
+    margin: 0;
+}
+
+.infoGrid .cell {
+    width: 100%;
+    height: 100%; 
+    padding: 5px; 
+    text-align: center;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    overflow: hidden;
+}

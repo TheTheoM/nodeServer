@@ -1,0 +1,48 @@
+.home-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 20px;
+  }
+  
+  .home-box {
+    background-color: var(--bg-color);
+    border: 1px solid var(--widget-border-color);
+    padding: 20px;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    margin: 0 !important;
+  }
+
+  .home-box > *  {
+    border: none !important;
+    margin: 0 !important;
+    padding: 0px !important;
+  }
+  
+  .large-box {
+    flex: 1 1 100%;
+  }
+  
+  .medium-box {
+    flex: 1 1 48%;
+  }
+  
+  .small-box {
+    /* flex: 1 1 calc( 50% - 2 * 16px - 18px); */
+    flex: 1 1 49%;
+    max-width: 50%;
+    /* yeah i don't like this :( */
+    /* max-width: calc( 50% - 2 * 16px - 18px); */
+  }
+  
+  @media screen and (max-width: 1000px) {
+    .small-box {
+      flex: 1 1 100%; 
+      max-width: 100%;
+    }
+  
+  }

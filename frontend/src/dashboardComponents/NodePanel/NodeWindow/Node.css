@@ -1,0 +1,31 @@
+.node-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 20px;
+  }
+  
+  .node-box {
+    background-color: #d0e0f0;
+    border: 1px solid #007bff;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .NodeCanvasWindow {
+    width: 100%;
+    height: 600px;
+    border: 1px solid var(--widget-border-color) !important;
+    background-color: var(--bg-color) !important;
+    z-index: 0;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+
+  .LinkInfoWindow {
+    width: 390px;
+    padding-left: 10px;
+  }

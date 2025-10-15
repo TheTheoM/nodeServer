@@ -1,0 +1,40 @@
+.Account-Container {
+  top: 10px;
+  right: 50px;
+  cursor: pointer;
+  user-select: none;
+  position: fixed;
+}
+
+.icon {
+  font-size: 24px;
+}
+
+.dropdown {
+  position: absolute;
+  top: 30px;
+  right: 0;
+  background-color: var(--widget-color);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  padding: 10px;
+  min-width: 120px;
+  z-index: 1000;
+}
+
+.username {
+  margin: 0;
+  font-weight: bold;
+}
+
+.logoutButton {
+  margin-top: 8px;
+  padding: 6px 12px;
+  width: 100%;
+  border: none;
+  background-color: #f44336;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}

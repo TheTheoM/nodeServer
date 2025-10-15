@@ -1,0 +1,52 @@
+.addProcess {
+    padding: 20px;
+    padding-right: 40px;
+    margin: 20px;
+    background-color: var(--bg-color);
+    color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.addProcess h2 {
+    margin-bottom: 20px;
+}
+
+.addProcess .formGroup {
+    margin-bottom: 15px;
+}
+
+.addProcess .formGroup label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: white;
+
+}
+
+.addProcess .formGroup input[type="text"],
+.addProcess .formGroup input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    background-color: var(--widget-color);
+    border: 1px solid var(--widget-border-color);
+    border-radius: 4px;
+    color: white;
+}
+
+.addProcess .formGroup input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.addProcess button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--fg-color);
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.addProcess button:hover {
+    background-color: #00a4b3;
+}

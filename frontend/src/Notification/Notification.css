@@ -1,0 +1,138 @@
+/* Notification.css */
+
+.container {
+  position: fixed;
+  top:   10px;
+  right: 10px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.icon {
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.notificationBox {
+  margin-top: 10px;
+  background-color: var(--widget-color);
+  color: white;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  width: 250px;
+  min-height: 80px;
+  border-radius: 8px;
+}
+
+.notificationContent {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  position: relative;
+}
+
+.statusBar {
+  width: 5px;
+  border-radius: 8px 0 0 8px;
+  height: 100%;
+}
+
+.notification-info {
+  background-color: #007bff;
+}
+
+.notification-success {
+  background-color: #28a745;
+}
+
+.notification-alert {
+  background-color: #ffc107;
+}
+
+.notification-warning {
+  background-color: #fd7e14;
+}
+
+@keyframes pulseColorAnimation {
+  0%, 100% {
+    background-color: #a82323; /* Darker red */
+  }
+  50% {
+    background-color: #dc3545; /* Normal red */
+  }
+}
+
+.notification-error {
+  animation: pulseColorAnimation 1s infinite;
+}
+
+.title {
+  font-weight: bold;
+  color: white; 
+  font-size: 16px;
+}
+
+
+.text-info {
+  color: #007bff;
+}
+
+.text-success {
+  color: #28a745;
+}
+
+.text-alert {
+  color: #ffc107;
+}
+
+.text-warning {
+  color: #fd7e14;
+}
+
+.text-error {
+  color: #dc3545;
+}
+
+
+.messageContent {
+  padding: 10px 15px;
+  flex: 1;
+}
+
+
+
+.message {
+  color: white;
+  font-size: 14px;
+}
+
+.closeButton {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background-color: transparent;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: #aaa;
+}
+
+.historyBox {
+  margin-top: 10px;
+  padding: 10px 15px;
+  background-color: var(--widget-color);
+  color: #fff;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  width: 250px;
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.historyItem {
+  margin-bottom: 10px;
+  padding: 5px 0;
+  border-bottom: 1px solid #555;
+}

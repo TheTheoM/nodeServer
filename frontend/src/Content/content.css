@@ -1,0 +1,18 @@
+.content-container {
+    width: 100%;
+    height: 100%;
+    margin-left: 6px;
+    /* background-color: var(--fg-color); */
+    /* padding: 10px; */
+}
+
+
+.component-container {
+    margin-top: var(--component-container-margin);
+    height: calc( 100% - 45px - 7px);
+    width: 100%;
+    background-color: var(--fg-color);
+    overflow-x: hidden;
+    overflow-y: auto;
+    /* border: 1px solid red; */
+}

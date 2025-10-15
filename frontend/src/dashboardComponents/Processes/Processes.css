@@ -1,0 +1,41 @@
+.processesTab-container {
+  background-color: var(--fg-color);
+}
+
+.processes-subcontainer {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  margin: 20px;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  position: relative;
+}
+
+.process-searchbar {
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid rgb(65, 71, 74);
+  background-color: var(--widget-color);
+  border-radius: 5px;
+  color: var(--text-color);
+
+}
+
+.process-list-container {
+  max-height: 450px;
+  min-height: 300px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.process-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow: hidden;
+  position: relative;
+}
+
+
+
